@@ -1,0 +1,1 @@
+UPDATE [account] SET [enable] = @enable, [update_date] = GETDATE(), [status] = @status, [is_verify] = @is_verify, [last_signin] = @last_signin WHERE [account_id] = @account_id;

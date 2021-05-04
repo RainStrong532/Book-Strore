@@ -1,0 +1,1 @@
+UPDATE [account] SET [password] = @password, [update_date] = GETDATE() WHERE [account_id] = @account_id;
