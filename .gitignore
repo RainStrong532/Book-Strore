@@ -3,6 +3,8 @@
 # dependencies
 /react-app/node_modules
 /expressjs/node_modules
+/expressjs/public
+/expressjs/private.js
 /.pnp
 .pnp.js
 

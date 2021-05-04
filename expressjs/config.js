@@ -4,6 +4,8 @@ const dotenv = require('dotenv');
 
 const assert = require('assert');
 
+const contants = require('./contants');
+
 dotenv.config();
 
 const { PORT, HOST, HOST_URL, SQL_USER, SQL_PASSWORD, SQL_DATABASE, SQL_SERVER, DOMAIN } = process.env;
@@ -30,5 +32,6 @@ module.exports = {
             trustedConnection: true,
         }
     },
-    domainFrontEnd: DOMAIN
+    domainFrontEnd: DOMAIN,
+    token_secret: contants.TOKEN_SECRET
 }
