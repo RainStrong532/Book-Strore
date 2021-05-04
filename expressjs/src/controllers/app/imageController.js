@@ -1,8 +1,8 @@
 'use strict';
 
-const Image = require('../models/image');
+const {Image} = require('../../models');
 const fs = require('fs');
-const config = require('../../config');
+const config = require('../../../config');
 
 
 const upload = async (req, res, next) => {
@@ -26,11 +26,12 @@ const upload = async (req, res, next) => {
         } catch (err) {
             console.error(err)
         }
-        res.status(400).send(err);
+        res.status(400).send({message: err.message});
     }
 }
 
 const findByImageName = async (req, res, next) => {
+    console.log("findByImageName");
     try {
         const name = req.params.name;
         if (name) {
@@ -41,11 +42,27 @@ const findByImageName = async (req, res, next) => {
             res.status(400).send({ message: "Url is not valid"});
         }
     } catch (err) {
-        res.status(400).send(err);
+        res.status(400).send({message: err.message});
+    }
+}
+
+const findById = async (req, res, next) => {
+    try {
+        const image_id = req.params.image_id;
+        if (image_id) {
+            let result = await Image.findById(image_id);
+            result[0].url = config.url + "/public/images/" + result[0].name;
+            res.status(200).send(result[0]);
+        } else {
+            res.status(400).send({ message: "Url is not valid"});
+        }
+    } catch (err) {
+        res.status(400).send({message: err.message});
     }
 }
 
 module.exports = {
     upload,
-    findByImageName
+    findByImageName,
+    findById
 }
