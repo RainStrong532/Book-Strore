@@ -1,0 +1,1 @@
+SELECT * FROM [verify] WHERE [account_id] = @account_id;

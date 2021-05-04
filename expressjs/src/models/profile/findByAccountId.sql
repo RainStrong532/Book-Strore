@@ -1,0 +1,1 @@
+SELECT * FROM [profile] WHERE [account_id] = @account_id;

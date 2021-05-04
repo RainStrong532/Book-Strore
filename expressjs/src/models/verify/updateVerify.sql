@@ -1,0 +1,1 @@
+UPDATE [verify] SET [code] = @code, [expried_date] = @expried_date WHERE [account_id] = @account_id;

@@ -54,7 +54,33 @@ const findByImageName = (name) => {
     })
 }
 
+const findById = (image_id) => {
+    let pool = new sql.ConnectionPool(config.sql);
+    return new Promise(async (resolve, reject) => {
+        try {
+            const sqlQueries = await utils.loadSqlQueries('image');
+            pool.connect().then(() => {
+                const request = new sql.Request(pool);
+                    request.input("image_id", sql.Int, image_id)
+                    .query(sqlQueries.findById).then(recordset => {
+                    pool.close();
+                    resolve(recordset.recordset)
+                }).catch(err => {
+                    pool.close();
+                    reject(err);
+                })
+            }).catch(err => {
+                reject(err);
+            })
+        } catch (err) {
+            console.log(err);
+            reject(err);
+        }
+    })
+}
+
 module.exports = {
     saveImage,
-    findByImageName
+    findByImageName,
+    findById
 }

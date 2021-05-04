@@ -1,0 +1,1 @@
+INSERT INTO [account_role]([account_id], [role_id]) VALUES(@account_id, @role_id);
