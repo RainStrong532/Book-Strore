@@ -1,6 +1,6 @@
 'use strict';
 
-const { Account, Verify } = require('../../models');
+const { Account, Verify } = require('../../data');
 const mailInfo = require('../../../private');
 const utils = require('../../utils');
 const nodemailer = require("nodemailer");

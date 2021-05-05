@@ -1,6 +1,6 @@
 'use strict';
 
-const { Account, Role, Verify, Profile } = require('../../models');
+const { Account, Role, Verify, Profile } = require('../../data');
 const utils = require('../../utils/auth');
 
 const signup = async (req, res, next) => {

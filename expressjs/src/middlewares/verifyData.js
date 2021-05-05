@@ -1,4 +1,4 @@
-const {Account} = require('../models');
+const {Account} = require('../data');
 const { ROLES } = require('../../contants');
 
 const checkDuplicateUsername = async (req, res, next) => {

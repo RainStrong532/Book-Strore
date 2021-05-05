@@ -1,4 +1,4 @@
-const { Profile } = require("../../models");
+const { Profile } = require("../../data");
 const utils = require("../../../src/utils");
 
 const saveProfile = async (req, res, next) => {

@@ -4,10 +4,10 @@ const router = express.Router();
 
 const authController = require("../../../controllers/auth/authController");
 const sendMailController = require("../../../controllers/auth/sendMailController");
-const verifySignup = require("../../../middlewares/verifySignup");
+const verifyData = require("../../../middlewares/verifyData");
 const authenticated = require("../../../middlewares/authenticated")
 
-router.post("/signup", verifySignup.checkMail, verifySignup.checkDuplicateUsername, verifySignup.checkRolesExisted, authController.signup);
+router.post("/signup", verifyData.checkMail, verifyData.checkDuplicateUsername, verifyData.checkRolesExisted, authController.signup);
 router.post("/signin", authController.signin);
 router.post("/signout", authenticated.authenticateToken, authController.signout);
 router.get("/users",authenticated.authenticateToken ,authController.getUserInfo);

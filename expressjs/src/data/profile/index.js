@@ -98,12 +98,21 @@ const saveProfile = ({ account_id, firstname, lastname, surname, description, do
                     .input("account_id", sql.Int, account_id)
                     .query(sqlQueries.saveProfile).then(recordset => {
                         pool.close();
+                        console.log('====================================');
+                        console.log(recordset);
+                        console.log('====================================');
                         resolve(recordset.recordset)
                     }).catch(err => {
+                        console.log('====================================');
+                        console.log(err);
+                        console.log('====================================');
                         pool.close();
                         reject(err);
                     })
             }).catch(err => {
+                console.log('====================================');
+                console.log(err);
+                console.log('====================================');
                 reject(err);
             })
         } catch (err) {

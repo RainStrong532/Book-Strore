@@ -1,6 +1,6 @@
 'use strict';
 
-const {Image} = require('../../models');
+const {Image} = require('../../data');
 const fs = require('fs');
 const config = require('../../../config');
 

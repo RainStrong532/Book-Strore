@@ -1,6 +1,6 @@
 'use strict';
 
-const ModelMulter = require('../models/image/ModelMulter');
+const ModelMulter = require('../data/image/ModelMulter');
 
 const upload = ModelMulter.single("image");
 
