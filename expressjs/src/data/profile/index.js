@@ -89,7 +89,6 @@ const saveProfile = ({ account_id, firstname, lastname, surname, description, do
                 request
                     .input("firstname", sql.NVarChar, firstname)
                     .input("lastname", sql.NVarChar, lastname)
-                    .input("surname", sql.NVarChar, surname)
                     .input("description", sql.NVarChar, description)
                     .input("dob", sql.DateTime, dob)
                     .input("gender", sql.Int, gender)
@@ -132,7 +131,6 @@ const updateProfile = ({ account_id, firstname, lastname, surname, description, 
                 request
                     .input("firstname", sql.NVarChar, firstname)
                     .input("lastname", sql.NVarChar, lastname)
-                    .input("surname", sql.NVarChar, surname)
                     .input("description", sql.NVarChar, description)
                     .input("dob", sql.DateTime, dob)
                     .input("gender", sql.Int, gender)

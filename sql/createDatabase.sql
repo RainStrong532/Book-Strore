@@ -50,7 +50,6 @@ CREATE TABLE profile(
    profile_id int IDENTITY(1,1) PRIMARY KEY,
    firstname NVARCHAR(50) COLLATE Latin1_General_100_CI_AI_SC_UTF8,
    lastname NVARCHAR(50) COLLATE Latin1_General_100_CI_AI_SC_UTF8,
-   surname NVARCHAR(50) COLLATE Latin1_General_100_CI_AI_SC_UTF8,
    description NVARCHAR(2500) COLLATE Latin1_General_100_CI_AI_SC_UTF8,
    dob DATETIME CHECK (dob < DATEADD(YEAR,-10, GETDATE())),
    gender int,
