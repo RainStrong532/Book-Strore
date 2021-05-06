@@ -1,3 +1,7 @@
+//Back-end url
+export const URL_DOMAIN = "http://localhost:4000";
+
+//Action types
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
