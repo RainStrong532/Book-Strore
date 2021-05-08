@@ -1,5 +1,4 @@
 import React from 'react';
-import Main from './Main';
 import Footer from './Footer';
 import Header from './Header';
 import Menu from './Menu';
@@ -9,7 +8,6 @@ function Layout({ children }) {
         <>
         <div id="wrapper">
             <Header />
-            <Main />
             {
                 children
             }

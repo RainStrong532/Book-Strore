@@ -1,0 +1,45 @@
+.loading{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 999999;
+}
+
+.loading .spinner{
+    width: 100px;
+}
+.loading .spinner img{
+    width: 100%;
+    height: auto;
+    animation: spin 0.7s infinite ease;
+}
+
+.loading .desc{
+    font-size: 2rem;
+    color: #fff;
+    animation: fade .8s infinite ease-in;
+}
+
+@keyframes spin {
+    0%{
+        transform: rotate(0deg) scale(1);
+    }
+    100%{
+        transform: rotate(360deg) scale(1);
+    }
+}
+@keyframes fade {
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}

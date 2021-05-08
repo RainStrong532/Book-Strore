@@ -6,9 +6,10 @@ const Routes = () => {
     return (
         <BrowserRouter>
             <Switch>
-                <Route exact path="/" component={pages.HomePage} />
-                <Route exact path="/login" component={pages.LoginPage} />
-                <Route exact path="*" component={pages.NotFoundPage} />
+                <Route exact path="/" component={pages.PublicPage.HomePage} />
+                <Route exact path="/login" component={pages.PublicPage.LoginPage} />
+                <Route exact path="/private" component={pages.PrivatePage.PrivatePage} />
+                <Route exact path="*" component={pages.PublicPage.NotFoundPage} />
             </Switch>
         </BrowserRouter>
     )

@@ -14,9 +14,23 @@ export function signup(payload) {
     })
 }
 
+export function sendMailSignup(payload) {
+    return ({
+        type: types.SEND_MAIL_SIGNUP_REQUEST,
+        payload
+    })
+}
+
 export function logout(payload) {
     return ({
         type: types.LOGOUT_REQUEST,
+        payload
+    })
+}
+
+export function getMyInfor(payload) {
+    return ({
+        type: types.GET_USER_INFO_REQUEST,
         payload
     })
 }

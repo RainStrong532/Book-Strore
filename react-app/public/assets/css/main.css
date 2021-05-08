@@ -1,17 +1,7 @@
 @import url(font-awesome.min.css);
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,700,900");
 
-html, body, div, span, applet, object,
-iframe, h1, h2:not(.h2-login), h3, h4, h5, h6, p, blockquote,
-pre, a, abbr, acronym, address, big, cite,
-code, del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var, b,
-u, i, center, dl, dt, dd, ol, ul, li, fieldset,
-form, label:not(.label-login), legend, table, caption, tbody,
-tfoot, thead, tr, th, td, article, aside,
-canvas, details, embed, figure, figcaption,
-footer, header, hgroup, menu, nav, output, ruby,
-section, summary, time, mark, audio, video {
+*{
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -19,15 +9,18 @@ section, summary, time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;}
 
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-	display: block;}
-
+.article, .aside, .details, .figcaption, .figure,
+.footer, .header, .hgroup, .menu, .nav, .section {
+	display: block;
+}
+/* a{
+	text-decoration: none!important;
+} */
 body {
 	line-height: 1;
 }
 
-ol, ul {
+.ol, .ul {
 	list-style: none;
 }
 
@@ -40,7 +33,7 @@ blockquote, q {
 		content: none;
 	}
 
-table {
+.table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
@@ -54,12 +47,12 @@ mark {
 	color: inherit;
 }
 
-input::-moz-focus-inner:not(.input-login) {
+.input::-moz-focus-inner:not(.input-login) {
 	border: 0;
 	padding: 0;
 }
 
-input:not(.input-login), select, textarea {
+.input:not(.input-login), .select, .textarea {
 	-moz-appearance: none;
 	-webkit-appearance: none;
 	-ms-appearance: none;
@@ -109,7 +102,7 @@ input:not(.input-login), select, textarea {
 
 /* Type */
 
-	body, input:not(.input-login), select, textarea {
+	body, .input:not(.input-login), .select, .textarea {
 		color: #585858;
 		font-family: "Source Sans Pro", Helvetica, sans-serif;
 		font-size: 16pt;
@@ -119,7 +112,7 @@ input:not(.input-login), select, textarea {
 
 		@media screen and (max-width: 1680px) {
 
-			body, input:not(.input-login), select, textarea {
+			body, .input:not(.input-login), .select, .textarea {
 				font-size: 14pt;
 			}
 
@@ -127,13 +120,13 @@ input:not(.input-login), select, textarea {
 
 		@media screen and (max-width: 1280px) {
 
-			body, input:not(.input-login), select, textarea {
+			body, .input:not(.input-login), .select, .textarea {
 				font-size: 12pt;
 			}
 
 		}
 
-	a {
+	.a {
 		-moz-transition: border-bottom-color 0.2s ease, color 0.2s ease;
 		-webkit-transition: border-bottom-color 0.2s ease, color 0.2s ease;
 		-ms-transition: border-bottom-color 0.2s ease, color 0.2s ease;
@@ -143,25 +136,25 @@ input:not(.input-login), select, textarea {
 		border-bottom: dotted 1px rgba(88, 88, 88, 0.5);
 	}
 
-		a:hover {
+		.a:hover {
 			border-bottom-color: transparent;
 			color: #f2849e !important;
 			text-decoration: none;
 		}
 
-	strong, b {
+	.strong, .b {
 		font-weight: 900;
 	}
 
-	em, i {
+	.em, .i {
 		font-style: italic;
 	}
 
-	p {
+	.p {
 		margin: 0 0 2em 0;
 	}
 
-	h1 {
+	.h1 {
 		font-size: 2.75em;
 		font-weight: 700;
 		line-height: 1.3;
@@ -169,17 +162,17 @@ input:not(.input-login), select, textarea {
 		letter-spacing: -0.035em;
 	}
 
-	h1 span {
+	.h1 .span {
 		color: #f2849e;
 	}
 
-		h1 a {
+		.h1 .a {
 			color: inherit;
 		}
 
 		@media screen and (max-width: 736px) {
 
-			h1 {
+			.h1 {
 				font-size: 2em;
 				margin: 0 0 1em 0;
 			}
@@ -188,7 +181,7 @@ input:not(.input-login), select, textarea {
 
 		@media screen and (max-width: 360px) {
 
-			h1 {
+			.h1 {
 				font-size: 1.75em;
 			}
 
@@ -199,7 +192,7 @@ input:not(.input-login), select, textarea {
 		font-weight: bold;
 	}
 
-	h2:not(.h2-login), h3, h4, h5, h6 {
+	.h2-1:not(.h2-login), .h3, .h4, .h5, .h6 {
 		font-weight: 900;
 		line-height: 1.5;
 		margin: 0 0 2em 0;
@@ -207,33 +200,33 @@ input:not(.input-login), select, textarea {
 		letter-spacing: 0.15em;
 	}
 
-		h2:not(.h2-login) a, h3 a, h4 a, h5 a, h6 a {
+		.h2-1:not(.h2-login) a, .h3 a, .h4 a, .h5 a, .h6 a {
 			color: inherit;
 		}
 
-	h2:not(.h2-login) {
+	.h2-1:not(.h2-login) {
 		font-size: 1.1em;
 	}
 
-	h3 {
+	.h3 {
 		font-size: 1em;
 	}
 
-	h4 {
+	.h4 {
 		font-size: 0.8em;
 	}
 
-	h5 {
+	.h5 {
 		font-size: 0.8em;
 	}
 
-	h6 {
+	.h6 {
 		font-size: 0.8em;
 	}
 
 	@media screen and (max-width: 980px) {
 
-		h1 br, h2:not(.h2-login) br, h3 br, h4 br, h5 br, h6 br {
+		.h1 br, .h2:not(.h2-login) br, .h3 br, .h4 br, .h5 br, .h6 br {
 			display: none;
 		}
 
@@ -241,23 +234,23 @@ input:not(.input-login), select, textarea {
 
 	@media screen and (max-width: 736px) {
 
-		h2:not(.h2-login) {
+		.h2-1:not(.h2-login) {
 			font-size: 1em;
 		}
 
-		h3 {
+		.h3 {
 			font-size: 0.8em;
 		}
 
 	}
 
-	sub {
+	.sub {
 		font-size: 0.8em;
 		position: relative;
 		top: 0.5em;
 	}
 
-	sup {
+	.sup {
 		font-size: 0.8em;
 		position: relative;
 		top: -0.5em;
@@ -294,13 +287,13 @@ input:not(.input-login), select, textarea {
 			overflow-x: auto;
 		}
 
-	hr {
+	.hr {
 		border: 0;
 		border-bottom: solid 1px #c9c9c9;
 		margin: 2em 0;
 	}
 
-		hr.major {
+		.hr.major {
 			margin: 3em 0;
 		}
 
@@ -1786,17 +1779,17 @@ input:not(.input-login), select, textarea {
 
 /* Section/Article */
 
-	section.special, article.special {
+	.section.special, article.special {
 		text-align: center;
 	}
 
-	header p {
+	.header p {
 		margin-top: -1em;
 	}
 
 	@media screen and (max-width: 736px) {
 
-		header p {
+		.header p {
 			margin-top: 0;
 		}
 
@@ -1854,52 +1847,52 @@ input:not(.input-login), select, textarea {
 
 /* List */
 
-	ol {
+	.ol {
 		list-style: decimal;
 		margin: 0 0 2em 0;
 		padding-left: 1.25em;
 	}
 
-		ol li {
+		.ol li {
 			padding-left: 0.25em;
 		}
 
-	ul {
+	.ul {
 		list-style: disc;
 		margin: 0 0 2em 0;
 		padding-left: 1em;
 	}
 
-		ul li {
+		.ul li {
 			padding-left: 0.5em;
 		}
 
-		ul.alt {
+		.ul.alt {
 			list-style: none;
 			padding-left: 0;
 		}
 
-			ul.alt li {
+			.ul.alt li {
 				border-top: solid 1px #c9c9c9;
 				padding: 0.5em 0;
 			}
 
-				ul.alt li:first-child {
+				.ul.alt li:first-child {
 					border-top: 0;
 					padding-top: 0;
 				}
 
-	dl {
+	.dl {
 		margin: 0 0 2em 0;
 	}
 
-		dl dt {
+		.dl dt {
 			display: block;
 			font-weight: 900;
 			margin: 0 0 1em 0;
 		}
 
-		dl dd {
+		.dl dd {
 			margin-left: 2em;
 		}
 
@@ -1909,7 +1902,7 @@ input:not(.input-login), select, textarea {
 		margin-bottom: 0!important;
 	}
 
-	ul.actions {
+	.ul.actions {
 		display: -moz-flex;
 		display: -webkit-flex;
 		display: -ms-flex;
@@ -1920,12 +1913,12 @@ input:not(.input-login), select, textarea {
 		padding-left: 0;
 	}
 
-		ul.actions li {
+		.ul.actions li {
 			padding: 0 0 0 1em;
 			vertical-align: middle;
 		}
 
-		ul.actions.special {
+		.ul.actions.special {
 			-moz-justify-content: center;
 			-webkit-justify-content: center;
 			-ms-justify-content: center;
@@ -1934,11 +1927,11 @@ input:not(.input-login), select, textarea {
 			margin-left: 0;
 		}
 
-			ul.actions.special li:first-child {
+			.ul.actions.special li:first-child {
 				padding-left: 0;
 			}
 
-		ul.actions.stacked {
+		.ul.actions.stacked {
 			-moz-flex-direction: column;
 			-webkit-flex-direction: column;
 			-ms-flex-direction: column;
@@ -1946,19 +1939,19 @@ input:not(.input-login), select, textarea {
 			margin-left: 0;
 		}
 
-			ul.actions.stacked li {
+			.ul.actions.stacked li {
 				padding: 1.3em 0 0 0;
 			}
 
-				ul.actions.stacked li:first-child {
+				.ul.actions.stacked li:first-child {
 					padding-top: 0;
 				}
 
-		ul.actions.fit {
+		.ul.actions.fit {
 			width: calc(100% + 1em);
 		}
 
-			ul.actions.fit li {
+			.ul.actions.fit li {
 				-moz-flex-grow: 1;
 				-webkit-flex-grow: 1;
 				-ms-flex-grow: 1;
@@ -1970,17 +1963,17 @@ input:not(.input-login), select, textarea {
 				width: 100%;
 			}
 
-				ul.actions.fit li > * {
+				.ul.actions.fit li > * {
 					width: 100%;
 				}
 
-			ul.actions.fit.stacked {
+			.ul.actions.fit.stacked {
 				width: 100%;
 			}
 
 		@media screen and (max-width: 480px) {
 
-			ul.actions:not(.fixed) {
+			.ul.actions:not(.fixed) {
 				-moz-flex-direction: column;
 				-webkit-flex-direction: column;
 				-ms-flex-direction: column;
@@ -1989,7 +1982,7 @@ input:not(.input-login), select, textarea {
 				width: 100% !important;
 			}
 
-				ul.actions:not(.fixed) li {
+				.ul.actions:not(.fixed) li {
 					-moz-flex-grow: 1;
 					-webkit-flex-grow: 1;
 					-ms-flex-grow: 1;
@@ -2003,27 +1996,27 @@ input:not(.input-login), select, textarea {
 					width: 100%;
 				}
 
-					ul.actions:not(.fixed) li > * {
+					.ul.actions:not(.fixed) li > * {
 						width: 100%;
 					}
 
-					ul.actions:not(.fixed) li:first-child {
+					.ul.actions:not(.fixed) li:first-child {
 						padding-top: 0;
 					}
 
-					ul.actions:not(.fixed) li input[type="submit"]:not(.input-login),
-					ul.actions:not(.fixed) li input[type="reset"]:not(.input-login),
-					ul.actions:not(.fixed) li input[type="button"]:not(.input-login),
-					ul.actions:not(.fixed) li button:not(.button-login),
-					ul.actions:not(.fixed) li .button:not(.button-login) {
+					.ul.actions:not(.fixed) li input[type="submit"]:not(.input-login),
+					.ul.actions:not(.fixed) li input[type="reset"]:not(.input-login),
+					.ul.actions:not(.fixed) li input[type="button"]:not(.input-login),
+					.ul.actions:not(.fixed) li button:not(.button-login),
+					.ul.actions:not(.fixed) li .button:not(.button-login) {
 						width: 100%;
 					}
 
-						ul.actions:not(.fixed) li input[type="submit"].icon:before:not(.input-login),
-						ul.actions:not(.fixed) li input[type="reset"].icon:before:not(.input-login),
-						ul.actions:not(.fixed) li input[type="button"].icon:before:not(.input-login),
-						ul.actions:not(.fixed) li button.icon:before:not(.button-login),
-						ul.actions:not(.fixed) li .button.icon:before:not(.button-login) {
+						.ul.actions:not(.fixed) li input[type="submit"].icon:before:not(.input-login),
+						.ul.actions:not(.fixed) li input[type="reset"].icon:before:not(.input-login),
+						.ul.actions:not(.fixed) li input[type="button"].icon:before:not(.input-login),
+						.ul.actions:not(.fixed) li button.icon:before:not(.button-login),
+						.ul.actions:not(.fixed) li .button.icon:before:not(.button-login) {
 							margin-left: -0.5rem;
 						}
 
@@ -2031,30 +2024,30 @@ input:not(.input-login), select, textarea {
 
 /* Icons */
 
-	ul.icons {
+	.ul.icons {
 		cursor: default;
 		list-style: none;
 		padding-left: 0;
 		margin: -1em 0 2em -1em;
 	}
 
-		ul.icons li {
+		.ul.icons li {
 			display: inline-block;
 			padding: 1em 0 0 1em;
 		}
 
 /* Form */
 
-	form {
+	.form {
 		margin: 0 0 2em 0;
 		overflow-x: hidden;
 	}
 
-		form > :last-child {
+		.form > :last-child {
 			margin-bottom: 0;
 		}
 
-		form > .fields {
+		.form > .fields {
 			display: -moz-flex;
 			display: -webkit-flex;
 			display: -ms-flex;
@@ -2067,7 +2060,7 @@ input:not(.input-login), select, textarea {
 			margin: -1.5em 0 2em -1.5em;
 		}
 
-			form > .fields > .field {
+			.form > .fields > .field {
 				-moz-flex-grow: 0;
 				-webkit-flex-grow: 0;
 				-ms-flex-grow: 0;
@@ -2080,35 +2073,35 @@ input:not(.input-login), select, textarea {
 				width: calc(100% - 1.5em);
 			}
 
-				form > .fields > .field.half {
+				.form > .fields > .field.half {
 					width: calc(50% - 0.75em);
 				}
 
-				form > .fields > .field.third {
+				.form > .fields > .field.third {
 					width: calc(100%/3 - 0.5em);
 				}
 
-				form > .fields > .field.quarter {
+				.form > .fields > .field.quarter {
 					width: calc(25% - 0.375em);
 				}
 
 		@media screen and (max-width: 480px) {
 
-			form > .fields {
+			.form > .fields {
 				width: calc(100% + 3em);
 				margin: -1.5em 0 2em -1.5em;
 			}
 
-				form > .fields > .field {
+				.form > .fields > .field {
 					padding: 1.5em 0 0 1.5em;
 					width: calc(100% - 1.5em);
 				}
 
-					form > .fields > .field.half {
+					.form > .fields > .field.half {
 						width: calc(100% - 1.5em);
 					}
 
-					form > .fields > .field.third {
+					.form > .fields > .field.third {
 						width: calc(100% - 1.5em);
 					}
 
@@ -2118,19 +2111,19 @@ input:not(.input-login), select, textarea {
 
 		}
 
-	label:not(.label-login) {
+	.label:not(.label-login) {
 		display: block;
 		font-size: 0.9em;
 		font-weight: 900;
 		margin: 0 0 1em 0;
 	}
 
-	input[type="text"]:not(.input-login),
-	input[type="password"]:not(.input-login),
-	input[type="email"]:not(.input-login),
-	input[type="tel"]:not(.input-login),
-	select,
-	textarea {
+	.input[type="text"]:not(.input-login),
+	.input[type="password"]:not(.input-login),
+	.input[type="email"]:not(.input-login),
+	.input[type="tel"]:not(.input-login),
+	.select,
+	.textarea {
 		-moz-appearance: none;
 		-webkit-appearance: none;
 		-ms-appearance: none;
@@ -2147,26 +2140,26 @@ input:not(.input-login), select, textarea {
 		width: 100%;
 	}
 
-		input[type="text"]:invalid:not(.input-login),
-		input[type="password"]:invalid:not(.input-login),
-		input[type="email"]:invalid:not(.input-login),
-		input[type="tel"]:invalid:not(.input-login),
-		select:invalid,
-		textarea:invalid {
+	.input[type="text"]:invalid:not(.input-login),
+	.input[type="password"]:invalid:not(.input-login),
+	.input[type="email"]:invalid:not(.input-login),
+	.input[type="tel"]:invalid:not(.input-login),
+	.select:invalid,
+	.textarea:invalid {
 			box-shadow: none;
 		}
 
-		input[type="text"]:focus:not(.input-login),
-		input[type="password"]:focus:not(.input-login),
-		input[type="email"]:focus:not(.input-login),
-		input[type="tel"]:focus:not(.input-login),
-		select:focus,
-		textarea:focus {
+		.input[type="text"]:focus:not(.input-login),
+		.input[type="password"]:focus:not(.input-login),
+		.input[type="email"]:focus:not(.input-login),
+		.input[type="tel"]:focus:not(.input-login),
+		.select:focus,
+		.textarea:focus {
 			border-bottom-color: #f2849e;
 			box-shadow: inset 0 -1px 0 0 #f2849e;
 		}
 
-	select {
+	.select {
 		background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' preserveAspectRatio='none' viewBox='0 0 40 40'%3E%3Cpath d='M9.4,12.3l10.4,10.4l10.4-10.4c0.2-0.2,0.5-0.4,0.9-0.4c0.3,0,0.6,0.1,0.9,0.4l3.3,3.3c0.2,0.2,0.4,0.5,0.4,0.9 c0,0.4-0.1,0.6-0.4,0.9L20.7,31.9c-0.2,0.2-0.5,0.4-0.9,0.4c-0.3,0-0.6-0.1-0.9-0.4L4.3,17.3c-0.2-0.2-0.4-0.5-0.4-0.9 c0-0.4,0.1-0.6,0.4-0.9l3.3-3.3c0.2-0.2,0.5-0.4,0.9-0.4S9.1,12.1,9.4,12.3z' fill='%23c9c9c9' /%3E%3C/svg%3E");
 		background-size: 1.25rem;
 		background-repeat: no-repeat;
@@ -2176,32 +2169,32 @@ input:not(.input-login), select, textarea {
 		text-overflow: ellipsis;
 	}
 
-		select option {
+		.select option {
 			background: #ffffff;
 		}
 
-		select:focus::-ms-value {
+		.select:focus::-ms-value {
 			background-color: transparent;
 		}
 
-		select::-ms-expand {
+		.select::-ms-expand {
 			display: none;
 		}
 
-	input[type="text"]:not(.input-login),
-	input[type="password"]:not(.input-login),
-	input[type="email"]:not(.input-login),
-	select {
+	.input[type="text"]:not(.input-login),
+	.input[type="password"]:not(.input-login),
+	.input[type="email"]:not(.input-login),
+	.select {
 		height: 3em;
 	}
 
-	textarea {
+	.textarea {
 		padding: 0;
 		min-height: 3.75em;
 	}
 
-	input[type="checkbox"]:not(.input-login),
-	input[type="radio"]:not(.input-login) {
+	.input[type="checkbox"]:not(.input-login),
+	.input[type="radio"]:not(.input-login) {
 		-moz-appearance: none;
 		-webkit-appearance: none;
 		-ms-appearance: none;
@@ -2214,8 +2207,8 @@ input:not(.input-login), select, textarea {
 		z-index: -1;
 	}
 
-		input[type="checkbox"]:not(.input-login) + label:not(.label-login),
-		input[type="radio"]:not(.input-login) + label:not(.label-login) {
+		.input[type="checkbox"]:not(.input-login) + label:not(.label-login),
+		.input[type="radio"]:not(.input-login) + label:not(.label-login) {
 			text-decoration: none;
 			color: #585858;
 			cursor: pointer;
@@ -2227,8 +2220,8 @@ input:not(.input-login), select, textarea {
 			position: relative;
 		}
 
-			input[type="checkbox"]:not(.input-login) + label:before:not(.label-login),
-			input[type="radio"]:not(.input-login) + label:before:not(.label-login) {
+			.input[type="checkbox"]:not(.input-login) + label:before:not(.label-login),
+			.input[type="radio"]:not(.input-login) + label:before:not(.label-login) {
 				-moz-osx-font-smoothing: grayscale;
 				-webkit-font-smoothing: antialiased;
 				font-family: FontAwesome;
@@ -2237,8 +2230,8 @@ input:not(.input-login), select, textarea {
 				text-transform: none !important;
 			}
 
-			input[type="checkbox"]:not(.input-login) + label:before:not(.label-login),
-			input[type="radio"]:not(.input-login) + label:before:not(.label-login) {
+			.input[type="checkbox"]:not(.input-login) + label:before:not(.label-login),
+			.input[type="radio"]:not(.input-login) + label:before:not(.label-login) {
 				border-radius: 4px;
 				border: solid 1px #c9c9c9;
 				content: '';
@@ -2252,25 +2245,25 @@ input:not(.input-login), select, textarea {
 				width: 1.8em;
 			}
 
-		input[type="checkbox"]:checked:not(.input-login) + label:before:not(.label-login),
-		input[type="radio"]:checked:not(.input-login) + label:before:not(.label-login){
+		.input[type="checkbox"]:checked:not(.input-login) + label:before:not(.label-login),
+		.input[type="radio"]:checked:not(.input-login) + label:before:not(.label-login){
 			background: #585858;
 			border-color: #585858;
 			color: #ffffff;
 			content: '\f00c';
 		}
 
-		input[type="checkbox"]:focus:not(.input-login) + label:before:not(.label-login),
-		input[type="radio"]:focus:not(.input-login) + label:before:not(.label-login) {
+		.input[type="checkbox"]:focus:not(.input-login) + label:before:not(.label-login),
+		.input[type="radio"]:focus:not(.input-login) + label:before:not(.label-login) {
 			border-color: #f2849e;
 			box-shadow: 0 0 0 1px #f2849e;
 		}
 
-	input[type="checkbox"]:not(.input-login) + label:before:not(.label-login) {
+	.input[type="checkbox"]:not(.input-login) + label:before:not(.label-login) {
 		border-radius: 4px;
 	}
 
-	input[type="radio"]:not(.input-login) + label:before:not(.label-login) {
+	.input[type="radio"]:not(.input-login) + label:before:not(.label-login) {
 		border-radius: 100%;
 	}
 
@@ -2364,72 +2357,72 @@ input:not(.input-login), select, textarea {
 		overflow-x: auto;
 	}
 
-	table {
+	.table {
 		margin: 0 0 2em 0;
 		width: 100%;
 	}
 
-		table tbody tr {
+		.table tbody tr {
 			border: solid 1px #c9c9c9;
 			border-left: 0;
 			border-right: 0;
 		}
 
-			table tbody tr:nth-child(2n + 1) {
+			.table tbody tr:nth-child(2n + 1) {
 				background-color: rgba(144, 144, 144, 0.075);
 			}
 
-		table td {
+		.table td {
 			padding: 0.75em 0.75em;
 		}
 
-		table th {
+		.table th {
 			font-size: 0.9em;
 			font-weight: 900;
 			padding: 0 0.75em 0.75em 0.75em;
 			text-align: left;
 		}
 
-		table thead {
+		.table thead {
 			border-bottom: solid 2px #c9c9c9;
 		}
 
-		table tfoot {
+		.table tfoot {
 			border-top: solid 2px #c9c9c9;
 		}
 
-		table.alt {
+		.table.alt {
 			border-collapse: separate;
 		}
 
-			table.alt tbody tr td {
+			.table.alt tbody tr td {
 				border: solid 1px #c9c9c9;
 				border-left-width: 0;
 				border-top-width: 0;
 			}
 
-				table.alt tbody tr td:first-child {
+				.table.alt tbody tr td:first-child {
 					border-left-width: 1px;
 				}
 
-			table.alt tbody tr:first-child td {
+			.table.alt tbody tr:first-child td {
 				border-top-width: 1px;
 			}
 
-			table.alt thead {
+			.table.alt thead {
 				border-bottom: 0;
 			}
 
-			table.alt tfoot {
+			.table.alt tfoot {
 				border-top: 0;
 			}
 
 /* Button */
 
-	input[type="submit"]:not(.input-login),
-	input[type="reset"]:not(.input-login),
-	input[type="button"]:not(.input-login),
-	button:not(.button-login),
+	.input[type="submit"]:not(.input-login),
+	.input[type="reset"]:not(.input-login),
+	.input[type="button"]:not(.input-login),
+	.button:not(.button-login),
 	.button:not(.button-login) {
 		-moz-appearance: none;
 		-webkit-appearance: none;
@@ -2460,88 +2453,88 @@ input:not(.input-login), select, textarea {
 		white-space: nowrap;
 	}
 
-		input[type="submit"].icon:before:not(.input-login),
-		input[type="reset"].icon:before:not(.input-login),
-		input[type="button"].icon:before:not(.input-login),
-		button.icon:before:not(.button-login),
+		.input[type="submit"].icon:before:not(.input-login),
+		.input[type="reset"].icon:before:not(.input-login),
+		.input[type="button"].icon:before:not(.input-login),
+		.button.icon:before:not(.button-login),
 		.button.icon:before:not(.button-login) {
 			margin-right: 0.5em;
 		}
 
-		input[type="submit"].fit:not(.input-login),
-		input[type="reset"].fit:not(.input-login),
-		input[type="button"].fit:not(.input-login),
-		button.fit:not(.button-login),
+		.input[type="submit"].fit:not(.input-login),
+		.input[type="reset"].fit:not(.input-login),
+		.input[type="button"].fit:not(.input-login),
+		.button.fit:not(.button-login),
 		.button.fit:not(.button-login) {
 			width: 100%;
 		}
 
-		input[type="submit"]:hover:not(.input-login),
-		input[type="reset"]:hover:not(.input-login),
-		input[type="button"]:hover:not(.input-login),
-		button:hover:not(.button-login),
+		.input[type="submit"]:hover:not(.input-login),
+		.input[type="reset"]:hover:not(.input-login),
+		.input[type="button"]:hover:not(.input-login),
+		.button:hover:not(.button-login),
 		.button:hover:not(.button-login) {
 			color: #f2849e !important;
 			box-shadow: inset 0 0 0 2px #f2849e;
 		}
 
-		input[type="submit"]:active:not(.input-login),
-		input[type="reset"]:active:not(.input-login),
-		input[type="button"]:active:not(.input-login),
-		button:active:not(.button-login),
+		.input[type="submit"]:active:not(.input-login),
+		.input[type="reset"]:active:not(.input-login),
+		.input[type="button"]:active:not(.input-login),
+		.button:active:not(.button-login),
 		.button:active:not(.button-login) {
 			background-color: rgba(242, 132, 158, 0.1);
 		}
 
-		input[type="submit"].small:not(.input-login),
-		input[type="reset"].small:not(.input-login),
-		input[type="button"].small:not(.input-login),
-		button.small:not(.button-login),
+		.input[type="submit"].small:not(.input-login),
+		.input[type="reset"].small:not(.input-login),
+		.input[type="button"].small:not(.input-login),
+		.button.small:not(.button-login),
 		.button.small:not(.button-login) {
 			font-size: 0.6em;
 		}
 
-		input[type="submit"].large:not(.input-login),
-		input[type="reset"].large:not(.input-login),
-		input[type="button"].large:not(.input-login),
-		button.large:not(.button-login),
+		.input[type="submit"].large:not(.input-login),
+		.input[type="reset"].large:not(.input-login),
+		.input[type="button"].large:not(.input-login),
+		.button.large:not(.button-login),
 		.button.large:not(.button-login) {
 			font-size: 1em;
 		}
 
-		input[type="submit"].primary:not(.input-login),
-		input[type="reset"].primary:not(.input-login),
-		input[type="button"].primary:not(.input-login),
-		button.primary:not(.button-login),
+		.input[type="submit"].primary:not(.input-login),
+		.input[type="reset"].primary:not(.input-login),
+		.input[type="button"].primary:not(.input-login),
+		.button.primary:not(.button-login),
 		.button.primary:not(.button-login) {
 			box-shadow: none;
 			background-color: #585858;
 			color: #ffffff !important;
 		}
 
-			input[type="submit"].primary:hover:not(.input-login),
-			input[type="reset"].primary:hover:not(.input-login),
-			input[type="button"].primary:hover:not(.input-login),
-			button.primary:hover:not(.button-login),
+			.input[type="submit"].primary:hover:not(.input-login),
+			.input[type="reset"].primary:hover:not(.input-login),
+			.input[type="button"].primary:hover:not(.input-login),
+			.button.primary:hover:not(.button-login),
 			.button.primary:hover:not(.button-login) {
 				background-color: #f2849e;
 			}
 
-			input[type="submit"].primary:active:not(.input-login),
-			input[type="reset"].primary:active:not(.input-login),
-			input[type="button"].primary:active:not(.input-login),
-			button.primary:active:not(.button-login),
+			.input[type="submit"].primary:active:not(.input-login),
+			.input[type="reset"].primary:active:not(.input-login),
+			.input[type="button"].primary:active:not(.input-login),
+			.button.primary:active:not(.button-login),
 			.button.primary:active:not(.button-login) {
 				background-color: #ee5f81;
 			}
 
-		input[type="submit"].disabled:not(.input-login), input[type="submit"]:disabled:not(.input-login),
-		input[type="reset"].disabled:not(.input-login),
-		input[type="reset"]:disabled:not(.input-login),
-		input[type="button"].disabled:not(.input-login),
-		input[type="button"]:disabled:not(.input-login),
-		button.disabled:not(.button-login),
-		button:disabled:not(.button-login),
+		.input[type="submit"].disabled:not(.input-login), input[type="submit"]:disabled:not(.input-login),
+		.input[type="reset"].disabled:not(.input-login),
+		.input[type="reset"]:disabled:not(.input-login),
+		.input[type="button"].disabled:not(.input-login),
+		.input[type="button"]:disabled:not(.input-login),
+		.button.disabled:not(.button-login),
+		.button:disabled:not(.button-login),
 		.button.disabled:not(.button-login),
 		.button:disabled:not(.button-login) {
 			pointer-events: none;
@@ -2973,18 +2966,21 @@ input:not(.input-login), select, textarea {
 			overflow-y: auto;
 		}
 
-			#menu > .inner > ul {
+			#menu > .inner > .ul {
 				list-style: none;
 				margin: 0 0 1em 0;
 				padding: 0;
 			}
-
-				#menu > .inner > ul > li {
+			#menu > .inner > .ul > li:hover > a, #menu > .inner > .ul > li > .ul li:hover a{
+				text-decoration: none;
+				color: #f2849e;
+			}
+				#menu > .inner > .ul > li {
 					padding: 0;
 					border-top: solid 1px rgba(255, 255, 255, 0.15);
 				}
 
-					#menu > .inner > ul > li a {
+					#menu > .inner > .ul > li a {
 						display: block;
 						padding: 1em 0;
 						line-height: 1.5;
@@ -2992,30 +2988,30 @@ input:not(.input-login), select, textarea {
 						color: inherit;
 					}
 
-					#menu > .inner > ul > li .active {
+					#menu > .inner > .ul > li .active {
 						color: #f2849e;
 					}
 
-					#menu > .inner > ul > li:first-child {
+					#menu > .inner > .ul > li:first-child {
 						border-top: 0;
 						margin-top: -1em;
 					}
 
-			#menu > .inner > ul > li ul { 
+			#menu > .inner > .ul > li .ul { 
 				padding-bottom: 15px;
 				list-style: none; 
 			}
 
-			#menu > .inner > ul > li ul li { 
+			#menu > .inner > .ul > li .ul li { 
 				margin-bottom: 15px;
 			}
 
-			#menu > .inner > ul > li ul a { 
+			#menu > .inner > .ul > li .ul a { 
 				padding-top: 0;
 				padding-bottom: 0;
 			}
 
-			#menu > .inner > ul > li ul .dropdown-toggle:after {
+			#menu > .inner > .ul > li .ul .dropdown-toggle:after {
 				margin-top: 4px!important;
 				margin-bottom: -4px!important;
 			}

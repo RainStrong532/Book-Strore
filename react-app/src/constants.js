@@ -1,10 +1,21 @@
 //Back-end url
 export const URL_DOMAIN = "http://localhost:4000";
 
+//Roles
+export const ROLES = {
+    USER: "USER",
+    ADMIN: "ADMIN",
+    BOSS: "BOSS"
+}
+
 //Action types
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+
+export const GET_USER_INFO_REQUEST = "GET_USER_INFO_REQUEST";
+export const GET_USER_INFO_FAILURE = "GET_USER_INFO_FAILURE";
+export const GET_USER_INFO_SUCCESS = "GET_USER_INFO_SUCCESS";
 
 export const SIGNUP_REQUEST = "SIGNUP_REQUEST";
 export const SIGNUP_FAILURE = "SIGNUP_FAILURE";
@@ -13,3 +24,7 @@ export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
 export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
 export const LOGOUT_FAILURE = "LOGOUT_FAILURE";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+
+export const SEND_MAIL_SIGNUP_REQUEST = "SEND_MAIL_SIGNUP_REQUEST";
+export const SEND_MAIL_SIGNUP_FAILURE = "SEND_MAIL_SIGNUP_FAILURE";
+export const SEND_MAIL_SIGNUP_SUCCESS = "SEND_MAIL_SIGNUP_SUCCESS";

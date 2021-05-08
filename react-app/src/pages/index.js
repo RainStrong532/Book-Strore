@@ -1,7 +1,6 @@
-import HomePage from './HomePage';
-import LoginPage from './LoginPage';
-import NotFoundPage from './NotFoundPage';
+import * as PrivatePage from './private';
+import * as PublicPage from './public';
 
 export {
-    HomePage, LoginPage, NotFoundPage
+    PrivatePage, PublicPage
 }

@@ -79,7 +79,7 @@ const findAll = () => {
     })
 }
 
-const saveProfile = ({ account_id, firstname, lastname, surname, description, dob, gender, address, phone_number }) => {
+const saveProfile = ({ account_id, firstname, lastname, description, dob, gender, address, phone_number }) => {
     let pool = new sql.ConnectionPool(config.sql);
     return new Promise(async (resolve, reject) => {
         try {
@@ -97,21 +97,12 @@ const saveProfile = ({ account_id, firstname, lastname, surname, description, do
                     .input("account_id", sql.Int, account_id)
                     .query(sqlQueries.saveProfile).then(recordset => {
                         pool.close();
-                        console.log('====================================');
-                        console.log(recordset);
-                        console.log('====================================');
                         resolve(recordset.recordset)
                     }).catch(err => {
-                        console.log('====================================');
-                        console.log(err);
-                        console.log('====================================');
                         pool.close();
                         reject(err);
                     })
             }).catch(err => {
-                console.log('====================================');
-                console.log(err);
-                console.log('====================================');
                 reject(err);
             })
         } catch (err) {
@@ -121,7 +112,7 @@ const saveProfile = ({ account_id, firstname, lastname, surname, description, do
     })
 }
 
-const updateProfile = ({ account_id, firstname, lastname, surname, description, dob, gender, address, phone_number }) => {
+const updateProfile = ({ account_id, firstname, lastname, description, dob, gender, address, phone_number }) => {
     let pool = new sql.ConnectionPool(config.sql);
     return new Promise(async (resolve, reject) => {
         try {

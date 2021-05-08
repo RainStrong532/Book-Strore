@@ -8,8 +8,8 @@ function Header() {
                     <a href="index.html" className="logo">
                         <span className="fa fa-book"></span> <span className="title">Book Online Store Website</span>
                     </a>
-                    <nav>
-                        <ul>
+                    <nav className="nav">
+                        <ul className="ul">
                             <li><a href="#menu">Menu</a></li>
                         </ul>
                     </nav>
@@ -18,8 +18,8 @@ function Header() {
             </header>
 
             <nav id="menu">
-						<h2>Menu</h2>
-						<ul>
+						<h2 className="h2-1">Menu</h2>
+						<ul className="ul">
 							<li><a href="index.html" className="active">Home</a></li>
 
 							<li><a href="products.html">Products</a></li>
@@ -29,7 +29,7 @@ function Header() {
 							<li>
 								<a href="#" className="dropdown-toggle">About</a>
 
-								<ul>
+								<ul className="ul">
 									<li><a href="about.html">About Us</a></li>
 									<li><a href="blog.html">Blog</a></li>
 									<li><a href="testimonials.html">Testimonials</a></li>

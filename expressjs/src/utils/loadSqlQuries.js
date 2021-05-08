@@ -4,7 +4,7 @@ const fs = require('fs-extra');
 const { join } = require('path');
 
 const loadSqlQueries = async (folderName) => {
-    const filePath = join(process.cwd(), 'src/models', folderName);
+    const filePath = join(process.cwd(), 'src/data', folderName);
     const files = await fs.readdir(filePath);
     const sqlFiles = await files.filter(f => f.endsWith('.sql'));
 

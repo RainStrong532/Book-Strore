@@ -1,5 +1,4 @@
 import Routes from './Routes';
-import "./assets/css/main.css"
 
 function App() {
   return (
@@ -8,5 +7,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
