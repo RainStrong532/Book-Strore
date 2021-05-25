@@ -13,6 +13,12 @@
 .footer, .header, .hgroup, .menu, .nav, .section {
 	display: block;
 }
+.ul.icons .icon:hover{
+	text-decoration: none!important;
+}
+#header{
+	box-shadow: 1px 2px 4px #eee;
+}
 /* a{
 	text-decoration: none!important;
 } */

@@ -2,28 +2,14 @@ import React from 'react';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
-import rootSaga from './sagas'
-import rootReducer from './reducers'
 import { render } from 'react-dom'
-import { createStore, applyMiddleware } from 'redux'
-import { Provider } from 'react-redux'
-import createSagaMiddleware from 'redux-saga'
-import logger from 'redux-logger'
 import { Router } from "react-router-dom";
 import history from "./history";
-const sagaMiddleware = createSagaMiddleware();
-
-const store = createStore(rootReducer, applyMiddleware(sagaMiddleware, logger));
-
-sagaMiddleware.run(rootSaga);
 
 render(
-  <Provider store={store}>
-    <Router history={history}>
-      <App />
-    </Router>
-  </Provider>,
+  <Router history={history}>
+    <App />
+  </Router>,
   document.getElementById('root')
 );
 

@@ -1,22 +1,40 @@
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-.login{
+.alert-pass {
+  color: #842029!important;
+  background-color: rgba(248, 215, 218, 0.0)!important;
+  border-color: #f5c2c7!important;
+  position: absolute!important;
+  padding: 1rem 1rem!important;
+  margin-bottom: 1rem!important;
+  border: 1px solid transparent!important;
+  border-radius: 1rem!important;
+  line-height: 1.5!important;
+  transition: backgroud-color .3s ease!important;
+}
+.alert-pass.active{
+  background-color: rgba(248, 215, 218, 0.9)!important;
+}
+.login {
   height: 100vh;
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif!important;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif !important;
   background: #ededed;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.input-login, .button-login {
-  border: none!important;
-  outline: none!important;
-  background: none!important;
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif!important;
+.input-login,
+.button-login {
+  border: none !important;
+  outline: none !important;
+  background: none !important;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif !important;
 }
 
 .tip {
@@ -62,16 +80,16 @@
 
 .cont.s--signup .sub-cont {
   -webkit-transform: translate3d(-640px, 0, 0);
-          transform: translate3d(-640px, 0, 0);
+  transform: translate3d(-640px, 0, 0);
 }
 .button-login {
-  display: block!important;
-  margin: 0 auto!important;
-  width: 260px!important;
-  height: 36px!important;
-  border-radius: 30px!important;
-  font-size: 15px!important;
-  cursor: pointer!important;
+  display: block !important;
+  margin: 0 auto !important;
+  width: 260px !important;
+  height: 36px !important;
+  border-radius: 30px !important;
+  font-size: 15px !important;
+  cursor: pointer !important;
 }
 .img {
   overflow: hidden;
@@ -85,7 +103,7 @@
 }
 
 .img:before {
-  content: '';
+  content: "";
   position: absolute;
   right: 0;
   top: 0;
@@ -100,7 +118,7 @@
 }
 
 .img:after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 0;
@@ -111,7 +129,7 @@
 
 .cont.s--signup .img:before {
   -webkit-transform: translate3d(640px, 0, 0);
-          transform: translate3d(640px, 0, 0);
+  transform: translate3d(640px, 0, 0);
 }
 
 .img__text {
@@ -141,17 +159,17 @@
 
 .cont.s--signup .img__text.m--up {
   -webkit-transform: translateX(520px);
-          transform: translateX(520px);
+  transform: translateX(520px);
 }
 
 .img__text.m--in {
   -webkit-transform: translateX(-520px);
-          transform: translateX(-520px);
+  transform: translateX(-520px);
 }
 
 .cont.s--signup .img__text.m--in {
   -webkit-transform: translateX(0);
-          transform: translateX(0);
+  transform: translateX(0);
 }
 
 .img__btn {
@@ -169,7 +187,7 @@
 }
 
 .img__btn:after {
-  content: '';
+  content: "";
   z-index: 2;
   position: absolute;
   left: 0;
@@ -188,11 +206,11 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   width: 100%;
   height: 100%;
   -webkit-transition: -webkit-transform 1.2s;
@@ -203,17 +221,17 @@
 
 .img__btn span.m--in {
   -webkit-transform: translateY(-72px);
-          transform: translateY(-72px);
+  transform: translateY(-72px);
 }
 
 .cont.s--signup .img__btn span.m--in {
   -webkit-transform: translateY(0);
-          transform: translateY(0);
+  transform: translateY(0);
 }
 
 .cont.s--signup .img__btn span.m--up {
   -webkit-transform: translateY(72px);
-          transform: translateY(72px);
+  transform: translateY(72px);
 }
 
 .h2-login {
@@ -243,7 +261,7 @@
   margin-top: 5px;
   padding-bottom: 5px;
   font-size: 16px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4)!important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4) !important;
   text-align: center;
 }
 
@@ -255,50 +273,50 @@
   cursor: pointer;
   transition: all 0.2s ease-in;
 }
-.forgot-pass:hover{
+.forgot-pass:hover {
   color: #bb9a6b;
   transform: scale(1.1);
 }
 
 .submit {
-  margin-top: 20px!important;
-  background: #d4af7a!important;
-  text-transform: uppercase!important;
+  margin-top: 20px !important;
+  background: #d4af7a !important;
+  text-transform: uppercase !important;
 }
 
 .fb-btn {
-  margin-top: 20px!important;
-  border: 2px solid #d3dae9!important;
-  color: #8fa1c7!important;
+  margin-top: 20px !important;
+  border: 2px solid #d3dae9 !important;
+  color: #8fa1c7 !important;
 }
 
 .fb-btn span {
-  font-weight: bold!important;
-  color: #455a81!important;
+  font-weight: bold !important;
+  color: #455a81 !important;
 }
 
 .sign-in {
   -webkit-transition-timing-function: ease-out;
-          transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
 }
 
 .cont.s--signup .sign-in {
   -webkit-transition-timing-function: ease-in-out;
-          transition-timing-function: ease-in-out;
+  transition-timing-function: ease-in-out;
   -webkit-transition-duration: 1.2s;
-          transition-duration: 1.2s;
+  transition-duration: 1.2s;
   -webkit-transform: translate3d(640px, 0, 0);
-          transform: translate3d(640px, 0, 0);
+  transform: translate3d(640px, 0, 0);
 }
 
 .sign-up {
   -webkit-transform: translate3d(-900px, 0, 0);
-          transform: translate3d(-900px, 0, 0);
+  transform: translate3d(-900px, 0, 0);
 }
 
 .cont.s--signup .sign-up {
   -webkit-transform: translate3d(0, 0, 0);
-          transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
 
 .icon-link {
@@ -317,17 +335,17 @@
   left: auto;
   right: 5px;
 }
-.g-btn span{
-  color: #bd4a39!important;
+.g-btn span {
+  color: #bd4a39 !important;
 }
-.login-button-container{
-  width: 80%!important;
+.login-button-container {
+  width: 80% !important;
 }
-.login-button-container .button-login{
-  width: 45%!important;
-  height: auto!important;
+.login-button-container .button-login {
+  width: 45% !important;
+  height: auto !important;
 }
-.submit:hover{
-  background-color: #bb9a6b!important;
+.submit:hover {
+  background-color: #bb9a6b !important;
 }
 /*# sourceMappingURL=login.css.map */

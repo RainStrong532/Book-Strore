@@ -5,22 +5,28 @@ const config = require('./config');
 const cors = require('cors');
 
 const app = express();
+var io = null;
+var server = null;
 
-app.use(cors(config.domainFrontEnd));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use("/public", express.static("public"));
 
 const Routes = require('./src/routes');
 
-app.use('/', Routes.routes);
+const initialServer = () => {
+    app.use(cors(config.domainFrontEnd));
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
+    app.use("/public", express.static("public"));
+    
+    app.use('/', Routes.routes);
+    
+    
+    //Socket.io
 
+    server = require('http').createServer(app);
+    io = require('socket.io')(server);
+}
 
-//Socket.io
-
-var path = require("path");
-var server = require('http').createServer(app);
-var io = require('socket.io')(server);
+initialServer();
 
 app.get("/chat", function (req, res) {
     res.sendFile(path.join(__dirname + '/public/chat.html'));

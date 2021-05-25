@@ -19,17 +19,16 @@ const smtpTransport = nodemailer.createTransport({
 
 const sendMailVerify = async (req, res, next) => {
     const { user_name } = req.body;
-    if(!user_name) return res.status(400).json({message: "Username is required"});
     try {
         const account = await Account.findByUserName(user_name);
         if (account.length === 0) {
             return res.status(400).json({ message: "Account not found" });
         }
-        const { is_verify, email } = account[0];
+        const { is_verify, email, account_id } = account[0];
         if (is_verify === 1) {
             return res.status(400).json({ message: "Your account has been verified" });
         }
-        const code = utils.auth.generateVerifyCode(8);
+        const code = utils.auth.generateVerifyCode(6);
         const isExisted = await Verify.existedVerify(account_id);
         let expried_date = new Date().getTime() + defaultExpried;
         expried_date = new Date(expried_date);
@@ -83,7 +82,7 @@ const sendMail = async (req, res, next) => {
         if(!account_id){
             res.status(400).send({message: "User not found"})
         }
-        const code = utils.auth.generateVerifyCode(8);
+        const code = utils.auth.generateVerifyCode(6);
         let expried_date = new Date().getTime() + defaultExpried;
         expried_date = new Date(expried_date);
         await Verify.updateVerify({ code, account_id, expried_date });

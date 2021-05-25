@@ -1,34 +1,14 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux'
-import * as actions from '../actions';
-import LoadingComponent from '../components/commons/LoadingComponent';
+import React/*, { useEffect }*/ from 'react';
 import Main from '../components/commons/Main';
+import HomeComponent from '../components/HomeComponent.js';
 
 function HomeContainer(props) {
     return (
         <>
-            {
-                props.user.isFetching
-                    ?
-                    <LoadingComponent />
-                    :
-                    <></>
-
-            }
             <Main />
+            <HomeComponent/>
         </>
     );
 }
 
-const mapStateToProps = (state) => {
-    return {
-        user: state.user
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);
+export default HomeContainer;

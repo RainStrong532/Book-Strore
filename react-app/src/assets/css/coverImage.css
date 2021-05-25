@@ -1,0 +1,50 @@
+.coverImage .modal-dialog {
+    width: 90vw !important;
+    /* height: 100vh !important; */
+    margin-top: 10vh!important;
+    max-width: max-content !important;
+}
+@media (min-width: 576px) {
+    .coverImage .modal-dialog {
+        width: 90vw !important;
+        margin-top: 10vh!important;
+        /* height: 100vh !important; */
+        max-width: max-content !important;
+    }
+}
+.btn-more {
+    position: absolute!important;
+    z-index: 999!important;
+    background: rgba(0,0,0,0.5)!important;
+    border: none!important;
+    bottom: 0!important;
+    right: 0!important;
+    padding: 0.5rem 1rem!important;
+    border-radius: 8px!important;
+}
+.profile{
+    position: relative;
+}
+
+.menu-dd{
+    width: 200px;
+    list-style-type: none;
+    background: #fff;
+    border-radius: 0.5rem;
+}
+.menu-dd li{
+    padding: 0.5rem 1rem;
+    position: relative;
+    border-radius: 0.5rem;
+}
+.menu-dd li input{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+.menu-dd li:hover{
+    background-color: #eee;
+}

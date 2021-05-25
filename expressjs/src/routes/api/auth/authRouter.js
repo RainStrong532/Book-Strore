@@ -11,11 +11,13 @@ router.post("/signup", verifyData.checkMail, verifyData.checkDuplicateUsername, 
 router.post("/signin", authController.signin);
 router.post("/signout", authenticated.authenticateToken, authController.signout);
 router.get("/users",authenticated.authenticateToken ,authController.getUserInfo);
-router.post("/mails", authenticated.authenticateToken ,sendMailController.sendMailVerify);
+router.post("/mails", sendMailController.sendMailVerify);
 router.put("/mails",sendMailController.sendMail);
-router.post("/verify",authenticated.authenticateToken ,authController.verifyAccount);
+router.post("/email",authController.existedEmail);
+router.post("/verify" ,authController.verifyAccount);
 router.post("/users/password" ,authController.resetPassword);
 router.put("/users/password",authenticated.authenticateToken ,authController.updatePassword);
+router.post("/:user_name",authController.existedUserName);
 
 module.exports = {
     routes: router

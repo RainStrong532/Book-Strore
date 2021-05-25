@@ -6,14 +6,14 @@ import Menu from './Menu';
 function Layout({ children }) {
     return (
         <>
-        <div id="wrapper">
-            <Header />
-            {
-                children
-            }
-            <Footer/>
-        </div>
-        <Menu/>
+            <div id="wrapper" style={{background: "#eee"}}>
+                <Header/>
+                {
+                    children
+                }
+                <Footer />
+            </div>
+            <Menu />
         </>
     )
 }

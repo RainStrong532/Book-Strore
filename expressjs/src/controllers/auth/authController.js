@@ -1,6 +1,7 @@
 'use strict';
 
-const { Account, Role, Verify, Profile } = require('../../data');
+const config = require('../../../config');
+const { Account, Role, Verify, Profile, Image } = require('../../data');
 const utils = require('../../utils/auth');
 
 const signup = async (req, res, next) => {
@@ -43,11 +44,10 @@ const signin = async (req, res, next) => {
     let { user_name, password } = req.body;
     try {
         if (!password || !user_name) {
-            res.status(400).json({ message: 'Lack of information' });
+            res.status(400).json({ message: 'Thiếu thông tin tên tài khoản hoặc mật khẩu' });
             return;
         }
         let account = await Account.findByUserName(user_name);
-
         if (account.length > 0) {
             const passwordPassed = await utils.checkPassword(password, account[0].password);
             if (passwordPassed) {
@@ -56,11 +56,11 @@ const signin = async (req, res, next) => {
                 await Account.updateAccount(account[0]);
                 res.status(200).send({ token: utils.generateAccessToken({ account_id: account[0].account_id, email: account[0].email, user_name: account[0].user_name, is_verify: account[0].is_verify, status: account[0].status }) });
             } else {
-                res.status(400).json({ message: 'Login failed' });
+                res.status(400).json({ message: 'Mật khẩu không chính xác' });
                 return;
             }
         } else {
-            res.status(400).send({ message: 'Username or password incorrect' });
+            res.status(400).send({ message: 'Mật khẩu không chính xác' });
         }
     } catch (err) {
         res.status(400).send({ message: err.message });
@@ -75,9 +75,9 @@ const signout = async (req, res, next) => {
             account = account[0];
             account.status = 0;
             await Account.updateAccount(account);
-            res.status(200).send({ message: "Signout successfully" })
+            res.status(200).send({ message: "Đăng xuất thành công" })
         } else {
-            res.status(400).send({ message: 'Username not found' });
+            res.status(400).send({ message: 'Tài khoản không tòn tại' });
         }
     } catch (err) {
         res.status(400).send({ message: err.message });
@@ -89,27 +89,27 @@ const resetPassword = async (req, res, next) => {
 
     try {
         if (!password) {
-            res.status(400).json({ message: 'Password is required' });
+            res.status(400).json({ message: 'Yêu cầu thông tin mật khẩu' });
             return;
         }
         if (!code) {
-            res.status(400).json({ message: 'Code is required' });
+            res.status(400).json({ message: 'Yêu cầu mã xác nhận' });
             return;
         }
         const verify = await Verify.findByAccountId(account_id);
         if (verify[0].verify_id) {
             const isExpried = await Verify.isExpriedVerify(account_id);
             if (isExpried) {
-                res.status(400).json({ message: 'The code has been expried' });
+                res.status(400).json({ message: 'Mã code đã hết hạn' });
                 return;
             }
             if (code != verify[0].code) {
-                res.status(400).json({ message: 'The code is not matched' });
+                res.status(400).json({ message: 'Mã code không khớp' });
                 return;
             }
             password = utils.hashCode(password);
             await Account.updatePassword({ account_id, password });
-            res.status(200).send({ message: "Update password successfully" })
+            res.status(200).send({ message: "Cập nhật mật khẩu thành công" })
         } else {
             res.status(400).json({ message: 'Account id is not valid' });
             return;
@@ -122,23 +122,23 @@ const resetPassword = async (req, res, next) => {
 
 const updatePassword = async (req, res, next) => {
     let { password } = req.body;
-    const {account_id} = req.user;
+    const { account_id } = req.user;
 
     try {
         if (!password) {
-            res.status(400).json({ message: 'Password is required' });
+            res.status(400).json({ message: 'Yêu cầu thông tin mật khẩu' });
             return;
         }
         if (password.length < 8) {
-            return res.status(400).json({ message: 'Password must be greater or equal than 8 characters' });
+            return res.status(400).json({ message: 'Mật khẩu phải lớn hơn hoặc bằng 8 ký tự' });
         }
         let result = await Account.findByAccountId(account_id);
-        if(result.length === 0)
-        return res.status(400).json({ message: 'User not found' });
-        else{
+        if (result.length === 0)
+            return res.status(400).json({ message: 'Không tìm thấy người dùng' });
+        else {
             result[0].password = utils.hashCode(password);
             await Account.updateAccount(result[0]);
-            return res.status(200).json({ message: 'Change password successfully' });
+            return res.status(200).json({ message: 'Đổi mật khẩu thành công' });
         }
 
     } catch (err) {
@@ -147,30 +147,32 @@ const updatePassword = async (req, res, next) => {
 }
 
 const verifyAccount = async (req, res, next) => {
-    const { code } = req.body;
-    const { account_id } = req.user;
+    const { code, user_name } = req.body;
     try {
-        const account = await Account.findByAccountId(account_id);
+        const account = await Account.findByUserName(user_name);
         if (account[0]) {
+            const { account_id } = account[0];
             if (account[0].is_verify === 1) {
-                return res.status(400).send({ message: "The account has not been verified" });
+                return res.status(400).send({ message: "Tài khoản này đã được xác thực" });
             } else {
                 const verify = await Verify.findByAccountId(account_id);
                 if (verify[0].verify_id) {
-                    const isExpried = await Verify.isExpriedVerify(account_id);
-                    if (!isExpried) {
-                        res.status(400).json({ message: 'The code has been expried' });
+                    if (code != verify[0].code) {
+                        res.status(400).json({ message: 'Mã không khớp' });
                         return;
                     }
-                    if (code != verify[0].code) {
-                        res.status(400).json({ message: 'The code is not matched' });
+                    const isExpried = await Verify.isExpriedVerify(account_id);
+                    if (!isExpried) {
+                        res.status(400).json({ message: 'Mã đã hết hạn' });
                         return;
                     }
                     account[0].is_verify = 1;
                     await Account.updateAccount(account[0]);
-                    res.status(200).send({ message: "Verify account successfully" })
+                    res.status(200).send({ message: "success" })
                 }
             }
+        } else {
+            res.status(400).send({ message: "Không tìm thấy tài khoản" });
         }
     } catch (err) {
         res.status(400).send({ message: err.message });
@@ -180,16 +182,30 @@ const verifyAccount = async (req, res, next) => {
 const getUserInfo = async (req, res, next) => {
     let { user } = req;
     try {
-        const profile = await Profile.findByAccountId(user.account_id);
+        let profile = await Profile.findByAccountId(user.account_id);
         const roles = await Role.findRoleByUserName(user.user_name);
         if (profile.length === 1) {
+            if (profile[0].avatar) {
+                let avatar = await Image.findById(profile[0].avatar);
+                if (avatar.length === 1) {
+                    avatar[0].url = config.url + "/public/images/" + avatar[0].name;
+                    profile[0].avatar = avatar[0];
+                }
+            }
+            if (profile[0].cover_image) {
+                let cover_image = await Image.findById(profile[0].cover_image);
+                if (cover_image.length === 1) {
+                    cover_image[0].url = config.url + "/public/images/" + cover_image[0].name;
+                    profile[0].cover_image = cover_image[0];
+                }
+            }
             user.profile = profile[0];
-        }else{
+        } else {
             user.profile = {};
         }
-        if(roles.length > 0){
+        if (roles.length > 0) {
             user.roles = roles;
-        }else{
+        } else {
             user.roles = [];
         }
         res.status(200).send(user);
@@ -205,13 +221,33 @@ const updateAccount = async (req, res, next) => {
     try {
         const result = await Account.findByAccountId(user.account_id);
         if (result.length === 1) {
-            data = {...result, ...data};
+            data = { ...result, ...data };
             await Account.updateAccount(data);
-            res.status(200).send({message: "Update account successfully"});
+            res.status(200).send({ message: "Cập nhật tài khoản thành công" });
         }
-        res.status(400).send({ message: "Update account failure" });
+        res.status(400).send({ message: "Cập nhật tài khoản thất bại" });
     } catch (err) {
         res.status(400).send({ message: err.message });
+    }
+}
+
+const existedEmail = async (req, res, next) => {
+    const { email } = req.body;
+    try {
+        const res = await Account.existedEmail(email);
+        res.status(200).send({ result: res });
+    } catch (err) {
+        res.status(400).send(err.message);
+    }
+}
+
+const existedUserName = async (req, res, next) => {
+    const { user_name } = req.body;
+    try {
+        const res = await Account.existedUserName(user_name);
+        res.status(200).send({ result: res });
+    } catch (err) {
+        res.status(400).send(err.message);
     }
 }
 
@@ -223,5 +259,7 @@ module.exports = {
     getUserInfo,
     signout,
     updatePassword,
-    updateAccount
+    updateAccount,
+    existedEmail,
+    existedUserName
 }

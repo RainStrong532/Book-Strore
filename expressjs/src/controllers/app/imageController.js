@@ -17,14 +17,14 @@ const upload = async (req, res, next) => {
             data: Buffer.from(encode_image, 'base64')
         };
 
-        const result = await Image.saveImage(finalImg);
-
-        res.status(200).send(result);
+        let result = await Image.saveImage(finalImg);
+        result[0].url = config.url + "/public/images/" + result[0].name;
+        res.status(200).send(result[0]);
     } catch (err) {
         try {
             fs.unlinkSync(path)
-        } catch (err) {
-            console.error(err)
+        } catch (e) {
+            res.status(400).send({message: e.message});
         }
         res.status(400).send({message: err.message});
     }
