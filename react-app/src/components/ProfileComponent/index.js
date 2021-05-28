@@ -57,9 +57,6 @@ function ProfileComponent(props) {
         if (!other) {
             return (<LoadingComponent></LoadingComponent>)
         } else {
-            console.log('================Check role====================');
-            console.log(auth.user.roles.length , other.roles.length);
-            console.log('====================================');
             return (
                 <>
                     {

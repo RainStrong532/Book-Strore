@@ -144,7 +144,11 @@ function LoginComponent() {
                             }}
                         />
                     </label>
-                    <p className="forgot-pass">Quên mật khẩu?</p>
+                    <p className="forgot-pass"
+                        onClick={()=>{
+                            history.push("/forgot-password")
+                        }}
+                    >Quên mật khẩu?</p>
                     <button type="button" className="submit button-login" onClick={handleLogin}>Đăng nhập</button>
                     <button type="button" className="fb-btn button-login"><span>Facebook</span></button>
                     <button type="button" className="fb-btn button-login g-btn"><span>Goole+</span></button>

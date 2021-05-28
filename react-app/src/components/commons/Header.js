@@ -48,7 +48,7 @@ function Header() {
                                 ?
                                 <>
                                     <Dropdown.Item href={`/profiles?profile_id=${auth.user.account_id}`}>Hồ sơ</Dropdown.Item>
-                                    <Dropdown.Item href="/setting">Cài đặt</Dropdown.Item>
+                                    <Dropdown.Item href="/change-password">Đổi mật khẩu</Dropdown.Item>
                                     <Dropdown.Item href=""
                                         onClick={handleShow}
                                     >Đăng xuất</Dropdown.Item>

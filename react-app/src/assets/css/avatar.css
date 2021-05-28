@@ -97,7 +97,7 @@
     width: auto;
 }
 .user-dropdown .dropdown-menu.show{
-    margin-top: 1rem!important;
+    margin-top: .5rem!important;
 }
 .user-dropdown .dropdown-toggle::after{
     display: none;

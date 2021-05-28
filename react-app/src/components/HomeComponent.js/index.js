@@ -12,7 +12,7 @@ function HomeComponent() {
 
             <br />
 
-            <h2 class="h2">Featured Products</h2>
+            <h2 className="h2">Featured Products</h2>
             <section className="tiles">
                 <BookComponent />
                 <BookComponent />

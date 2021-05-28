@@ -22,7 +22,6 @@ function NotFoundComponent() {
                 <div className="buttons-con">
                     <div className="action-link-wrap">
                         <Link onClick={()=>{
-                            console.log("a");
                             history.goBack();
                             }} className="link-button link-back-button btn-success">Go Back</Link>
                         <Link to="/" className="link-button btn-success">Go to Home Page</Link>

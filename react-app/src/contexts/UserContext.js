@@ -169,26 +169,28 @@ export const ProtectRoute = ({ children }) => {
     }
     else {
         const path = window.location.pathname;
-
+        console.log("pathname: ", path);
         if (path === '/' || path === '/home' || path === '/verify') { // public pages
             return children;
         } else if (!user) {
-            if (path !== '/login') {
+            if (path !== '/login' && path !== '/forgot-password') {
                 return (<Redirect to="/login" />);
             } else {
                 return children;
             }
         } else {
-            if (user.is_verify !== 1) {
-                return (<Redirect to="/verify" />)
-            } else if (path === '/login') {
+            if (path === '/login') {
                 if (user.roles.length > 1) {
                     return (<Redirect to="/admin/home" />)
                 } else {
                     return (<Redirect to="/" />)
                 }
+            } else if (user.is_verify !== 1) {
+                return (<Redirect to="/verify" />)
             } else if (path.startsWith('/admin')) {
+                console.log("route admin");
                 if (user.roles.length === 1) {
+                    console.log("user");
                     return (<NotAuthorizedComponent />);
                 } else if (path.startsWith('/admin/managements/employees')) {
                     if (user.roles.length === 3) {
@@ -196,6 +198,8 @@ export const ProtectRoute = ({ children }) => {
                     } else {
                         return (<NotAuthorizedComponent />);
                     }
+                } else {
+                    return children;
                 }
             } else {
                 return children;

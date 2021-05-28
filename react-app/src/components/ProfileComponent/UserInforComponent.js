@@ -8,11 +8,13 @@ import fetchApi from '../../services/fetchApi';
 import * as urls from '../../services/url';
 import Cookies from 'js-cookie';
 import * as utils from '../../utils';
+import { useHistory } from 'react-router';
 
 const GENDERS = ["Nữ", "Nam", "Khác", "Chưa có"];
 
 function UserInforComponent({ user, other, loading, setLoading }) {
     const u = other ? other : user;
+    const history = useHistory();
 
     const [firstname, setFirstname] = useState("");
     const [canEdit, setCanEdit] = useState(false);
@@ -111,7 +113,9 @@ function UserInforComponent({ user, other, loading, setLoading }) {
                                         :
                                         <Button style={{ fontWeight: "bold" }} variant="warning" className="px-4">Xác thực</Button>
                                 }
-                                <Button style={{ fontWeight: "bold" }} className="px-4">Cài đặt</Button>
+                                <Button style={{ fontWeight: "bold" }} className="px-4"
+                                    onClick={()=>{history.push("/change-password")}}
+                                >Đổi mật khẩu</Button>
                             </>
                             :
                             <Button style={{ fontWeight: "bold" }} className="px-4">Nhắn tin</Button>
