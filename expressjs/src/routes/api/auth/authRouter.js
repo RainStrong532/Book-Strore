@@ -15,6 +15,7 @@ router.post("/mails", sendMailController.sendMailVerify);
 router.put("/mails",sendMailController.sendMail);
 router.post("/email",authController.existedEmail);
 router.post("/verify" ,authController.verifyAccount);
+router.put("/verify" ,sendMailController.verifyEmail);
 router.post("/users/password" ,authController.resetPassword);
 router.put("/users/password",authenticated.authenticateToken ,authController.updatePassword);
 router.post("/:user_name",authController.existedUserName);

@@ -4,13 +4,13 @@ const { ROLES } = require('../../contants');
 const checkDuplicateUsername = async (req, res, next) => {
     const user_name = req.body.user_name;
     if (!user_name) {
-        res.status(400).json({ message: 'Username is required'});
+        res.status(400).json({ message: 'Yêu cầu tên tài khoản'});
         return;
     }
     try {
         const isExisted = await Account.existedUserName(user_name);
         if (isExisted) {
-            res.status(200).json({ message: "Username already exists" });
+            res.status(200).json({ message: "Tên tài khoản đã tồn tại" });
             return;
         } else {
             next();
@@ -28,7 +28,7 @@ const checkRolesExisted = (req, res, next) => {
         for (let i = 0; i < roles.length; i++) {
             if (!ROLES[roles[i]]) {
                 res.status(400).json({
-                    message: "Failed! " + roles[i] + " does not exist"
+                    message: "Thất bại! " + roles[i] + " không tồn tại"
                 });
                 return;
             }
@@ -48,17 +48,17 @@ function validateEmail(email) {
 const checkMail = async (req, res, next) => {
     const email = req.body.email;
     if (!email) {
-        res.status(400).json({ message: 'Email is required' });
+        res.status(400).json({ message: 'Yêu cầu Email' });
         return;
     }
     if(!validateEmail(email)){
-        res.status(400).json({ message: 'Email is not valid' });
+        res.status(400).json({ message: 'Email không hợp lệ' });
         return;
     }
     try {
         const isExisted = await Account.existedEmail(email);
         if (isExisted) {
-            res.status(200).json({ message: "Email was existed"});
+            res.status(200).json({ message: "Email đã tòn tại"});
             return;
         } else {
             next();

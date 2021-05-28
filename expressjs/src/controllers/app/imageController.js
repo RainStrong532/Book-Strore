@@ -31,7 +31,6 @@ const upload = async (req, res, next) => {
 }
 
 const findByImageName = async (req, res, next) => {
-    console.log("findByImageName");
     try {
         const name = req.params.name;
         if (name) {
@@ -39,7 +38,7 @@ const findByImageName = async (req, res, next) => {
             result[0].url = config.url + "/public/images/" + result[0].name;
             res.status(200).send(result[0]);
         } else {
-            res.status(400).send({ message: "Url is not valid"});
+            res.status(404).send({ message: "Url không hợp lệ"});
         }
     } catch (err) {
         res.status(400).send({message: err.message});
@@ -54,7 +53,7 @@ const findById = async (req, res, next) => {
             result[0].url = config.url + "/public/images/" + result[0].name;
             res.status(200).send(result[0]);
         } else {
-            res.status(400).send({ message: "Url is not valid"});
+            res.status(404).send({ message: "Url không hợp lệ"});
         }
     } catch (err) {
         res.status(400).send({message: err.message});

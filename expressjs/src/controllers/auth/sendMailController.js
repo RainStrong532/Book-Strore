@@ -56,31 +56,24 @@ const sendMailVerify = async (req, res, next) => {
 }
 
 const sendMail = async (req, res, next) => {
-    let { user_name, email } = req.body;
-    let account_id = null;
+    let { contact } = req.body;
+    let account_id = null, email = null;
     try {
-        if (!user_name && !email) {
+        if (!contact) {
             return res.status(400).send({ message: "Username or email is required" });
         }
-        if (user_name) {
-            let result = await Account.findByUserName(user_name);
-            if (result.length > 0) {
-                email = result[0].email;
-                account_id = result[0].account_id;
-            }
+        let result = null;
+        if (utils.auth.validateEmail(contact)) {
+            result = await await Account.findByEmail(contact);
+        } else {
+            result = await await Account.findByUserName(contact);
         }
-        if(email && account_id === null){
-            if (!utils.auth.validateEmail(email)) {
-                return res.status(400).send({ message: "Email is not valid" });
-            }
-            let result = await Account.findByEmail(email);
-            if (result.length > 0) {
-                account_id = result[0].account_id;
-                user_name = result[0].user_name;
-            }
-        }
-        if(!account_id){
-            res.status(400).send({message: "User not found"})
+        if (result.length > 0) {
+            email = result[0].email;
+            account_id = result[0].account_id;
+        } else {
+            res.status(400).send({ message: "Tài khoản không tồn tại!" })
+            return;
         }
         const code = utils.auth.generateVerifyCode(6);
         let expried_date = new Date().getTime() + defaultExpried;
@@ -89,37 +82,47 @@ const sendMail = async (req, res, next) => {
         const mailOptions = {
             to: email,
             subject: "Check your verify code [" + code + "]",
-            html: "<p style='font-size: 24px'>Hello, <b>" + user_name + "!</b></p>\
+            html: "<p style='font-size: 24px'>Hello, <b>" + result[0].user_name + "!</b></p>\
             <p style='font-size: 20px'>Here your code <span style='text-decoration: underline; color: #344fa1; cursor: pointer;'>"+ code + "</span>.</p>"
         }
         smtpTransport.sendMail(mailOptions, function (error, response) {
             if (error) {
                 res.status(400).send(error);
+                return;
             } else {
-                res.status(200).json({ message: "Sent", account_id});
+                res.status(200).json({ message: "Sent", data: { email, account_id } });
+                return;
             }
         });
     } catch (err) {
         res.status(400).send({ message: err.message });
+        return;
     }
 }
 
 const verifyEmail = async function (req, res) {
     const { code, account_id } = req.body;
     if (!code) {
-        return res.status(400).json({ message: "Verify code is required" });
+        return res.status(400).json({ message: "Verify code is required", success: 0 });
     }
     try {
         const verify = await Verify.findByAccountId(account_id);
         if (code === verify[0].code) {
-            res.status(200).send({ message: "Account has been verified" })
+            res.status(200).send({ success: true })
         } else {
-            res.status(400).json({ message: "Verify code is invalid" });
+            res.status(400).send({
+                success: 0,
+                message: "Verify code is invalid"
+            });
         }
     } catch (err) {
-        res.status(400).json(err);
+        res.status(400).json({
+            success: 0,
+            message: err.message
+        });
     }
 }
+
 
 module.exports = {
     sendMailVerify,

@@ -85,38 +85,29 @@ const signout = async (req, res, next) => {
 }
 
 const resetPassword = async (req, res, next) => {
-    let { password, account_id, code } = req.body;
+    let { password, account_id } = req.body;
 
     try {
         if (!password) {
             res.status(400).json({ message: 'Yêu cầu thông tin mật khẩu' });
             return;
         }
-        if (!code) {
-            res.status(400).json({ message: 'Yêu cầu mã xác nhận' });
-            return;
-        }
-        const verify = await Verify.findByAccountId(account_id);
-        if (verify[0].verify_id) {
-            const isExpried = await Verify.isExpriedVerify(account_id);
-            if (isExpried) {
-                res.status(400).json({ message: 'Mã code đã hết hạn' });
-                return;
+        if (account_id) {
+            const result = await Account.findByAccountId(account_id);
+            if (result.length > 0) {
+                password = utils.hashCode(password);
+                await Account.updatePassword({ account_id, password });
+                res.status(200).send({ success: 1, message: "Cập nhật mật khẩu thành công" })
+            } else {
+                return res.status(400).send({ success: 0, message: "Tài khoản không hợp lệ" });
             }
-            if (code != verify[0].code) {
-                res.status(400).json({ message: 'Mã code không khớp' });
-                return;
-            }
-            password = utils.hashCode(password);
-            await Account.updatePassword({ account_id, password });
-            res.status(200).send({ message: "Cập nhật mật khẩu thành công" })
         } else {
-            res.status(400).json({ message: 'Account id is not valid' });
+            res.status(400).json({ success: 0, message: 'Tài khoản không hợp lệ' });
             return;
         }
 
     } catch (err) {
-        res.status(400).send({ message: err.message });
+        res.status(400).send({ success: 0, message: err.message });
     }
 }
 
@@ -126,23 +117,23 @@ const updatePassword = async (req, res, next) => {
 
     try {
         if (!password) {
-            res.status(400).json({ message: 'Yêu cầu thông tin mật khẩu' });
+            res.status(400).json({ success: 0, message: 'Yêu cầu thông tin mật khẩu' });
             return;
         }
         if (password.length < 8) {
-            return res.status(400).json({ message: 'Mật khẩu phải lớn hơn hoặc bằng 8 ký tự' });
+            return res.status(400).json({ success: 0, message: 'Mật khẩu phải lớn hơn hoặc bằng 8 ký tự' });
         }
         let result = await Account.findByAccountId(account_id);
         if (result.length === 0)
-            return res.status(400).json({ message: 'Không tìm thấy người dùng' });
+            return res.status(400).json({ success: 0, message: 'Không tìm thấy người dùng' });
         else {
             result[0].password = utils.hashCode(password);
             await Account.updateAccount(result[0]);
-            return res.status(200).json({ message: 'Đổi mật khẩu thành công' });
+            return res.status(200).json({ success: 1, message: 'Đổi mật khẩu thành công' });
         }
 
     } catch (err) {
-        res.status(400).send({ message: err.message });
+        res.status(400).send({ success: 0, message: err.message });
     }
 }
 

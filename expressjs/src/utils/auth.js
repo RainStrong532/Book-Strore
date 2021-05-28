@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 const generateAccessToken = function (user) {
-    const exprieAfter = 60 * 60 * 24; //1 day
+    const exprieAfter = 60 * 60 * 24 * 7; //7 ngày
     return jwt.sign(user, confgi.token_secret, { expiresIn: exprieAfter });
 }
 

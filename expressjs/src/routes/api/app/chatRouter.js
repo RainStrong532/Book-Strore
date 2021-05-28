@@ -6,8 +6,6 @@ const chatController = require("../../../controllers/app/chatController");
 
 const authenticated = require("../../../middlewares/authenticated");
 
-const utils = require("../../../utils");
-
 router.post("/users/conversations", authenticated.authenticateToken, chatController.saveConversation);
 router.post("/users/messages", authenticated.authenticateToken, chatController.saveMessage);
 router.get("/users/conversations", authenticated.authenticateToken, chatController.findAll);

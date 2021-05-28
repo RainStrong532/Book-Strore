@@ -1,0 +1,1 @@
+SELECT * FROM [author] WHERE [enable] = 1 AND [author_name] LIKE @keywords;
