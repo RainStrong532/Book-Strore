@@ -87,3 +87,75 @@ CREATE TABLE message(
 	seen_date DATETIME,
 	conversation_id INT FOREIGN KEY REFERENCES conversation(user_id) NOT NULL,
 );
+
+CREATE TABLE category(
+	category_id INT IDENTITY(1,1) PRIMARY KEY,
+	category_name NVARCHAR(255) COLLATE Latin1_General_100_CI_AI_SC_UTF8 NOT NULL,
+	description NVARCHAR(1000) COLLATE Latin1_General_100_CI_AI_SC_UTF8,
+	enable INT NOT NULL DEFAULT 1,
+	create_date DATETIME DEFAULT GETDATE(),
+	update_date DATETIME,
+	parent_id INT FOREIGN KEY REFERENCES category(category_id)
+);
+
+CREATE TABLE book(
+	book_id INT IDENTITY(1,1) PRIMARY KEY,
+	book_name NVARCHAR(255) NOT NULL COLLATE Latin1_General_100_CI_AI_SC_UTF8 NOT NULL,
+	description NVARCHAR(1000) COLLATE Latin1_General_100_CI_AI_SC_UTF8,
+	enable INT NOT NULL DEFAULT 1,
+	price FLOAT NOT NULL DEFAULT 0,
+	discount FLOAT NOT NULL DEFAULT 0,
+	quantity BIGINT NOT NULL DEFAULT 0,
+	publish_year INT,
+	create_date DATETIME DEFAULT GETDATE(),
+	update_date DATETIME
+);
+
+CREATE TABLE author(
+	author_id INT IDENTITY(1,1) PRIMARY KEY,
+	author_name NVARCHAR(255) COLLATE Latin1_General_100_CI_AI_SC_UTF8 NOT NULL,
+	description NVARCHAR(1000) COLLATE Latin1_General_100_CI_AI_SC_UTF8,
+	enable INT NOT NULL DEFAULT 1,
+	create_date DATETIME DEFAULT GETDATE(),
+	update_date DATETIME
+);
+
+CREATE TABLE category_book(
+	category_id INT NOT NULL,
+	book_id INT NOT NULL,
+	PRIMARY KEY(category_id, book_id),
+	FOREIGN KEY (category_id) REFERENCES category(category_id)
+	ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (book_id) REFERENCES book(book_id)
+	ON DELETE CASCADE ON UPDATE CASCADE,
+);
+
+CREATE TABLE author_book(
+	author_id INT NOT NULL,
+	book_id INT NOT NULL,
+	PRIMARY KEY(author_id, book_id),
+	FOREIGN KEY (author_id) REFERENCES author(author_id)
+	ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (book_id) REFERENCES book(book_id)
+	ON DELETE CASCADE ON UPDATE CASCADE,
+);
+
+CREATE TABLE author_image(
+	author_id INT NOT NULL,
+	image_id INT NOT NULL,
+	PRIMARY KEY(author_id, image_id),
+	FOREIGN KEY (author_id) REFERENCES author(author_id)
+	ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (image_id) REFERENCES image(image_id)
+	ON DELETE CASCADE ON UPDATE CASCADE,
+);
+
+CREATE TABLE book_image(
+	book_id INT NOT NULL,
+	image_id INT NOT NULL,
+	PRIMARY KEY(book_id, image_id),
+	FOREIGN KEY (book_id) REFERENCES book(book_id)
+	ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (image_id) REFERENCES image(image_id)
+	ON DELETE CASCADE ON UPDATE CASCADE,
+);
