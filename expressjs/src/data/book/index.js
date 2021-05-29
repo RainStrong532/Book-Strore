@@ -8,7 +8,10 @@ const findAll = (pattern, orderBy, sortBy) => {
     let pool = new sql.ConnectionPool(config.sql);
     return new Promise(async (resolve, reject) => {
         try {
-            const sqlQueries = `SELECT * FROM [book] WHERE [enable] = 1 AND [book_name] LIKE '${pattern}' ORDER BY [${orderBy}] ${sortBy};`;
+            const sqlQueries = `SELECT * FROM [book]\
+            WHERE [enable] = 1 AND\
+            [book_name] LIKE N'${pattern}'\
+            ORDER BY [${orderBy}] ${sortBy};`;
             pool.connect().then(() => {
                 const request = new sql.Request(pool);
                 request
@@ -37,7 +40,7 @@ const findById = (id) => {
             pool.connect().then(() => {
                 const request = new sql.Request(pool);
                 request
-                .input("book_id", sql.Int, id)
+                    .input("book_id", sql.Int, id)
                     .query(sqlQueries.findByBookId).then(recordset => {
                         pool.close();
                         resolve(recordset.recordset[0])
@@ -63,12 +66,12 @@ const saveBook = (data) => {
             pool.connect().then(() => {
                 const request = new sql.Request(pool);
                 request
-                .input("book_name", sql.Nvarchar(255), data.book_name)
-                .input("description", sql.Nvarchar(1000), data.description)
-                .input("price", sql.Float, data.price)
-                .input("discount", sql.Float, data.discount)
-                .input("quantity", sql.BigInt, data.quantity)
-                .input("publish_year", sql.Int, data.publish_year)
+                    .input("book_name", sql.Nvarchar(255), data.book_name)
+                    .input("description", sql.Nvarchar(1000), data.description)
+                    .input("price", sql.Float, data.price)
+                    .input("discount", sql.Float, data.discount)
+                    .input("quantity", sql.BigInt, data.quantity)
+                    .input("publish_year", sql.Int, data.publish_year)
                     .query(sqlQueries.saveBook).then(recordset => {
                         pool.close();
                         resolve(recordset.recordset[0])
@@ -279,16 +282,24 @@ const existedImage = async (data) => {
     })
 }
 
-const findByCategory = async (id) => {
+const findByCategory = async (pattern, orderBy, sortBy, id) => {
     let pool = new sql.ConnectionPool(config.sql);
+    let query = `USE[Book Store];\
+    SELECT * FROM [book] WHERE [book_id]\
+    IN\
+        (\
+            SELECT[book_id] FROM[category_book] WHERE[category_id] = @category_id\
+        )\
+        AND [enable] = 1 AND\
+        [book_name] LIKE N'${pattern}'\
+        ORDER BY [${orderBy}] ${sortBy};`
     return new Promise(async (resolve, reject) => {
         try {
-            const sqlQueries = await utils.loadSqlQueries('book');
             pool.connect().then(() => {
                 const request = new sql.Request(pool);
                 request
                     .input('category_id', sql.Int, id)
-                    .query(sqlQueries.findByCategory).then(recordset => {
+                    .query(query).then(recordset => {
                         pool.close();
                         resolve(recordset.recordset)
                     }).catch(err => {
@@ -305,16 +316,24 @@ const findByCategory = async (id) => {
     })
 }
 
-const findByAuthor = async (id) => {
+const findByAuthor = async (pattern, orderBy, sortBy, id) => {
     let pool = new sql.ConnectionPool(config.sql);
+    let query = `USE[Book Store];\
+    SELECT * FROM [book] WHERE [book_id]\
+    IN\
+        (\
+            SELECT[book_id] FROM[author_book] WHERE[author_id] = @author_id\
+        )\
+        AND [enable] = 1 AND\
+        [book_name] LIKE N'${pattern}'\
+        ORDER BY [${orderBy}] ${sortBy};`
     return new Promise(async (resolve, reject) => {
         try {
-            const sqlQueries = await utils.loadSqlQueries('book');
             pool.connect().then(() => {
                 const request = new sql.Request(pool);
                 request
                     .input('author_id', sql.Int, id)
-                    .query(sqlQueries.findByAuthor).then(recordset => {
+                    .query(query).then(recordset => {
                         pool.close();
                         resolve(recordset.recordset)
                     }).catch(err => {

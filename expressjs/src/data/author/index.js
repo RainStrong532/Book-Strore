@@ -8,7 +8,7 @@ const findAll = async (pattern, orderBy, sortBy) => {
     let pool = new sql.ConnectionPool(config.sql);
     return new Promise(async (resolve, reject) => {
         try {
-            const sqlQueries = `SELECT * FROM [author] WHERE [enable] = 1 AND [author_name] LIKE '${pattern}' ORDER BY [${orderBy}] ${sortBy};`;
+            const sqlQueries = `SELECT * FROM [author] WHERE [enable] = 1 AND [author_name] LIKE N'${pattern}' ORDER BY [${orderBy}] ${sortBy};`;
             pool.connect().then(() => {
                 const request = new sql.Request(pool);
                 request

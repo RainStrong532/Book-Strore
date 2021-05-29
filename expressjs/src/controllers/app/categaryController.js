@@ -148,7 +148,7 @@ const update = async (req, res, next) => {
         })
     }else{
         return res.status(404).send({
-            success: 0, message: "Không tìm thấy chủ đề"
+            success: 0, message: "Không tìm thấy thể loại"
         })
     }
 

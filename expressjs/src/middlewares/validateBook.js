@@ -24,7 +24,7 @@ const validate = async (req, res, next) => {
     }
 
     if(!data.categories || data.categories.length === 0){
-        return res.status(400).send({success: 0, message:"Yêu cầu thông tin chủ đề"})
+        return res.status(400).send({success: 0, message:"Yêu cầu thông tin thể loại"})
     }
 
     next();

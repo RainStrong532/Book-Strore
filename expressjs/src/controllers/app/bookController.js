@@ -239,6 +239,27 @@ const update = async (req, res, next) => {
 
 
 const findByCategoryId = async (req, res, next) => {
+    let page_number = parseInt(req.query.page_number) || 0;
+    let page_size = parseInt(req.query.page_size) || 20;
+    let text_search = req.query.text_search || '';
+    let sort_by = req.query.sort_by || "ASC";
+    let order_by = req.query.order_by || "book_id";
+
+    let col = columns.filter(item => item == order_by);
+    if (col.length === 0)
+        return res.status(400).send({ success: 0, message: "order_by không hợp lệ" });
+
+    let sort = sortType.filter(item => item == sort_by);
+    if (sort.length === 0) return res.status(400).send({ success: 0, message: "sort_by không hợp lệ" });;
+
+    let pattern = '%' + text_search + '%';
+
+    if (!Number.isInteger(page_number) || !Number.isInteger(page_size)) {
+        return res.status(400).send({
+            success: 0,
+            message: 'pag_size or page_number không hợp lệ'
+        })
+    }
     let category_id = parseInt(req.params.category_id);
     if (!Number.isInteger(category_id)) {
         return res.status(404).send({
@@ -247,9 +268,12 @@ const findByCategoryId = async (req, res, next) => {
     }
 
     try {
-        let result = await Book.findByCategory(category_id);
+        let result = await Book.findByCategory(pattern, order_by, sort_by, category_id);
+        let total = Math.ceil(result.length / page_size);
+        result = result.splice(page_number * page_size, page_size);
         res.status(200).send({
             success: 1,
+            total,
             data: result,
         })
 
@@ -259,6 +283,27 @@ const findByCategoryId = async (req, res, next) => {
 }
 
 const findByAuthorId = async (req, res, next) => {
+    let page_number = parseInt(req.query.page_number) || 0;
+    let page_size = parseInt(req.query.page_size) || 20;
+    let text_search = req.query.text_search || '';
+    let sort_by = req.query.sort_by || "ASC";
+    let order_by = req.query.order_by || "book_id";
+
+    let col = columns.filter(item => item == order_by);
+    if (col.length === 0)
+        return res.status(400).send({ success: 0, message: "order_by không hợp lệ" });
+
+    let sort = sortType.filter(item => item == sort_by);
+    if (sort.length === 0) return res.status(400).send({ success: 0, message: "sort_by không hợp lệ" });;
+
+    let pattern = '%' + text_search + '%';
+
+    if (!Number.isInteger(page_number) || !Number.isInteger(page_size)) {
+        return res.status(400).send({
+            success: 0,
+            message: 'pag_size or page_number không hợp lệ'
+        })
+    }
     let author_id = parseInt(req.params.author_id);
     if (!Number.isInteger(author_id)) {
         return res.status(404).send({
@@ -267,9 +312,12 @@ const findByAuthorId = async (req, res, next) => {
     }
 
     try {
-        let result = await Book.findByAuthor(author_id);
+        let result = await Book.findByAuthor(pattern, order_by, sort_by, author_id);
+        let total = Math.ceil(result.length / page_size);
+        result = result.splice(page_number * page_size, page_size);
         res.status(200).send({
             success: 1,
+            total,
             data: result,
         })
 
