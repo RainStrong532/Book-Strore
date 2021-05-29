@@ -56,6 +56,32 @@ const findById = async (id) => {
     })
 }
 
+const findByBookId = async (id) => {
+    let pool = new sql.ConnectionPool(config.sql);
+    return new Promise(async (resolve, reject) => {
+        try {
+            const sqlQueries = await utils.loadSqlQueries('author');
+            pool.connect().then(() => {
+                const request = new sql.Request(pool);
+                request
+                    .input("book_id", sql.Int, id)
+                    .query(sqlQueries.findByBookId).then(recordset => {
+                        pool.close();
+                        resolve(recordset.recordset)
+                    }).catch(err => {
+                        pool.close();
+                        reject(err);
+                    })
+            }).catch(err => {
+                reject(err);
+            })
+        } catch (err) {
+            console.log(err);
+            reject(err);
+        }
+    })
+}
+
 const deleteAuthor = async (id) => {
     let pool = new sql.ConnectionPool(config.sql);
     return new Promise(async (resolve, reject) => {
@@ -282,5 +308,6 @@ module.exports = {
     deleteImage,
     existedImage,
     deleteAuthor,
-    update
+    update,
+    findByBookId
 }

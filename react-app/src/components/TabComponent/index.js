@@ -4,6 +4,7 @@ import TabLayout from '../commons/TabLayout';
 import fetchApi from '../../services/fetchApi';
 import * as urls from '../../services/url';
 import LoadingComponent from '../commons/LoadingComponent';
+import { useHistory } from 'react-router';
 
 const bookFields = [
     {
@@ -76,6 +77,18 @@ export default function ControlledTabs() {
     const [listCategory, setListCategory] = useState({ total: 0, data: [] });
     const [listAuthor, setListAuthor] = useState({ total: 0, data: [] });
     const [isLoading, setIsLoading] = useState(false);
+
+    const history = useHistory();
+
+    const handleDetailsBook = (id) => {
+        if(Number.isInteger(parseInt(id)))
+        history.push(`/admin/managements/books/${id}`)
+    }
+
+    const handleUpdateBook = (id) => {
+        if(Number.isInteger(parseInt(id)))
+        history.push(`/admin/managements/books/update/${id}`)
+    }
 
     const getListBook = async function (data, loading, filter) {
         if(loading !== 1)
@@ -182,6 +195,8 @@ export default function ControlledTabs() {
                         listFilters={[listCategory.data, listAuthor.data]}
                         ids={["categories", "authors"]}
                         placeholders={["Chọn thể loại", "Chọn tác giả"]}
+                        handleDetails={handleDetailsBook}
+                        handleUpdate={handleUpdateBook}
                     />
                 </Tab>
 

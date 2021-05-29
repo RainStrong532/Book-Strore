@@ -2,7 +2,35 @@ import React from 'react';
 import { Button, Table } from 'react-bootstrap';
 import sortIcon from '../../assets/images/sort.svg';
 
-function TableCustom({ fields, data, setOrderBy, setSortBy, sortBy }) {
+function TableCustom({ fields, data, setOrderBy, setSortBy, sortBy, handleDetails, handleUpdate }) {
+
+    const gotoDetail = (item) =>{
+        let id = null;
+        for (const key in item) {
+            if (Object.hasOwnProperty.call(item, key)) {
+                if(key.endsWith('id') && key !== 'parent_id'){
+                    id = item[key];
+                }
+            }
+        }
+        if(handleDetails){
+            handleDetails(id);
+        }
+    }
+
+    const gotoUpdate = (item) =>{
+        let id = null;
+        for (const key in item) {
+            if (Object.hasOwnProperty.call(item, key)) {
+                if(key.endsWith('id') && key !== 'parent_id'){
+                    id = item[key];
+                }
+            }
+        }
+        if(handleUpdate){
+            handleUpdate(id);
+        }
+    }
 
     const headerTable = () => {
         let listHeader = [];
@@ -56,14 +84,18 @@ function TableCustom({ fields, data, setOrderBy, setSortBy, sortBy }) {
                             tifOptions
                         }
                         <td key={index + 'action'} className="d-flex" style={{ border: "none" }}>
-                            <Button variant="primary" className="mx-2" title="Chi tiết">
-                                <i class="fas fa-eye"></i>
+                            <Button variant="primary" className="mx-2" title="Chi tiết"
+                                onClick={() => gotoDetail(item)}
+                            >
+                                <i className="fas fa-eye"></i>
                             </Button>
-                            <Button variant="warning" className="mx-2" title="Chỉnh sửa">
-                                <i class="fas fa-edit" style={{ color: "#FFF" }}></i>
+                            <Button variant="warning" className="mx-2" title="Chỉnh sửa"
+                                onClick={() => gotoUpdate(item)}
+                            >
+                                <i className="fas fa-edit" style={{ color: "#FFF" }}></i>
                             </Button>
                             <Button variant="danger" className="mx-2" title="Xóa">
-                                <i class="fas fa-trash-alt"></i>
+                                <i className="fas fa-trash-alt"></i>
                             </Button>
                         </td>
                     </tr>

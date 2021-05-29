@@ -2,6 +2,8 @@
 
 const Book = require('../../data/book');
 const Image = require('../../data/image');
+const Author = require('../../data/author');
+const Category = require('../../data/category');
 
 const columns = ['book_id', 'book_name', 'description', 'quantity', 'price', 'discount', 'publish_year'];
 const sortType = ['ASC', 'DESC'];
@@ -89,7 +91,10 @@ const findById = async (req, res, next) => {
                 images[i] = {...images[i], ...rs[0]};
             }
         }
-        result = {...result, images};
+
+        let authors = await Author.findByBookId(id);
+        let categories = await Category.findByBookId(id);
+        result = {...result, images, authors, categories};
         res.status(200).send({
             success: 1,
             data: result,

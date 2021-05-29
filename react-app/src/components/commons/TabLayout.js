@@ -5,7 +5,7 @@ import SearchBox from './SearchBox';
 import TableCustom from './TableCustom';
 import Filter from './Filter';
 
-function TabLayout({ data, fields, getData, listFilters, ids, placeholders}) {
+function TabLayout({ data, fields, getData, listFilters, ids, placeholders, handleUpdate, handleDetails}) {
 
     const [limit, setLimit] = useState(20);
     const [current, setCurrent] = useState(1);
@@ -105,6 +105,8 @@ function TabLayout({ data, fields, getData, listFilters, ids, placeholders}) {
                     setOrderBy={setOrderBy}
                     setSortBy={setSortBy}
                     sortBy={sortBy}
+                    handleDetails={handleDetails}
+                    handleUpdate={handleUpdate}
                 />
             </div>
             <PaginationCustom total={data.total} current={current} limit={limit} setLimit={setLimit} setCurrent={setCurrent} />

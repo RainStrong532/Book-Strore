@@ -102,3 +102,7 @@
 .user-dropdown .dropdown-toggle::after{
     display: none;
 }
+
+.cgseTX{
+    z-index: 999999!important;
+}
