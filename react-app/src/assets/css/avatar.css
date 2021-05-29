@@ -93,8 +93,8 @@
     justify-content: center;
 }
 .user-dropdown .dropdown-toggle img{
-    height: 100%;
-    width: auto;
+    width: 100%;
+    height: auto;
 }
 .user-dropdown .dropdown-menu.show{
     margin-top: .5rem!important;

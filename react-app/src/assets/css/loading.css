@@ -18,13 +18,13 @@
 .loading .spinner img{
     width: 100%;
     height: auto;
-    animation: spin 0.7s infinite ease;
+    animation: spin 0.7s infinite ease!important;
 }
 
 .loading .desc{
     font-size: 2rem;
     color: #fff;
-    animation: fade .8s infinite ease-in;
+    animation: fade .8s infinite ease-in!important;
 }
 
 @keyframes spin {

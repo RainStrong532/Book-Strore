@@ -10,6 +10,7 @@ const Routes = () => {
                 <Route exact path="/admin/managements/books">
                         <Redirect to="/admin/home"/>
                 </Route>
+                <Route exact path="/admin/managements/books/:book_id" component={pages.AdminPage.BookDetailPage}/>
                 <Route exact path="/" component={pages.PublicPage.HomePage} />
                 <Route exact path="/login" component={pages.PublicPage.LoginPage} />
                 <Route  path="/home" component={function(){return<Redirect to="/"/>}} />

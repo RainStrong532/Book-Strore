@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Table } from 'react-bootstrap';
 import sortIcon from '../../assets/images/sort.svg';
 
-function TableCustom({ fields, data }) {
+function TableCustom({ fields, data, setOrderBy, setSortBy, sortBy }) {
 
     const headerTable = () => {
         let listHeader = [];
@@ -14,7 +14,17 @@ function TableCustom({ fields, data }) {
                         {
                             item.sortable
                                 ?
-                                <img style={{ cursor: "pointer" }} className="ml-3" src={sortIcon} alt="icon" width={12} />
+                                <img
+                                    style={{ cursor: "pointer" }}
+                                    className="ml-3"
+                                    src={sortIcon}
+                                    alt="icon"
+                                    width={12}
+                                    onClick={() => {
+                                        setOrderBy(item.key);
+                                        setSortBy(!sortBy)
+                                    }}
+                                />
                                 :
                                 <></>
                         }
@@ -22,7 +32,6 @@ function TableCustom({ fields, data }) {
                 )
             })
             listHeader.push(<th key="action"></th>);
-            console.log("field header: ", listHeader);
         }
         return listHeader;
     }
@@ -32,15 +41,12 @@ function TableCustom({ fields, data }) {
         if (data) {
             listContent = data.map((item, index) => {
                 const tifOptions = fields.map((field, i) => {
-                    console.log('=================Key===================');
-                    console.log(field.key);
-                    console.log('====================================');
                     return (
                         field.key === 'id'
-                        ?
-                        <td key={`${index}${i}`}>{index+1}</td>
-                        :
-                        <td style={{ whiteSpace: i === 1 ? 'nowrap' : 'normal' }} key={`${index}${i}`}>{item[field.key] !== null ? item[field.key] : "null"}</td>
+                            ?
+                            <td key={`${index}${i}`}>{index + 1}</td>
+                            :
+                            <td style={{ whiteSpace: i === 1 ? 'nowrap' : 'normal' }} key={`${index}${i}`}>{item[field.key] !== null ? item[field.key] : "null"}</td>
                     )
                 }
                 )
@@ -49,15 +55,15 @@ function TableCustom({ fields, data }) {
                         {
                             tifOptions
                         }
-                        <td key={index + 'action'} className="d-flex" style={{ border: "none"}}>
-                            <Button variant="primary" className="mx-2">
-                                Chi tiết
+                        <td key={index + 'action'} className="d-flex" style={{ border: "none" }}>
+                            <Button variant="primary" className="mx-2" title="Chi tiết">
+                                <i class="fas fa-eye"></i>
                             </Button>
-                            <Button variant="warning" className="mx-2">
-                                Chỉnh sửa
+                            <Button variant="warning" className="mx-2" title="Chỉnh sửa">
+                                <i class="fas fa-edit" style={{ color: "#FFF" }}></i>
                             </Button>
-                            <Button variant="danger" className="mx-2">
-                                Xóa
+                            <Button variant="danger" className="mx-2" title="Xóa">
+                                <i class="fas fa-trash-alt"></i>
                             </Button>
                         </td>
                     </tr>
@@ -67,20 +73,22 @@ function TableCustom({ fields, data }) {
         return listContent;
     }
     return (
-        <Table striped bordered hover responsive>
-            <thead>
-                <tr>
+        <div style={{ minHeight: "100vh" }}>
+            <Table striped bordered hover responsive>
+                <thead>
+                    <tr>
+                        {
+                            headerTable()
+                        }
+                    </tr>
+                </thead>
+                <tbody>
                     {
-                        headerTable()
+                        contentTable()
                     }
-                </tr>
-            </thead>
-            <tbody>
-                {
-                    contentTable()
-                }
-            </tbody>
-        </Table>
+                </tbody>
+            </Table>
+        </div>
     )
 }
 

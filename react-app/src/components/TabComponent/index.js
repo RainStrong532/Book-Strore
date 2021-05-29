@@ -59,7 +59,7 @@ const categoryFields = [
         key: "id"
     },
     {
-        name: "Tên chủ đề",
+        name: "Tên thể loại",
         key: "category_name",
         sortable: true
     },
@@ -72,57 +72,90 @@ const categoryFields = [
 
 export default function ControlledTabs() {
     const [key, setKey] = useState('books');
-    const [listBook, setListBook] = useState([]);
-    const [listCategory, setListCategory] = useState([]);
-    const [listAuthor, setListAuthor] = useState([]);
+    const [listBook, setListBook] = useState({ total: 0, data: [] });
+    const [listCategory, setListCategory] = useState({ total: 0, data: [] });
+    const [listAuthor, setListAuthor] = useState({ total: 0, data: [] });
     const [isLoading, setIsLoading] = useState(false);
 
-    const getListBook = async function () {
+    const getListBook = async function (data, loading, filter) {
+        if(loading !== 1)
         setIsLoading(true);
         try {
-            const res = await fetchApi('GET', urls.BOOK_URL);
+            let url = new URL(urls.BOOK_URL);
+            if(filter && filter.id != -1){
+                url = new URL(`${urls.BOOK_URL}/${filter.name}/${filter.id}`);
+            }
+            if (data) {
+                for (const key in data) {
+                    if (data[key]) {
+                        url.searchParams.set(key, data[key]);
+                    }
+                }
+            }
+            const res = await fetchApi('GET', url);
             if (res.success == 1) {
-                setListBook(res.data);
+                setListBook(res);
             } else {
                 alert(res.message);
             }
         } catch (err) {
             alert(err.message)
         }
+        if(loading !== 1)
         setIsLoading(false);
     }
 
-    const getListAuthors = async function () {
+    const getListAuthors = async function (data, loading) {
+        if(loading !== 1)
         setIsLoading(true);
         try {
-            const res = await fetchApi('GET', urls.AUTHOR_URL);
+            const url = new URL(urls.AUTHOR_URL);
+            if (data) {
+                for (const key in data) {
+                    if (data[key]) {
+                        url.searchParams.set(key, data[key]);
+                    }
+                }
+            }
+            const res = await fetchApi('GET', url);
             if (res.success == 1) {
-                setListAuthor(res.data);
+                setListAuthor(res);
             } else {
                 alert(res.message);
             }
         } catch (err) {
             alert(err.message)
         }
+        if(loading !== 1)
         setIsLoading(false);
     }
 
-    const getListCategories = async function () {
+    const getListCategories = async function (data, loading) {
+        if(loading !== 1)
         setIsLoading(true);
         try {
-            const res = await fetchApi('GET', urls.CATEGORY_URL);
+            const url = new URL(urls.CATEGORY_URL);
+            if (data) {
+                for (const key in data) {
+                    if (data[key]) {
+                        url.searchParams.set(key, data[key]);
+                    }
+                }
+            }
+            const res = await fetchApi('GET', url);
             if (res.success == 1) {
-                setListCategory(res.data);
+                setListCategory(res);
             } else {
                 alert(res.message);
             }
         } catch (err) {
             alert(err.message)
         }
+        if(loading !== 1)
         setIsLoading(false);
     }
 
-    useEffect(() => {
+    useEffect(() => {  
         getListBook();
         getListAuthors();
         getListCategories();
@@ -143,13 +176,22 @@ export default function ControlledTabs() {
                     <TabLayout
                         fields={bookFields}
                         data={listBook}
+                        getData={getListBook}
+                        setIsLoading={setIsLoading}
+                        isLoading={isLoading}
+                        listFilters={[listCategory.data, listAuthor.data]}
+                        ids={["categories", "authors"]}
+                        placeholders={["Chọn thể loại", "Chọn tác giả"]}
                     />
                 </Tab>
 
-                <Tab eventKey="categories" title="Chủ đề">
+                <Tab eventKey="categories" title="Thể loại">
                     <TabLayout
                         fields={categoryFields}
                         data={listCategory}
+                        getData={getListCategories}
+                        setIsLoading={setIsLoading}
+                        isLoading={isLoading}
                     />
                 </Tab>
 
@@ -157,6 +199,9 @@ export default function ControlledTabs() {
                     <TabLayout
                         fields={authorFields}
                         data={listAuthor}
+                        getData={getListAuthors}
+                        setIsLoading={setIsLoading}
+                        isLoading={isLoading}
                     />
                 </Tab>
             </Tabs>
