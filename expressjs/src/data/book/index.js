@@ -66,8 +66,8 @@ const saveBook = (data) => {
             pool.connect().then(() => {
                 const request = new sql.Request(pool);
                 request
-                    .input("book_name", sql.Nvarchar(255), data.book_name)
-                    .input("description", sql.Nvarchar(1000), data.description)
+                    .input("book_name", sql.NVarChar, data.book_name)
+                    .input("description", sql.NVarChar, data.description)
                     .input("price", sql.Float, data.price)
                     .input("discount", sql.Float, data.discount)
                     .input("quantity", sql.BigInt, data.quantity)
@@ -100,7 +100,7 @@ const deleteBook = async (id) => {
                     .input("book_id", sql.Int, id)
                     .query(sqlQueries.delete).then(recordset => {
                         pool.close();
-                        resolve(recordset.recordset[0])
+                        resolve(recordset.recordset)
                     }).catch(err => {
                         pool.close();
                         reject(err);
@@ -119,7 +119,7 @@ const update = async (data, book_id) => {
     let pool = new sql.ConnectionPool(config.sql);
     return new Promise(async (resolve, reject) => {
         try {
-            const sqlQueries = await utils.loadSqlQueries('author');
+            const sqlQueries = await utils.loadSqlQueries('book');
             pool.connect().then(() => {
                 const request = new sql.Request(pool);
                 request
@@ -131,7 +131,7 @@ const update = async (data, book_id) => {
                     .input("enable", sql.Int, data.enable)
                     .input("publish_year", sql.Int, data.publish_year)
                     .input("book_id", sql.Int, book_id)
-                    .query(sqlQueries.saveBook).then(recordset => {
+                    .query(sqlQueries.update).then(recordset => {
                         pool.close();
                         resolve(recordset.recordset)
                     }).catch(err => {
@@ -159,6 +159,60 @@ const saveImage = async (data) => {
                     .input("book_id", sql.Int, data.book_id)
                     .input("image_id", sql.Int, data.image_id)
                     .query(sqlQueries.saveImage).then(recordset => {
+                        pool.close();
+                        resolve(recordset.recordset)
+                    }).catch(err => {
+                        pool.close();
+                        reject(err);
+                    })
+            }).catch(err => {
+                reject(err);
+            })
+        } catch (err) {
+            console.log(err);
+            reject(err);
+        }
+    })
+}
+
+const saveAuthor = async (data) => {
+    let pool = new sql.ConnectionPool(config.sql);
+    return new Promise(async (resolve, reject) => {
+        try {
+            const sqlQueries = await utils.loadSqlQueries('book');
+            pool.connect().then(() => {
+                const request = new sql.Request(pool);
+                request
+                    .input("book_id", sql.Int, data.book_id)
+                    .input("author_id", sql.Int, data.author_id)
+                    .query(sqlQueries.saveAuthor).then(recordset => {
+                        pool.close();
+                        resolve(recordset.recordset)
+                    }).catch(err => {
+                        pool.close();
+                        reject(err);
+                    })
+            }).catch(err => {
+                reject(err);
+            })
+        } catch (err) {
+            console.log(err);
+            reject(err);
+        }
+    })
+}
+
+const saveCategory = async (data) => {
+    let pool = new sql.ConnectionPool(config.sql);
+    return new Promise(async (resolve, reject) => {
+        try {
+            const sqlQueries = await utils.loadSqlQueries('book');
+            pool.connect().then(() => {
+                const request = new sql.Request(pool);
+                request
+                    .input("book_id", sql.Int, data.book_id)
+                    .input("category_id", sql.Int, data.category_id)
+                    .query(sqlQueries.saveCategory).then(recordset => {
                         pool.close();
                         resolve(recordset.recordset)
                     }).catch(err => {
@@ -239,6 +293,60 @@ const deleteImage = async (data) => {
                     .input('book_id', sql.Int, data.book_id)
                     .input('image_id', sql.Int, data.image_id)
                     .query(sqlQueries.deleteImage).then(recordset => {
+                        pool.close();
+                        resolve(recordset.recordset)
+                    }).catch(err => {
+                        pool.close();
+                        reject(err);
+                    })
+            }).catch(err => {
+                reject(err);
+            })
+        } catch (err) {
+            console.log(err);
+            reject(err);
+        }
+    })
+}
+
+const deleteCategory = async (data) => {
+    let pool = new sql.ConnectionPool(config.sql);
+    return new Promise(async (resolve, reject) => {
+        try {
+            const sqlQueries = await utils.loadSqlQueries('book');
+            pool.connect().then(() => {
+                const request = new sql.Request(pool);
+                request
+                    .input('book_id', sql.Int, data.book_id)
+                    .input('category_id', sql.Int, data.category_id)
+                    .query(sqlQueries.deleteCategory).then(recordset => {
+                        pool.close();
+                        resolve(recordset.recordset)
+                    }).catch(err => {
+                        pool.close();
+                        reject(err);
+                    })
+            }).catch(err => {
+                reject(err);
+            })
+        } catch (err) {
+            console.log(err);
+            reject(err);
+        }
+    })
+}
+
+const deleteAuthor = async (data) => {
+    let pool = new sql.ConnectionPool(config.sql);
+    return new Promise(async (resolve, reject) => {
+        try {
+            const sqlQueries = await utils.loadSqlQueries('book');
+            pool.connect().then(() => {
+                const request = new sql.Request(pool);
+                request
+                    .input('book_id', sql.Int, data.book_id)
+                    .input('author_id', sql.Int, data.author_id)
+                    .query(sqlQueries.deleteAuthor).then(recordset => {
                         pool.close();
                         resolve(recordset.recordset)
                     }).catch(err => {
@@ -362,5 +470,9 @@ module.exports = {
     deleteBook,
     update,
     findByAuthor,
-    findByCategory
+    findByCategory,
+    saveAuthor,
+    saveCategory,
+    deleteAuthor,
+    deleteCategory
 }

@@ -93,7 +93,7 @@ const deleteAuthor = async (id) => {
                     .input("author_id", sql.Int, id)
                     .query(sqlQueries.delete).then(recordset => {
                         pool.close();
-                        resolve(recordset.recordset[0])
+                        resolve(recordset.recordset)
                     }).catch(err => {
                         pool.close();
                         reject(err);
@@ -147,7 +147,7 @@ const update = async (data, author_id) => {
                     .input("description", sql.NChar, data.description)
                     .input("enable", sql.Int, data.enable)
                     .input("author_id", sql.Int, author_id)
-                    .query(sqlQueries.saveAuthor).then(recordset => {
+                    .query(sqlQueries.update).then(recordset => {
                         pool.close();
                         resolve(recordset.recordset)
                     }).catch(err => {

@@ -19,6 +19,7 @@ const upload = async (req, res, next) => {
 
         let result = await Image.saveImage(finalImg);
         result[0].url = config.url + "/public/images/" + result[0].name;
+
         res.status(200).send(result[0]);
     } catch (err) {
         try {

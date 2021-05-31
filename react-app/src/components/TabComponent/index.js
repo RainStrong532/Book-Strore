@@ -5,6 +5,8 @@ import fetchApi from '../../services/fetchApi';
 import * as urls from '../../services/url';
 import LoadingComponent from '../commons/LoadingComponent';
 import { useHistory } from 'react-router';
+import { Modal, ModalBody, ModalFooter, ModalHeader, Button } from 'reactstrap'
+import Cookies from 'js-cookie'
 
 const bookFields = [
     {
@@ -77,25 +79,133 @@ export default function ControlledTabs() {
     const [listCategory, setListCategory] = useState({ total: 0, data: [] });
     const [listAuthor, setListAuthor] = useState({ total: 0, data: [] });
     const [isLoading, setIsLoading] = useState(false);
+    const [modal, setModal] = useState(false);
+    const [item, setItem] = useState(null)
+
+    const toggleDelete = () => {
+        setModal(!modal);
+    }
+
+    const onDelete = (data) => {
+        setItem({ ...item, ...data });
+        console.log("data:", data, item);
+        toggleDelete();
+    }
+
+    const deleleItem = async () => {
+        console.log(item, "item");
+        for (const key in item) {
+            if (Object.hasOwnProperty.call(item, key)) {
+                console.log("key: ", key);
+                if (key === 'book_id') {
+                    deleteBook();
+                    break;
+                } else if (key === 'author_id') {
+                    deleteAuthor();
+                    break;
+                } else if (key === 'category_id') {
+                    deleteCategory();
+                    break;
+                }
+            }
+        }
+    }
+
+    const deleteCategory = async () => {
+        setIsLoading(true);
+        try {
+            const token = Cookies.get('token');
+            const res = await fetchApi('DELETE', `${urls.CATEGORY_URL}/${item.category_id}`, null, token);
+            if (res.success == 0) {
+                alert(res.message);
+            } else {
+                let categories = listCategory.data;
+                categories = categories.filter(category => category.category_id !== item.category_id);
+                setListCategory({...listCategory, data: [...categories]});
+                alert("Xóa thể loại thành công");
+            }
+        } catch (err) {
+            alert(err.message)
+        }
+        setIsLoading(false);
+    }
+
+    const deleteAuthor = async () => {
+        setIsLoading(true);
+        try {
+            const token = Cookies.get('token');
+            const res = await fetchApi('DELETE', `${urls.AUTHOR_URL}/${item.author_id}`, null, token);
+            if (res.success == 0) {
+                alert(res.message);
+            } else {
+                let authors = listAuthor.data;
+                authors = authors.filter(author => author.author_id !== item.author_id);
+                setListAuthor({...listAuthor, data: [...authors]});
+                alert("Xóa tác giả thành công");
+            }
+        } catch (err) {
+            alert(err.message)
+        }
+        setIsLoading(false);
+    }
+
+    const deleteBook = async () => {
+        setIsLoading(true);
+        try {
+            const token = Cookies.get('token');
+            const res = await fetchApi('DELETE', `${urls.BOOK_URL}/${item.book_id}`, null, token);
+            if (res.success == 0) {
+                alert(res.message);
+            } else {
+                let books = listBook.data;
+                books = books.filter(book => book.book_id !== item.book_id);
+                setListBook({...listBook, data: [...books]});
+                alert("Xóa sách thành công");
+            }
+        } catch (err) {
+            alert(err.message)
+        }
+        setIsLoading(false);
+    }
 
     const history = useHistory();
 
     const handleDetailsBook = (id) => {
-        if(Number.isInteger(parseInt(id)))
-        history.push(`/admin/managements/books/${id}`)
+        if (Number.isInteger(parseInt(id)))
+            history.push(`/admin/managements/books/${id}`)
+    }
+
+    const handleDetailsCategory = (id) => {
+        if (Number.isInteger(parseInt(id)))
+            history.push(`/admin/managements/books/categories/${id}`)
+    }
+
+    const handleDetailsAuthor = (id) => {
+        if (Number.isInteger(parseInt(id)))
+            history.push(`/admin/managements/books/authors/${id}`)
     }
 
     const handleUpdateBook = (id) => {
-        if(Number.isInteger(parseInt(id)))
-        history.push(`/admin/managements/books/update/${id}`)
+        if (Number.isInteger(parseInt(id)))
+            history.push(`/admin/managements/books/update/${id}`)
+    }
+
+    const handleUpdateCategory = (id) => {
+        if (Number.isInteger(parseInt(id)))
+            history.push(`/admin/managements/books/categories/update/${id}`)
+    }
+
+    const handleUpdateAuthors = (id) => {
+        if (Number.isInteger(parseInt(id)))
+            history.push(`/admin/managements/books/authors/update/${id}`)
     }
 
     const getListBook = async function (data, loading, filter) {
-        if(loading !== 1)
-        setIsLoading(true);
+        if (loading !== 1)
+            setIsLoading(true);
         try {
             let url = new URL(urls.BOOK_URL);
-            if(filter && filter.id != -1){
+            if (filter && filter.id != -1) {
                 url = new URL(`${urls.BOOK_URL}/${filter.name}/${filter.id}`);
             }
             if (data) {
@@ -114,13 +224,13 @@ export default function ControlledTabs() {
         } catch (err) {
             alert(err.message)
         }
-        if(loading !== 1)
-        setIsLoading(false);
+        if (loading !== 1)
+            setIsLoading(false);
     }
 
     const getListAuthors = async function (data, loading) {
-        if(loading !== 1)
-        setIsLoading(true);
+        if (loading !== 1)
+            setIsLoading(true);
         try {
             const url = new URL(urls.AUTHOR_URL);
             if (data) {
@@ -139,13 +249,13 @@ export default function ControlledTabs() {
         } catch (err) {
             alert(err.message)
         }
-        if(loading !== 1)
-        setIsLoading(false);
+        if (loading !== 1)
+            setIsLoading(false);
     }
 
     const getListCategories = async function (data, loading) {
-        if(loading !== 1)
-        setIsLoading(true);
+        if (loading !== 1)
+            setIsLoading(true);
         try {
             const url = new URL(urls.CATEGORY_URL);
             if (data) {
@@ -164,11 +274,11 @@ export default function ControlledTabs() {
         } catch (err) {
             alert(err.message)
         }
-        if(loading !== 1)
-        setIsLoading(false);
+        if (loading !== 1)
+            setIsLoading(false);
     }
 
-    useEffect(() => {  
+    useEffect(() => {
         getListBook();
         getListAuthors();
         getListCategories();
@@ -197,6 +307,8 @@ export default function ControlledTabs() {
                         placeholders={["Chọn thể loại", "Chọn tác giả"]}
                         handleDetails={handleDetailsBook}
                         handleUpdate={handleUpdateBook}
+                        onAddButton={() => history.push("/admin/managements/books/add")}
+                        onDelete={onDelete}
                     />
                 </Tab>
 
@@ -207,6 +319,10 @@ export default function ControlledTabs() {
                         getData={getListCategories}
                         setIsLoading={setIsLoading}
                         isLoading={isLoading}
+                        onDelete={onDelete}
+                        onAddButton={() => history.push("/admin/managements/books/categories/add")}
+                        handleDetails={handleDetailsCategory}
+                        handleUpdate={handleUpdateCategory}
                     />
                 </Tab>
 
@@ -217,9 +333,27 @@ export default function ControlledTabs() {
                         getData={getListAuthors}
                         setIsLoading={setIsLoading}
                         isLoading={isLoading}
+                        onDelete={onDelete}
+                        onAddButton={() => history.push("/admin/managements/books/authors/add")}
+                        handleDetails={handleDetailsAuthor}
+                        handleUpdate={handleUpdateAuthors}
                     />
                 </Tab>
             </Tabs>
+
+            <Modal isOpen={modal} toggle={toggleDelete} centered={true}>
+                <ModalHeader toggle={toggleDelete}>Thông báo</ModalHeader>
+                <ModalBody>
+                    Bạn có chắc muốn xóa?
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="danger" onClick={() => {
+                        deleleItem();
+                        toggleDelete();
+                    }}>Đồng ý</Button>{' '}
+                    <Button color="secondary" onClick={toggleDelete}>Hủy</Button>
+                </ModalFooter>
+            </Modal>
         </>
     );
 }

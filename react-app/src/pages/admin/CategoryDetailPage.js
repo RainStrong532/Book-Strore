@@ -1,19 +1,19 @@
 import React from 'react';
 import Layout from '../../components/commons/Layout';
 import { AuthProvider, ProtectRoute } from '../../contexts/UserContext';
-import BookDetail from '../../containers/BookDetail'
+import CategoryDetail from '../../containers/CategoryDetail'
 
 
-function BookDetailPage() {
+function CategoryDetailPage() {
     return (
         <AuthProvider>
             <ProtectRoute>
                 <Layout>
-                    <BookDetail/>
+                    <CategoryDetail/>
                 </Layout>
             </ProtectRoute>
         </AuthProvider>
     )
 }
 
-export default BookDetailPage;
+export default CategoryDetailPage;

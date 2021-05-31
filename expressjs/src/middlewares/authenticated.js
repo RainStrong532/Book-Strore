@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { ROLES, TOKEN_SECRET } = require('../../contants')
+const Role = require('../data/role')
 
 const authenticateToken = function (req, res, next) {
   const authHeader = req.headers['authorization']
@@ -24,7 +25,7 @@ const isVerify = (req, res, next) => {
 
 
 const isAdmin = (req, res, next) => {
-  ROLE.findRoleByUserName(req.user.user_id).then(roles => {
+  Role.findRoleByUserName(req.user.user_name).then(roles => {
     for (let i = 0; i < roles.length; i++) {
       if (roles[i].role_name === ROLES.ADMIN) {
         next();
@@ -40,7 +41,7 @@ const isAdmin = (req, res, next) => {
 };
 
 const isUser = (req, res, next) => {
-  ROLE.findRoleByUserName(req.user.user_id).then(roles => {
+  Role.findRoleByUserName(req.user.user_name).then(roles => {
     for (let i = 0; i < roles.length; i++) {
       if (roles[i].role_name === ROLES.USER) {
         next();
@@ -55,7 +56,7 @@ const isUser = (req, res, next) => {
   });
 };
 const isBoss = (req, res, next) => {
-  ROLE.findRoleByUserName(req.user.user_id).then(roles => {
+  Role.findRoleByUserName(req.user.user_name).then(roles => {
     for (let i = 0; i < roles.length; i++) {
       if (roles[i].role_name === ROLES.BOSS) {
         next();

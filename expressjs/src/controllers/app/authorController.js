@@ -82,11 +82,16 @@ const findById = async (req, res, next) => {
 
     try {
         let result = await Author.findById(id);
+        if(!result){
+            return res.status(404).send({
+                success: 0, message: "không tồn tại"
+            })
+        }
         let images = await Author.findAllImages(result.author_id);
         if (images.length > 0) {
             for (let i = 0; i < images.length; i++) {
                 let rs = await Image.findById(images[i].image_id);
-                rs[0].url = rs[0].url = config.url + "/public/images/" + rs[0].image_name;
+                rs[0].url = rs[0].url = config.url + "/public/images/" + rs[0].name;
                 images[i] = {...images[i], ...rs[0]};
             }
         }
@@ -122,6 +127,7 @@ const deleteAuthor = async (req, res, next) => {
 
 const save = async (req, res, next) => {
     const data = req.body;
+    console.log(data);
     if(!data.author_name || data.author_name.length === 0){
         return res.status(400).send({
             success: 0,
@@ -189,18 +195,30 @@ const deleteImage = async (req, res) => {
 
 const saveImage = async (req, res) => {
     let { author_id } = req.params;
-    let { image_id } = req.body;
+
+    let { images } = req.body;
     try {
-        const rs = await Author.existedImage({ author_id, image_id });
-        const { isExisted } = rs[0];
-        if (isExisted == '0') {
-            await Author.saveImage({ author_id, image_id });
-            res.status(200).send({
-                success: 1
+        let imagesExist = await Author.findAllImages(author_id);
+        for (let i = 0; i < imagesExist.length; i++) {
+            let isDelete = images.find((image) => {
+                return image.image_id === imagesExist[i].image_id;
             })
-        } else {
-            res.status(400).send({ success: 0, message: "Ảnh đã tồn tại" });
+            if (!isDelete) {
+                await Author.deleteImage({ author_id, image_id: imagesExist[i].image_id });
+            }
         }
+        for (let i = 0; i < images.length; i++) {
+            let isAdd = imagesExist.find((image) => {
+                return image.image_id === images[i].image_id;
+            })
+            if (!isAdd) {
+                await Author.saveImage({ author_id, image_id: images[i].image_id });
+            }
+        }
+
+        res.status(200).send({
+            success: 1
+        })
     } catch (err) {
         res.status(400).send({ success: 0, message: err.message });
     }
@@ -230,7 +248,7 @@ const update = async (req, res, next) => {
     const { author_id } = req.params;
     try {
         const rs = await Author.findById(author_id);
-        if (rs.author_id) {
+        if (rs) {
             let d = { ...rs, ...data };
             await Author.update(d, author_id);
             return res.status(200).send({ success: 1 });

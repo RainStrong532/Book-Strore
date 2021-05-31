@@ -35,7 +35,8 @@ function PaginationCustom({ current, total, limit, setLimit, setCurrent }) {
 
     return (
         <div className="w-100 d-flex justify-content-end">
-            <select className="form-select form-select-sm mr-3 px-3" aria-label=".form-select-sm example" style={{ border: "1px solid #999", borderRadius: "5px", height: "40px" }}
+
+            <select className="form-select form-select-sm mr-3 px-3 col-1" aria-label=".form-select-sm example" style={{ border: "1px solid #999", borderRadius: "5px", height: "40px" }}
                 value={limit || 20}
                 onChange={handleSelected}
             >
@@ -43,7 +44,7 @@ function PaginationCustom({ current, total, limit, setLimit, setCurrent }) {
                 <option value="30">30</option>
                 <option value="20" defaultValue>20</option>
                 <option value="10">10</option>
-                \<option value="5">5</option>
+                <option value="5">5</option>
             </select>
 
 

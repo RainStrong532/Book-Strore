@@ -5,12 +5,13 @@ import { useHistory } from "react-router";
 import fetchApi from '../services/fetchApi'
 import * as urls from '../services/url';
 import LoadingComponent from './commons/LoadingComponent';
+import Cookies from 'js-cookie';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 
 let firstLoad = true;
 
 function BookDetail() {
     const history = useHistory();
-    const [book_id, setBook_id] = useState(null);
     const [book, setBook] = useState({
         book_name: "",
         description: "",
@@ -21,20 +22,43 @@ function BookDetail() {
     });
     const [images, setImages] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [modal, setModal] = useState(false);
+
+    const toggleDelete = () => {
+        setModal(!modal);
+    }
+
+    const handleDelete = async () => {
+        setIsLoading(true);
+        try {
+            const token = Cookies.get('token');
+            const res = await fetchApi('DELETE', `${urls.BOOK_URL}/${book.book_id}`, null, token);
+            if (res.success == 0) {
+                alert(res.message);
+            } else {
+                alert("Xóa sách thành công");
+                history.push('/admin/managements/books');
+            }
+        } catch (err) {
+            alert(err.message)
+        }
+        setIsLoading(false);
+    }
 
     const getBook = async (id) => {
         setIsLoading(true);
         try {
-            console.log("book_id: ", book_id);
             const res = await fetchApi('GET', `${urls.BOOK_URL}/${id}`);
             if (res.success === 1) {
                 setBook(res.data);
                 setImages(res.data.images.map(image => image.url));
             } else {
                 alert(res.message);
+                history.push("/admin/managements/books")
             }
         } catch (e) {
             alert(e.message)
+            history.push("/admin/managements/books")
         }
         setIsLoading(false);
     }
@@ -49,7 +73,6 @@ function BookDetail() {
             let id = p[p.length - 1];
             id = parseInt(id);
             if (Number.isInteger(id)) {
-                setBook_id(id);
                 getBook(id);
             } else {
                 console.log("id not valid");
@@ -73,10 +96,14 @@ function BookDetail() {
                 </div>
 
                 <div className="right">
-                    <Button variant="warning" className="mx-2" title="Chỉnh sửa">
+                    <Button variant="warning" className="mx-2" title="Chỉnh sửa"
+                        onClick={() => history.push(`/admin/managements/books/update/${book.book_id}`) }
+                    >
                         <i className="fas fa-edit" style={{ color: "#FFF" }}></i>
                     </Button>
-                    <Button variant="danger" className="mx-2" title="Xóa">
+                    <Button variant="danger" className="mx-2" title="Xóa"
+                        onClick={toggleDelete}
+                    >
                         <i className="fas fa-trash-alt"></i>
                     </Button>
                 </div>
@@ -120,7 +147,7 @@ function BookDetail() {
                         <Form>
                             <Form.Group className="mb-3" controlId="description">
                                 <Form.Label>Mô tả</Form.Label>
-                                <p className="form-control bg-light" style={{ minHeight: "100px" }}>Mô tả</p>
+                                <p className="form-control bg-light" style={{ minHeight: "100px" }}>{book.description || ""}</p>
                             </Form.Group>
                         </Form>
 
@@ -166,7 +193,7 @@ function BookDetail() {
 
                         <Form>
                             <Form.Group className="mb-3" controlId="book_name">
-                                <Form.Label>Danh sách chủ đề</Form.Label>
+                                <Form.Label>Danh sách thể loại</Form.Label>
                                 <div className="d-flex flex-wrap">
                                     {
                                         book.categories
@@ -190,6 +217,19 @@ function BookDetail() {
                     </div>
                 </div>
             </div>
+            <Modal isOpen={modal} toggle={toggleDelete} centered={true}>
+                <ModalHeader toggle={toggleDelete}>Thông báo</ModalHeader>
+                <ModalBody>
+                    Bạn có chắc muốn xóa?
+                </ModalBody>
+                <ModalFooter>
+                    <Button variant="danger" onClick={() => {
+                        handleDelete();
+                        toggleDelete();
+                    }}>Đồng ý</Button>{' '}
+                    <Button variant="secondary" onClick={toggleDelete}>Hủy</Button>
+                </ModalFooter>
+            </Modal>
         </div>
     )
 }

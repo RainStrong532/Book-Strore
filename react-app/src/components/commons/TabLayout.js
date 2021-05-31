@@ -5,7 +5,17 @@ import SearchBox from './SearchBox';
 import TableCustom from './TableCustom';
 import Filter from './Filter';
 
-function TabLayout({ data, fields, getData, listFilters, ids, placeholders, handleUpdate, handleDetails}) {
+function TabLayout({ data,
+    fields,
+    getData,
+    listFilters,
+    ids,
+    placeholders,
+    handleUpdate,
+    handleDetails,
+    onAddButton,
+    onDelete
+}) {
 
     const [limit, setLimit] = useState(20);
     const [current, setCurrent] = useState(1);
@@ -95,7 +105,13 @@ function TabLayout({ data, fields, getData, listFilters, ids, placeholders, hand
                    }
 
                     <Col lg={2}>
-                        <Button variant="success" title="Thêm mới">
+                        <Button variant="success" title="Thêm mới"
+                            onClick={() => {
+                                if(onAddButton){
+                                    onAddButton();
+                                }
+                            }}
+                        >
                             <i className="fas fa-plus"></i>
                         </Button>
                     </Col>
@@ -107,6 +123,7 @@ function TabLayout({ data, fields, getData, listFilters, ids, placeholders, hand
                     sortBy={sortBy}
                     handleDetails={handleDetails}
                     handleUpdate={handleUpdate}
+                    handleDelete={onDelete}
                 />
             </div>
             <PaginationCustom total={data.total} current={current} limit={limit} setLimit={setLimit} setCurrent={setCurrent} />

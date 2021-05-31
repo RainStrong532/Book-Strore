@@ -18,15 +18,6 @@ const validate = async (req, res, next) => {
             success: 0, message:"Yêu cầu có số lượng sách"
         })
     }
-
-    if(!data.authors || data.authors.length === 0){
-        return res.status(400).send({success: 0, message:"Yêu cầu thông tin tác giả"})
-    }
-
-    if(!data.categories || data.categories.length === 0){
-        return res.status(400).send({success: 0, message:"Yêu cầu thông tin thể loại"})
-    }
-
     next();
 }
 

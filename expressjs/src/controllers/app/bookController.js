@@ -4,6 +4,7 @@ const Book = require('../../data/book');
 const Image = require('../../data/image');
 const Author = require('../../data/author');
 const Category = require('../../data/category');
+const config = require('../../../config');
 
 const columns = ['book_id', 'book_name', 'description', 'quantity', 'price', 'discount', 'publish_year'];
 const sortType = ['ASC', 'DESC'];
@@ -83,18 +84,24 @@ const findById = async (req, res, next) => {
 
     try {
         let result = await Book.findById(id);
+        if(!result){
+            return res.status(404).send({
+                success: 0, message: "Không tồn tại"
+            })
+        }
         let images = await Book.findAllImages(result.book_id);
+
         if (images.length > 0) {
             for (let i = 0; i < images.length; i++) {
                 let rs = await Image.findById(images[i].image_id);
-                rs[0].url = rs[0].url = config.url + "/public/images/" + rs[0].image_name;
-                images[i] = {...images[i], ...rs[0]};
+                rs[0].url = rs[0].url = config.url + "/public/images/" + rs[0].name;
+                images[i] = { ...images[i], ...rs[0] };
             }
         }
 
         let authors = await Author.findByBookId(id);
         let categories = await Category.findByBookId(id);
-        result = {...result, images, authors, categories};
+        result = { ...result, images, authors, categories };
         res.status(200).send({
             success: 1,
             data: result,
@@ -110,20 +117,12 @@ const saveBook = async (req, res, next) => {
     const data = req.body;
 
     try {
-        const book = await Book.save(data);
+        const book = await Book.saveBook(data);
 
         if (!book.book_id) {
             return res.status(400).send({ success: 0, message: "Tạo thất bại" })
         }
-
-        if (data.images) {
-            data.images.forEach(
-                async (image) => {
-                    await Book.saveImage({ book_id: book.book_id, image_id: image.image_id });
-                }
-            )
-        }
-        return res.status(200).send({ success: 1, data: { book_id: book.book_id } });
+        return res.status(200).send({ success: 1, data: book });
     } catch (err) {
         res.status(400).send({ success: 0, message: err.message });
     }
@@ -189,18 +188,29 @@ const deleteImage = async (req, res) => {
 
 const saveImage = async (req, res) => {
     let { book_id } = req.params;
-    let { image_id } = req.body;
+    let { images } = req.body;
     try {
-        const rs = await Book.existedImage({ book_id, image_id });
-        const { isExisted } = rs[0];
-        if (isExisted == '0') {
-            await Book.saveImage({ book_id, image_id });
-            res.status(200).send({
-                success: 1
+        let imagesExist = await Book.findAllImages(book_id);
+        for (let i = 0; i < imagesExist.length; i++) {
+            let isDelete = images.find((image) => {
+                return image.image_id === imagesExist[i].image_id;
             })
-        } else {
-            res.status(400).send({ success: 0, message: "Ảnh đã tồn tại" });
+            if (!isDelete) {
+                await Book.deleteImage({ book_id, image_id: imagesExist[i].image_id });
+            }
         }
+        for (let i = 0; i < images.length; i++) {
+            let isAdd = imagesExist.find((image) => {
+                return image.image_id === images[i].image_id;
+            })
+            if (!isAdd) {
+                await Book.saveImage({ book_id, image_id: images[i].image_id });
+            }
+        }
+
+        res.status(200).send({
+            success: 1
+        })
     } catch (err) {
         res.status(400).send({ success: 0, message: err.message });
     }
@@ -331,6 +341,96 @@ const findByAuthorId = async (req, res, next) => {
     }
 }
 
+const saveAuthor = async (req, res, next) => {
+    const { authors } = req.body;
+    const { book_id } = req.params;
+
+    try {
+        let authorsExist = await Author.findByBookId(book_id);
+        for (let i = 0; i < authorsExist.length; i++) {
+            let isDelete = authors.find((author) => {
+                return author.author_id === authorsExist[i].author_id;
+            })
+            if (!isDelete) {
+                await Book.deleteAuthor({ book_id, author_id: authorsExist[i].author_id });
+            }
+        }
+        for (let i = 0; i < authors.length; i++) {
+            let isAdd = authorsExist.find((author) => {
+                return author.author_id === authors[i].author_id;
+            })
+            if (!isAdd) {
+                await Book.saveAuthor({ book_id, author_id: authors[i].author_id });
+            }
+        }
+
+        res.status(200).send({
+            success: 1
+        })
+    } catch (err) {
+        res.status(400).send({ success: 0, message: err.message });
+    }
+}
+
+const saveCategory = async (req, res, next) => {
+    const { categories } = req.body;
+    const { book_id } = req.params;
+
+    try {
+        let categoriesExist = await Category.findByBookId(book_id);
+        for (let i = 0; i < categoriesExist.length; i++) {
+            let isDelete = categories.find((category) => {
+                return category.category_id === categoriesExist[i].category_id;
+            })
+            if (!isDelete) {
+                await Book.deleteCategory({ book_id, category_id: categoriesExist[i].category_id });
+            }
+        }
+        for (let i = 0; i < categories.length; i++) {
+            let isAdd = categoriesExist.find((category) => {
+                return category.category_id === categories[i].category_id;
+            })
+            if (!isAdd) {
+                await Book.saveCategory({ book_id, category_id: categories[i].category_id });
+            }
+        }
+
+        res.status(200).send({
+            success: 1
+        })
+    } catch (err) {
+        res.status(400).send({ success: 0, message: err.message });
+    }
+}
+const deleteAuthor = async (req, res, next) => {
+    const { book_id, author_id } = req.params;
+
+    try {
+        await Book.deleteAuthor({ author_id, book_id })
+        res.status(200).send({
+            success: 1
+        })
+    } catch (err) {
+        res.status(400).send({
+            success: 0, message: err.message
+        })
+    }
+}
+const deleteCategory = async (req, res, next) => {
+    const { book_id, category_id } = req.params;
+
+    try {
+        await Book.deleteCategory({ category_id, book_id })
+        res.status(200).send({
+            success: 1
+        })
+    } catch (err) {
+        res.status(400).send({
+            success: 0, message: err.message
+        })
+    }
+}
+
 module.exports = {
     findAll,
     findById,
@@ -342,5 +442,9 @@ module.exports = {
     findAllImage,
     update,
     findByCategoryId,
-    findByAuthorId
+    findByAuthorId,
+    saveAuthor,
+    deleteAuthor,
+    saveCategory,
+    deleteCategory
 }

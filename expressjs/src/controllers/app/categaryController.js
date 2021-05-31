@@ -80,10 +80,14 @@ const findById = async (req, res, next) => {
 
     try {
         let result = await Category.findById(id);
-        res.status(200).send({
-            success: 1,
-            data: result,
-        })
+        if (result) {
+            res.status(404).send({
+                success: 1,
+                data: result,
+            })
+        }else{
+            res.status(400).send({ success: 0, message: "Không tồn tại" });
+        }
 
     } catch (err) {
         res.status(400).send({ success: 0, message: err.message });
@@ -140,17 +144,17 @@ const update = async (req, res, next) => {
 
     try {
         const rs = await Category.findById(id);
-        if(rs.category_id){
-            let d = {...rs, ...data};
-        await Category.update(d, id);
-        res.status(200).send({
-            success: 1
-        })
-    }else{
-        return res.status(404).send({
-            success: 0, message: "Không tìm thấy thể loại"
-        })
-    }
+        if (rs.category_id) {
+            let d = { ...rs, ...data };
+            await Category.update(d, id);
+            res.status(200).send({
+                success: 1
+            })
+        } else {
+            return res.status(404).send({
+                success: 0, message: "Không tìm thấy thể loại"
+            })
+        }
 
     } catch (err) {
         res.status(400).send({ success: 0, message: err.message });

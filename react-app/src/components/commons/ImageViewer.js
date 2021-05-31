@@ -24,10 +24,10 @@ function ImageViewerCustom({images}) {
                         <div className="no-image ml-3 col-3 d-flex justify-content-center align-items-center pl-0"
                         style={{ height: "200px", background: "#d5d5d5" }}
                         >
-                            <p className="m-0">Chưa có ảnh nào</p>
+                            <p className="m-0" style={{color: "#666", fontWeight: "bold", cursor: "context-menu"}}>Chưa có ảnh nào</p>
                         </div>
                         :
-                        <div className="col-3 d-flex justify-content-center align-items-center" style={{ overflow: 'hidden' }}>
+                        <div className="col-3 d-flex justify-content-center align-items-center" style={{ overflow: 'hidden', border: "1px solid #e5e5e5" }}>
                             <img
                                 src={images[0]}
                                 onClick={() => openImageViewer(0)}
@@ -36,7 +36,7 @@ function ImageViewerCustom({images}) {
                                 }}
                                 height="200"
                                 key={0}
-                                style={{ margin: '2px' }}
+                                style={{ margin: '2px', cursor: "pointer" }}
                                 alt="" />
                         </div>
                 }
