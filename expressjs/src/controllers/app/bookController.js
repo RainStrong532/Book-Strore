@@ -36,6 +36,17 @@ const findAll = async (req, res, next) => {
         let result = await Book.findAll(pattern, order_by, sort_by);
         let total = Math.ceil(result.length / page_size);
         result = result.splice(page_number * page_size, page_size);
+
+        for (let i = 0; i < result.length; i++){
+            const img = await Book.findOneImage(result[i].book_id);
+            if(img[0]){
+                img[0].url = img[0].url = config.url + "/public/images/" + img[0].name;
+                result[i] = {...result[i], image: {...img[0]}};
+            }else{
+                result[i] = {...result[i], image: null};
+            }
+        }
+        
         let url = new URL(`${process.env.HOST_URL}/api/app/books`);
         if (text_search.length > 0) {
             url.searchParams.set('text_search', text_search);

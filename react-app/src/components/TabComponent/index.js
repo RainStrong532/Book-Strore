@@ -80,7 +80,10 @@ export default function ControlledTabs() {
     const [listAuthor, setListAuthor] = useState({ total: 0, data: [] });
     const [isLoading, setIsLoading] = useState(false);
     const [modal, setModal] = useState(false);
-    const [item, setItem] = useState(null)
+    const [item, setItem] = useState(null);
+
+    const [ready, setReady] = useState(false);
+
 
     const toggleDelete = () => {
         setModal(!modal);
@@ -201,8 +204,9 @@ export default function ControlledTabs() {
     }
 
     const getListBook = async function (data, loading, filter) {
-        if (loading !== 1)
+        if (loading !== 1){
             setIsLoading(true);
+        }
         try {
             let url = new URL(urls.BOOK_URL);
             if (filter && filter.id != -1) {
@@ -218,19 +222,22 @@ export default function ControlledTabs() {
             const res = await fetchApi('GET', url);
             if (res.success == 1) {
                 setListBook(res);
+                setReady(true);
             } else {
                 alert(res.message);
             }
         } catch (err) {
             alert(err.message)
         }
-        if (loading !== 1)
+        if (loading !== 1){
             setIsLoading(false);
+        }
     }
 
     const getListAuthors = async function (data, loading) {
-        if (loading !== 1)
+        if (loading !== 1){
             setIsLoading(true);
+        }
         try {
             const url = new URL(urls.AUTHOR_URL);
             if (data) {
@@ -249,13 +256,15 @@ export default function ControlledTabs() {
         } catch (err) {
             alert(err.message)
         }
-        if (loading !== 1)
+        if (loading !== 1){
             setIsLoading(false);
+        }
     }
 
     const getListCategories = async function (data, loading) {
-        if (loading !== 1)
+        if (loading !== 1){
             setIsLoading(true);
+        }
         try {
             const url = new URL(urls.CATEGORY_URL);
             if (data) {
@@ -274,14 +283,15 @@ export default function ControlledTabs() {
         } catch (err) {
             alert(err.message)
         }
-        if (loading !== 1)
+        if (loading !== 1){
             setIsLoading(false);
+        }
     }
 
-    useEffect(() => {
+    useEffect(() => {  
+        getListAuthors(null, 1);
+        getListCategories(null, 1);
         getListBook();
-        getListAuthors();
-        getListCategories();
     }, [])
 
     return (
@@ -309,6 +319,7 @@ export default function ControlledTabs() {
                         handleUpdate={handleUpdateBook}
                         onAddButton={() => history.push("/admin/managements/books/add")}
                         onDelete={onDelete}
+                        ready={ready}
                     />
                 </Tab>
 
@@ -323,6 +334,7 @@ export default function ControlledTabs() {
                         onAddButton={() => history.push("/admin/managements/books/categories/add")}
                         handleDetails={handleDetailsCategory}
                         handleUpdate={handleUpdateCategory}
+                        ready={ready}
                     />
                 </Tab>
 
@@ -337,6 +349,7 @@ export default function ControlledTabs() {
                         onAddButton={() => history.push("/admin/managements/books/authors/add")}
                         handleDetails={handleDetailsAuthor}
                         handleUpdate={handleUpdateAuthors}
+                        ready={ready}
                     />
                 </Tab>
             </Tabs>

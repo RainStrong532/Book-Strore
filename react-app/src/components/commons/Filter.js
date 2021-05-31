@@ -16,14 +16,15 @@ function Filter({
     className,
     onChange,
     lastOption,
-    onLastOption
+    onLastOption,
+    ready
 }) {
 
     const [selected, setSelected] = useState(-1);
     const selectedRef = useRef();
 
     useEffect(() => {
-        if (getData && selected >= -1) {
+        if (getData && selected >= -1 && ready ) {
             setCurrent(1);
             getData({
                 text_search: text_search,
@@ -31,7 +32,7 @@ function Filter({
                 page_size: limit,
                 order_by: orderBy,
                 sort_by: sortBy ? 'ASC' : 'DESC'
-            }, 0, { name: id, id: selected });
+            }, null, { name: id, id: selected });
         }
 
         if (selected == -2) {

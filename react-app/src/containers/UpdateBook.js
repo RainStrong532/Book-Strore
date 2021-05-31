@@ -44,12 +44,13 @@ function UpdateBook() {
                 alert(res.message);
             } else {
                 if (images && images.length > 0) {
-                    saveImages(images, res.data.book_id);
+                    saveImages(images, book.book_id);
                 }
 
-                saveAuthors(authors, res.data.book_id);
+                saveAuthors(authors, book.book_id);
 
-                saveCategories(categories, res.data.book_id);
+                saveCategories(categories, book.book_id);
+
                 deleteFromLocalStorage(book.book_id);
                 alert("Cập nhật sách thành công");
                 history.push("/admin/managements/books");

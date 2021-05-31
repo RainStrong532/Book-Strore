@@ -31,7 +31,7 @@ function Menu() {
                                 <li><a href="/admin/managements/about-us">Quản lý thông tin giới thiệu</a></li>
 
                                 {
-                                    user.roles.length === 3
+                                    (user && user.roles.length === 3)
                                     ?
                                     <li><a href="/admin/managements/employees">Quản lý thông tin nhân viên</a></li>
                                     :

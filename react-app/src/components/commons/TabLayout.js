@@ -14,7 +14,8 @@ function TabLayout({ data,
     handleUpdate,
     handleDetails,
     onAddButton,
-    onDelete
+    onDelete,
+    ready
 }) {
 
     const [limit, setLimit] = useState(20);
@@ -58,6 +59,7 @@ function TabLayout({ data,
                         limit={limit}
                         setFilterActive={setFilterActive}
                         filterActive={filterActive}
+                        ready={ready}
                     />
                 </Col>
             )
@@ -65,7 +67,8 @@ function TabLayout({ data,
     }
 
     useEffect(() => {
-        if (getData) {
+        console.log("ready", ready);
+        if (getData && ready) {
             setCurrent(1);
             getData({
                 text_search: text_search,
@@ -78,7 +81,7 @@ function TabLayout({ data,
     }, [text_search]);
 
     useEffect(() => {
-        if (getData) {
+        if (getData && ready) {
             getData({
                 text_search: text_search,
                 page_number: current - 1,
