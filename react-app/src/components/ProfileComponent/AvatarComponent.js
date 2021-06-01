@@ -144,7 +144,7 @@ function AvatarComponent({ user, loading, setLoading, other }) {
                             onClick={() => { setShowMenu(!showMenu) }}
                         />
 
-                        <ul className={`menu-dd ${showMenu ? "active" : ""}`}>
+                        <ul className={`menu-dd p-0 ${showMenu ? "active" : ""}`}>
                             <li
                                 onClick={handleDeleteAvatar}
                             >

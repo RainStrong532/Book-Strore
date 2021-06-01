@@ -15,7 +15,7 @@ let firstLoad = false;
 
 function ProfileComponent(props) {
     const auth = useAuth();
-    console.log(auth);
+    console.log("auth.....", auth);
     const [other, setOther] = useState(null);
     const [redirect, setRedirect] = useState(false);
 
@@ -57,6 +57,7 @@ function ProfileComponent(props) {
         if (!other) {
             return (<LoadingComponent></LoadingComponent>)
         } else {
+            console.log("auth: ", auth.roles, "user: ", other.roles);
             return (
                 <>
                     {

@@ -55,6 +55,7 @@ function LoginComponent() {
                 if (!res.message === "Sent") {
                     alert(res.message);
                 }else{
+                    await auth.login( user_name_up,  password_up);
                     alert("Đăng ký tài khoản thành công. Xác thực tài khoản!");
                     setTimeout(() => {
                         history.push("/verify");

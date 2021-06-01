@@ -117,7 +117,7 @@ function CoverImageComponent({ user, loading, setLoading, other }) {
 
                             {
                                 showMenu &&
-                                <ul className="menu-dd">
+                                <ul className="menu-dd p-0">
                                     <li
                                         onClick={handleDeleteCoverImage}
                                     >

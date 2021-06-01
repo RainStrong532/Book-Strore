@@ -188,7 +188,6 @@ export const ProtectRoute = ({ children }) => {
             } else if (user.is_verify !== 1) {
                 return (<Redirect to="/verify" />)
             } else if (path.startsWith('/admin')) {
-                console.log("route admin");
                 if (user.roles.length === 1) {
                     console.log("user");
                     return (<NotAuthorizedComponent />);

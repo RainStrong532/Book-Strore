@@ -171,10 +171,51 @@ const verifyAccount = async (req, res, next) => {
 }
 
 const getUserInfo = async (req, res, next) => {
-    let { user } = req;
+    let { account_id } = req.user;
     try {
-        let profile = await Profile.findByAccountId(user.account_id);
-        const roles = await Role.findRoleByUserName(user.user_name);
+        let user = await Account.findByAccountId(account_id);
+        user = user[0];
+        delete user.password;
+        let profile = await Profile.findByAccountId(account_id);
+        const roles = await Role.findRoleByAccountId(account_id);
+        if (profile.length === 1) {
+            if (profile[0].avatar) {
+                let avatar = await Image.findById(profile[0].avatar);
+                if (avatar.length === 1) {
+                    avatar[0].url = config.url + "/public/images/" + avatar[0].name;
+                    profile[0].avatar = avatar[0];
+                }
+            }
+            if (profile[0].cover_image) {
+                let cover_image = await Image.findById(profile[0].cover_image);
+                if (cover_image.length === 1) {
+                    cover_image[0].url = config.url + "/public/images/" + cover_image[0].name;
+                    profile[0].cover_image = cover_image[0];
+                }
+            }
+            user.profile = profile[0];
+        } else {
+            user.profile = {};
+        }
+        if (roles.length > 0) {
+            user.roles = roles;
+        } else {
+            user.roles = [];
+        }
+        res.status(200).send(user);
+    } catch (err) {
+        res.status(400).send({ message: err.message });
+    }
+}
+
+const getUserInfoById = async (req, res, next) => {
+    let { account_id } = req.params;
+    try {
+        let user = await Account.findByAccountId(account_id);
+        user = user[0];
+        delete user.password;
+        let profile = await Profile.findByAccountId(account_id);
+        const roles = await Role.findRoleByAccountId(account_id);
         if (profile.length === 1) {
             if (profile[0].avatar) {
                 let avatar = await Image.findById(profile[0].avatar);
@@ -252,5 +293,6 @@ module.exports = {
     updatePassword,
     updateAccount,
     existedEmail,
-    existedUserName
+    existedUserName,
+    getUserInfoById
 }
