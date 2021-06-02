@@ -171,7 +171,7 @@ function ForgotPasswordComponent() {
                                     ?
                                     <input className="form-control mt-5"
                                         value={verifyCode}
-                                        type="number"
+                                        type="text"
                                         onChange={(e) => { setVerifyCode(e.target.value) }}
                                     />
                                     :

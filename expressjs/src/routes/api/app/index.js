@@ -8,7 +8,7 @@ const authorRouter = require("../app/authorRouter");
 const categoryRouter = require("../app/categoryRouter");
 
 router.use("/images", imageRouter.routes);
-router.use("/chats", chatRouter.routes);
+router.use("/conversations", chatRouter.routes);
 router.use("/books", bookRouter.routes);
 router.use("/authors", authorRouter.routes);
 router.use("/categories", categoryRouter.routes);

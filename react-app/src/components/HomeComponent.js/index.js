@@ -27,7 +27,7 @@ function HomeComponent({ books }) {
                         </>
                 }
             </section>
-            <p className="text-center"><a href="/products">More Books &nbsp;<i className="fa fa-long-arrow-right"></i></a></p>
+            <p className="text-center"><a href="/products">More Books &nbsp;<i className="fas fa-arrow-right" style={{ fontSize: "0.8rem" }}></i></a></p>
         </Container>
     )
 }

@@ -29,6 +29,31 @@ const findRoleByUserName = (userName) => {
     })
 }
 
+const findRoleByAccountId = (account_id) => {
+    let pool = new sql.ConnectionPool(config.sql);
+    return new Promise(async (resolve, reject) => {
+        try {
+            const sqlQueries = await utils.loadSqlQueries('role');
+            pool.connect().then(() => {
+                const request = new sql.Request(pool);
+                    request.input("account_id", sql.Int, account_id)
+                    .query(sqlQueries.findRoleByAccountId).then(recordset => {
+                    pool.close();
+                    resolve(recordset.recordset)
+                }).catch(err => {
+                    pool.close();
+                    reject(err);
+                })
+            }).catch(err => {
+                reject(err);
+            })
+        } catch (err) {
+            console.log(err);
+            reject(err);
+        }
+    })
+}
+
 const findByRoleName = (role_name) => {
     let pool = new sql.ConnectionPool(config.sql);
     return new Promise(async (resolve, reject) => {
@@ -86,5 +111,6 @@ const saveRoleAccount = (role_id, account_id) => {
 module.exports = {
     findRoleByUserName,
     findByRoleName,
-    saveRoleAccount
+    saveRoleAccount,
+    findRoleByAccountId
 }

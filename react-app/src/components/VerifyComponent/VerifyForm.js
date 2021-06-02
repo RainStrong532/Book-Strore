@@ -16,12 +16,13 @@ function VerifyForm() {
     const [isSend, setIsSend] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const histoty = useHistory();
+    const [user_name, setUserName] = useState(null);
 
     const handleVerify = async () => {
         if (auth.verify) {
             setIsLoading(true);
             try {
-                const res = await auth.verify({ code: verifyCode, user_name: auth.user.user_name });
+                const res = await auth.verify({ code: verifyCode, user_name: user_name ? user_name : auth.user.user_name });
                 if (res.message === "success") {
                     alert("Xác thực tài khoản thành công bạn cần đăng nhập lại để tiếp tục");
                     Cookies.remove("token");
@@ -61,14 +62,16 @@ function VerifyForm() {
     }
 
     useEffect(() => {
-        console.log('==================User==================');
-        console.log(auth.user);
-        console.log('====================================');
         if (firstLoad) {
             firstLoad = false;
             if (!auth.user) {
-                alert("Bạn phải đăng nhập trước để xác thực tài khoản");
-                histoty.push("/login");
+                if(window.history.state.state && window.history.state.state.user_name){
+                    setUserName(window.history.state.state.user_name);
+                }else{
+                    alert('Bạn cần đăng nhập để xác thực tài khoản');
+                    histoty.push("/login");
+                }
+                
             }
             else if (auth.user.is_verify === 0) {
                 if (!isSend)

@@ -32,7 +32,7 @@ function LoginComponent() {
     }
 
     const handleSignup = async () => {
-        let data = { ...profile, email: email, user_name: user_name_up, password: password_up }
+        let data = { ...profile, email: email, user_name: user_name_up.toLowerCase(), password: password_up }
         const mes = utils.validates.validatePassword(password_up);
 
         if (mes) {
@@ -54,12 +54,13 @@ function LoginComponent() {
                 const res = await auth.signup(data);
                 if (!res.message === "Sent") {
                     alert(res.message);
-                }else{
-                    await auth.login( user_name_up,  password_up);
+                } else {
                     alert("Đăng ký tài khoản thành công. Xác thực tài khoản!");
-                    setTimeout(() => {
-                        history.push("/verify");
-                    }, 500);
+                    history.push({
+                        pathname: "/verify",
+                        state: {user_name: user_name_up}
+                    });
+
                 }
             } catch (err) {
                 let data = { ...profile, email: email, user_name: user_name_up, password: password_up }
@@ -104,7 +105,7 @@ function LoginComponent() {
         }
         if (auth.login) {
             try {
-                const res = await auth.login(user_name, password);
+                const res = await auth.login(user_name.toLowerCase(), password);
                 const desc = "Chào mừng " + res.user_name + ",";
                 setData({ ...data, desc });
                 toggle();
@@ -146,7 +147,7 @@ function LoginComponent() {
                         />
                     </label>
                     <p className="forgot-pass"
-                        onClick={()=>{
+                        onClick={() => {
                             history.push("/forgot-password")
                         }}
                     >Quên mật khẩu?</p>

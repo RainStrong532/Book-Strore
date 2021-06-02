@@ -11,6 +11,7 @@ router.post("/signup", verifyData.checkMail, verifyData.checkDuplicateUsername, 
 router.post("/signin", authController.signin);
 router.post("/signout", authenticated.authenticateToken, authController.signout);
 router.get("/users",authenticated.authenticateToken ,authController.getUserInfo);
+router.get("/users/:account_id" ,authController.getUserInfoById);
 router.post("/mails", sendMailController.sendMailVerify);
 router.put("/mails",sendMailController.sendMail);
 router.post("/email",authController.existedEmail);
