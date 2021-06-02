@@ -60,7 +60,7 @@ const updateMessage = (message_id) => {
     })
 }
 
-const findByAccountId = (account_id) => {
+const deleteMessage = (message_id) => {
     let pool = new sql.ConnectionPool(config.sql);
     return new Promise(async (resolve, reject) => {
         try {
@@ -68,8 +68,8 @@ const findByAccountId = (account_id) => {
             pool.connect().then(() => {
                 const request = new sql.Request(pool);
                 request
-                    .input("account_id", sql.Int, account_id)
-                    .query(sqlQueries.findByAccountId).then(recordset => {
+                    .input("message_id", sql.Int, message_id)
+                    .query(sqlQueries.deleteMessage).then(recordset => {
                         pool.close();
                         resolve(recordset.recordset)
                     }).catch(err => {
@@ -86,7 +86,7 @@ const findByAccountId = (account_id) => {
     })
 }
 
-const findAllByConversationId = (conversation_id) => {
+const findAllByConversationId = ({ conversation_id, offset, limit}) => {
     let pool = new sql.ConnectionPool(config.sql);
     return new Promise(async (resolve, reject) => {
         try {
@@ -95,7 +95,35 @@ const findAllByConversationId = (conversation_id) => {
                 const request = new sql.Request(pool);
                 request
                     .input("conversation_id", sql.Int, conversation_id)
+                    .input("offset", sql.Int, offset)
+                    .input("limit", sql.Int, limit)
                     .query(sqlQueries.findAllByConversationId).then(recordset => {
+                        pool.close();
+                        resolve(recordset.recordset)
+                    }).catch(err => {
+                        pool.close();
+                        reject(err);
+                    })
+            }).catch(err => {
+                reject(err);
+            })
+        } catch (err) {
+            console.log(err);
+            reject(err);
+        }
+    })
+}
+
+const seenMessage = (message_id) => {
+    let pool = new sql.ConnectionPool(config.sql);
+    return new Promise(async (resolve, reject) => {
+        try {
+            const sqlQueries = await utils.loadSqlQueries('message');
+            pool.connect().then(() => {
+                const request = new sql.Request(pool);
+                request
+                    .input("message_id", sql.Int, message_id)
+                    .query(sqlQueries.seenMessage).then(recordset => {
                         pool.close();
                         resolve(recordset.recordset)
                     }).catch(err => {
@@ -115,6 +143,7 @@ const findAllByConversationId = (conversation_id) => {
 module.exports = {
     saveMessage,
     updateMessage,
-    findByAccountId,
-    findAllByConversationId
+    deleteMessage,
+    findAllByConversationId,
+    seenMessage
 }

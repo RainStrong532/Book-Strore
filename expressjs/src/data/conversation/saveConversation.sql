@@ -1,2 +1,2 @@
-INSERT INTO [conversation]([user_id])
-VALUES(@user_id);
+INSERT INTO [conversation]([conversation_id])
+VALUES(@conversation_id);

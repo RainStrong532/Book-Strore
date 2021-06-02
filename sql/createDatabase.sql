@@ -65,15 +65,11 @@ CREATE TABLE profile(
    FOREIGN KEY (account_id) REFERENCES account(account_id),
 );
 
-CREATE TABLE conversation(
-	user_id INT FOREIGN KEY REFERENCES account(account_id) PRIMARY KEY,
-	enable INT NOT NULL DEFAULT 1
-)
 
-CREATE TABLE conversation_admin(
-	user_id INT NOT NULL FOREIGN KEY REFERENCES conversation(user_id),
-	admin_id INT NOT NULL FOREIGN KEY REFERENCES account(account_id),
-	CONSTRAINT pk_conversation_admin PRIMARY KEY(user_id, admin_id)
+CREATE TABLE conversation(
+	coversation_id INT FOREIGN KEY REFERENCES account(account_id),
+	enable INT NOT NULL DEFAULT 1,
+	PRIMARY KEY(coversation_id)
 );
 
 CREATE TABLE message(
@@ -85,7 +81,7 @@ CREATE TABLE message(
 	create_date DATETIME DEFAULT GETDATE(),
 	enable INT NOT NULL DEFAULT 1,
 	seen_date DATETIME,
-	conversation_id INT FOREIGN KEY REFERENCES conversation(user_id) NOT NULL,
+	conversation_id INT FOREIGN KEY REFERENCES conversation(coversation_id) NOT NULL,
 );
 
 CREATE TABLE category(

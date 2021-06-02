@@ -1,0 +1,1 @@
+SELECT * FROM [conversation] WHERE [conversation_id] = @conversation_id AND [enable] = 1;

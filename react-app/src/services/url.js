@@ -18,3 +18,5 @@ export const BOOK_URL = URL_DOMAIN + "/api/app/books";
 export const CATEGORY_URL = URL_DOMAIN + "/api/app/categories";
 
 export const AUTHOR_URL = URL_DOMAIN + "/api/app/authors";
+
+export const CONVERSATION_URL = URL_DOMAIN + "/api/app/conversations";

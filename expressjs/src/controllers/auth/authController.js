@@ -112,24 +112,31 @@ const resetPassword = async (req, res, next) => {
 }
 
 const updatePassword = async (req, res, next) => {
-    let { password } = req.body;
+    let { password, oldPassword } = req.body;
     const { account_id } = req.user;
 
     try {
-        if (!password) {
+        if (!password || !oldPassword) {
             res.status(400).json({ success: 0, message: 'Yêu cầu thông tin mật khẩu' });
             return;
-        }
-        if (password.length < 8) {
-            return res.status(400).json({ success: 0, message: 'Mật khẩu phải lớn hơn hoặc bằng 8 ký tự' });
         }
         let result = await Account.findByAccountId(account_id);
         if (result.length === 0)
             return res.status(400).json({ success: 0, message: 'Không tìm thấy người dùng' });
         else {
-            result[0].password = utils.hashCode(password);
-            await Account.updateAccount(result[0]);
-            return res.status(200).json({ success: 1, message: 'Đổi mật khẩu thành công' });
+            let matched = await utils.checkPassword(oldPassword, result[0].password);
+            if (matched) {
+                let mt = await utils.checkPassword(password, result[0].password);
+                if (!mt) {
+                    result[0].password = utils.hashCode(password);
+                    await Account.updateAccount(result[0]);
+                    return res.status(200).json({ success: 1, message: 'Đổi mật khẩu thành công' });
+                } else {
+                    return res.status(400).json({ success: 0, message: 'Mật khẩu mới trùng với mật khẩu cũ' });
+                }
+            } else {
+                return res.status(400).json({ success: 0, message: 'Mật khẩu cũ không khớp' });
+            }
         }
 
     } catch (err) {

@@ -20,8 +20,9 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-simple-image-viewer": "0.0.8",
-    "web-vitals": "^1.0.1",
-    "reactstrap": "^8.8.1"
+    "reactstrap": "^8.8.1",
+    "socket.io-client": "^4.1.2",
+    "web-vitals": "^1.0.1"
   },
   "scripts": {
     "start-js": "react-scripts start",

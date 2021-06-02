@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import Chat from './components/chat/Chat';
 import * as pages from './pages'
 
 const Routes = () => {
@@ -10,6 +11,7 @@ const Routes = () => {
                 <Route exact path="/admin/managements/books">
                         <Redirect to="/admin/home"/>
                 </Route>
+                <Route exact path="/chats/conversation/:account_id" component={pages.PrivatePage.ChatPage}/>
                 <Route exact path="/admin/managements/books/add" component={pages.AdminPage.BookCreatePage}/>
                 <Route exact path="/admin/managements/books/categories/add" component={pages.AdminPage.CategoryCreatePage}/>
                 <Route exact path="/admin/managements/books/categories/update/:category_id" component={pages.AdminPage.CategoryUpdatePage}/>
