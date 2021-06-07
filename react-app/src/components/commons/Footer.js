@@ -26,10 +26,10 @@ function Footer() {
 						<h2 className="h2-1">Follow Us</h2>
 
 						<ul className="ul icons">
-							<li><a href="/#" className="icon style2 fa-twitter" title="Twitter"></a></li>
-							<li><a href="/#" className="icon style2 fa-facebook" title="Facebook"></a></li>
-							<li><a href="/#" className="icon style2 fa-instagram" title="Instagram"></a></li>
-							<li><a href="/#" className="icon style2 fa-linkedin" title="Linkedin"></a></li>
+							<li><a href="/#" className="icon style2 fa-twitter" title="Twitter"> </a></li>
+							<li><a href="/#" className="icon style2 fa-facebook" title="Facebook"> </a></li>
+							<li><a href="/#" className="icon style2 fa-instagram" title="Instagram"> </a></li>
+							<li><a href="/#" className="icon style2 fa-linkedin" title="Linkedin"> </a></li>
 						</ul>
 					</section>
 

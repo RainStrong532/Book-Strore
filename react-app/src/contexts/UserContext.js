@@ -171,7 +171,6 @@ export const ProtectRoute = ({ children }) => {
     }
     else {
         const path = window.location.pathname;
-        console.log("pathname: ", path);
         if (path === '/' || path === '/home' || path === '/verify') { // public pages
             return children;
         } else if (!user) {
