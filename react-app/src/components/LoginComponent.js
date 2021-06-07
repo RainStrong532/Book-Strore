@@ -61,7 +61,7 @@ function LoginComponent() {
                     alert("Đăng ký tài khoản thành công. Xác thực tài khoản!");
                     history.push({
                         pathname: "/verify",
-                        state: {user_name: user_name_up}
+                        state: {user_name: user_name_up, email: email}
                     });
 
                 }
@@ -110,17 +110,13 @@ function LoginComponent() {
         }
         if (auth.login) {
             try {
-                const res = await auth.login(user_name.toLowerCase(), password);
-                const desc = "Chào mừng " + res.user_name + ",";
-                setData({ ...data, desc });
-                toggle();
-                setTimeout(() => {
-
-                }, 1000);
+                await auth.login(user_name.toLowerCase(), password);
             } catch (err) {
                 let desc = "";
-                if (err.message) desc = err.message;
-                else desc = err;
+                if(err.response.data){
+                    desc = err.response.data.message;
+                }
+                else desc = err.message;
                 setData({ ...data, desc });
                 toggle();
             }
@@ -144,7 +140,7 @@ function LoginComponent() {
                     </label>
                     <label className="label-login">
                         <span>Mật khẩu</span>
-                        <input className="input-login" suggested="current-password" type="password" value={password}
+                        <input className="input-login" autoComplete="true" type="password" value={password}
                             onChange={e => {
                                 setPassword(e.target.value)
                             }}
@@ -216,7 +212,7 @@ function LoginComponent() {
                         </label>
                         <label className="label-login" style={{ textAlign: "left", position: "relative" }}>
                             <span>Mật khẩu</span>
-                            <input className="input-login" suggested="current-password" type={showPassword ? "text" : "password"} value={password_up} style={{ textAlign: "left" }}
+                            <input className="input-login" autoComplete="true" type={showPassword ? "text" : "password"} value={password_up} style={{ textAlign: "left" }}
                                 onChange={e => {
                                     setPasswordUp(e.target.value);
                                 }}

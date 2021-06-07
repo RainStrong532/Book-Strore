@@ -2,6 +2,7 @@ import React, { createContext, useState, useContext, useEffect } from 'react'
 import Cookies from 'js-cookie'
 
 import fetchApi from '../services/fetchApi';
+import * as services from '../services'
 import * as urls from '../services/url';
 import LoadingComponent from '../components/commons/LoadingComponent';
 import { Redirect } from 'react-router';
@@ -21,20 +22,18 @@ export const AuthProvider = ({ children }) => {
         if (token) {
             setLoading(true);
             try {
-                let user = await fetchApi("GET", urls.USER_URL, null, token);
-                if (!user.message) {
-                    setUser(user);
-                }
+                let user = await services.auth.getUserInfo(token);
+                setUser(user);
             } catch (err) {
             }
         }
-        setLoading(false)
+        setLoading(false);
     }
 
     useEffect(() => {
         const ac = new AbortController();
         loadUserFromCookies();
-        return () =>  ac.abort();
+        return () => ac.abort();
     }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
     const loadUser = async function () {
@@ -42,35 +41,25 @@ export const AuthProvider = ({ children }) => {
         if (token) {
             setIsFetching(true);
             try {
-                let user = await fetchApi("GET", urls.USER_URL, null, token);
-                if (!user.message) {
-                    setUser(user);
-                }
+                let user = await await services.auth.getUserInfo(token);
+                setUser(user);
             } catch (err) {
             }
         }
         setIsFetching(false)
     }
 
-    const login = (username, password) => {
+    const login = (user_name, password) => {
         return new Promise(async (resolve, reject) => {
             setIsFetching(true);
             try {
-                const data = await fetchApi("POST", urls.LOGIN_URL, { user_name: username, password });
-                if (data.token) {
-                    Cookies.set('token', data.token, { expires: 60 })
-                    let user = await fetchApi("GET", urls.USER_URL, null, data.token);
-                    if (!user.message) {
-                        localStorage.removeItem("loginReq");
-                        setUser(user);
-                        setIsFetching(false)
-                        resolve(user);
-                    }
-                    setIsFetching(false)
-                    reject(user)
-                }
+                const result = await services.auth.login({ user_name, password });
+                let user = await services.auth.getUserInfo(result.data.token);
+                localStorage.removeItem("loginReq");
+                Cookies.set('token', result.data.token, { expires: 60 })
+                setUser(user);
                 setIsFetching(false)
-                reject(data)
+                resolve(user);
             } catch (err) {
                 setIsFetching(false)
                 reject(err)
@@ -82,25 +71,17 @@ export const AuthProvider = ({ children }) => {
         return new Promise(async (resolve, reject) => {
             setIsFetching(true);
             try {
-                const signupRes = await fetchApi("POST", urls.SIGNUP_URL, data);
-                if (signupRes.message === "signup successfully") {
-                    const result = await fetchApi("POST", urls.LOGIN_URL, { user_name: data.user_name, password: data.password });
-                    if (result.token) {
-                        await fetchApi("POST", urls.PROFILE_URL, { firstname: data.firstname, lastname: data.lastname }, result.token);
-                        const res = await sendVerify(data);
-                        if (res.message === "Sent") {
-                            localStorage.removeItem("signupReq");
-                            setIsFetching(false)
-                            resolve(res);
-                        }
-                        setIsFetching(false)
-                        reject(res)
-                    }
-                } else {
+                await services.auth.signup(data);
+                const result = await services.auth.login({ user_name: data.user_name, password: data.password });
+                await services.profile.createProfile({ firstname: data.firstname, lastname: data.lastname }, result.data.token);
+                const res = await sendVerify(data);
+                if (res.message === "Sent") {
+                    localStorage.removeItem("signupReq");
                     setIsFetching(false)
-                    reject(signupRes);
+                    resolve(res);
                 }
                 setIsFetching(false)
+                reject(res)
             } catch (err) {
                 setIsFetching(false)
                 reject(err)

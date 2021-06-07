@@ -5,7 +5,7 @@ const mailInfo = require('../../../private');
 const utils = require('../../utils');
 const nodemailer = require("nodemailer");
 
-const defaultExpried = 1000 * 60 * 2; // 2 minutes
+const defaultExpried = 1000 * 60 * 5; // 2 minutes
 
 const smtpTransport = nodemailer.createTransport({
     host: 'smtp.gmail.com',

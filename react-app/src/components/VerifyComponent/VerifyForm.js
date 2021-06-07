@@ -14,13 +14,13 @@ function VerifyForm() {
     const [isSend, setIsSend] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const histoty = useHistory();
-    const [user_name, setUserName] = useState(null);
+    const [user, setUser] = useState(null);
 
     const handleVerify = async () => {
         if (auth.verify) {
             setIsLoading(true);
             try {
-                const res = await auth.verify({ code: verifyCode, user_name: user_name ? user_name : auth.user.user_name });
+                const res = await auth.verify({ code: verifyCode, user_name: user ? user.user_name : auth.user.user_name });
                 if (res.message === "success") {
                     alert("Xác thực tài khoản thành công bạn cần đăng nhập lại để tiếp tục");
                     Cookies.remove("token");
@@ -40,14 +40,12 @@ function VerifyForm() {
         if (auth.sendVerify) {
             setIsLoading(true);
             try {
-                const res = await auth.sendVerify({ user_name: auth.user.user_name });
+                const res = await auth.sendVerify({ user_name: user ? user.user_name : auth.user.user_name });
                 if (res.message !== "Sent") {
                     alert(res.message);
                 } else {
-                    setTitle("Mã xác thực đã được gửi tới email " + auth.user.email);
-                    setTimeout(() => {
-
-                    }, 500)
+                    alert("Gửi thành công");
+                    setTitle("Mã xác thực đã được gửi tới email " + (user ? user.email : auth.user.email));
                     setVerifyCode("");
                     setCounter(30);
                     setIsSend(true);
@@ -61,8 +59,11 @@ function VerifyForm() {
 
     useEffect(() => {
         if (!auth.user) {
-            if (window.history.state.state && window.history.state.state.user_name) {
-                setUserName(window.history.state.state.user_name);
+            let u = window.history.state.state
+            if (u && u.user_name) {
+                setUser({...u});
+                setTitle("Mã xác thực đã được gửi tới email " + u.email);
+                setIsSend(true);
             } else {
                 alert('Bạn cần đăng nhập để xác thực tài khoản');
                 histoty.push("/login");
@@ -74,7 +75,7 @@ function VerifyForm() {
                 setTitle("Tài khoản của bạn chưa được xác thực.\n Xác thực ngay?");
         } else {
             alert("Tài khoản của bạn đã được xác thực. Trở về trang chủ");
-            if (auth.user.roles.length===1) {
+            if (auth.user.roles.length === 1) {
                 histoty.push("/");
             }
             else {
@@ -104,10 +105,15 @@ function VerifyForm() {
                         {isSend && <span style={{ fontSize: "1rem", paddingLeft: "0.3rem" }}>(mail có thể có trong hộp thư rác của bạn)</span>}
                     </h3>
                     {
-                        isSend && <input className="form-control mt-5"
-                            value={verifyCode}
-                            onChange={(e) => { setVerifyCode(e.target.value) }}
-                        />
+                        isSend &&
+                        <div className="mt-5">
+                            <label htmlFor="verify">Nhập mã xác thực</label>
+                            <input className="form-control"
+                                id="verify"
+                                value={verifyCode}
+                                onChange={(e) => { setVerifyCode(e.target.value) }}
+                            />
+                        </div>
                     }
                 </div>
                 <div className="d-flex justify-content-end">
