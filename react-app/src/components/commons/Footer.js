@@ -18,7 +18,7 @@ function Footer() {
 						<h2 className="h2-1">Contact Info</h2>
 
 						<ul className="ul alt">
-							<li><span className="fa fa-envelope-o"></span> <a href="#">contact@company.com</a></li>
+							<li><span className="fa fa-envelope"></span> <a href="#">contact@company.com</a></li>
 							<li><span className="fa fa-phone"></span> +1 333 4040 5566 </li>
 							<li><span className="fa fa-map-pin"></span> 212 Barrington Court New York, ABC 10001 United States of America</li>
 						</ul>
