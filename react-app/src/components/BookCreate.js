@@ -33,7 +33,7 @@ function BookCreate({ createBook, saveToLocalStorage }) {
         ops = options.filter(item => {
             if (data) {
                 if (!item.id || !item.name) return false;
-                let res = data.find(c => c[fieldCheck]===item.id);
+                let res = data.find(c => c[fieldCheck] === item.id);
                 return (res === undefined)
             }
             return true;
@@ -66,14 +66,14 @@ function BookCreate({ createBook, saveToLocalStorage }) {
     }
 
     const addCategory = (id) => {
-        if (id===-1 || !Number.isInteger(parseInt(id))) {
+        if (id === -1 || !Number.isInteger(parseInt(id))) {
             filterOptions(categoryOptions, categories, 'category_id');
             return;
         }
-        if(id < -1){
+        if (id < -1) {
             return;
         }
-        let category = categoryOptions.find(c => c.id===id);
+        let category = categoryOptions.find(c => c.id === id);
         category.category_id = category.id;
         delete category.id;
         category.category_name = category.name;
@@ -86,14 +86,14 @@ function BookCreate({ createBook, saveToLocalStorage }) {
     }
 
     const addAuthor = (id) => {
-        if (id===-1 || !Number.isInteger(parseInt(id))) {
+        if (id === -1 || !Number.isInteger(parseInt(id))) {
             filterOptions(authorOptions, authors, 'author_id');
             return;
         }
-        if(id < -1){
+        if (id < -1) {
             return;
         }
-        let author = authorOptions.find(c => c.id===id);
+        let author = authorOptions.find(c => c.id === id);
         author.author_id = author.id;
         delete author.id;
         author.author_name = author.name;
@@ -106,7 +106,7 @@ function BookCreate({ createBook, saveToLocalStorage }) {
 
     const deleteAuthor = (id) => {
         let ats = authors.filter(c => c.author_id !== id);
-        let author = authors.find(c => c.author_id===id);
+        let author = authors.find(c => c.author_id === id);
         setAuthors([...ats]);
         let options = authorOptions;
         options.push({ id: author.author_id, name: author.author_name })
@@ -115,7 +115,7 @@ function BookCreate({ createBook, saveToLocalStorage }) {
 
     const deleteCategory = (id) => {
         let cts = categories.filter(c => c.category_id !== id);
-        let category = categories.find(c => c.category_id===id);
+        let category = categories.find(c => c.category_id === id);
         setCategories([...cts]);
         let options = categoryOptions;
         options.push({ id: category.category_id, name: category.category_name })
@@ -129,7 +129,7 @@ function BookCreate({ createBook, saveToLocalStorage }) {
 
             url.searchParams.set('limit', 100);
             const res = await fetchApi('GET', url);
-            if (res.success===1) {
+            if (res.success === 1) {
                 let options = [];
                 options = res.data.map((item) => {
                     let option = {};
@@ -162,7 +162,7 @@ function BookCreate({ createBook, saveToLocalStorage }) {
             url.searchParams.set('limit', 100);
 
             const res = await fetchApi('GET', url);
-            if (res.success===1) {
+            if (res.success === 1) {
                 let options = [];
                 options = res.data.map((item) => {
                     let option = {};
@@ -209,7 +209,7 @@ function BookCreate({ createBook, saveToLocalStorage }) {
         const imagesData = localStorage.getItem('images');
 
         setImages(imagesData ? JSON.parse(imagesData) : [...images]);
-        setBook(bookData ? JSON.parse(bookData) : {...book});
+        setBook(bookData ? JSON.parse(bookData) : { ...book });
         setAuthors(authorsData ? JSON.parse(authorsData) : [...authors]);
         setCategories(categoriesData ? JSON.parse(categoriesData) : [...categories]);
     }
@@ -230,7 +230,7 @@ function BookCreate({ createBook, saveToLocalStorage }) {
         let ops2 = [];
         ops2 = filterOptions(authorOptions, authors, 'author_id');
         setAuhtorOptions(ops2);
-    }, [categories, authors])
+    }, [categories, authors, categoryOptions, authorOptions])
 
     return (
         <div className="book-detail">
@@ -297,7 +297,7 @@ function BookCreate({ createBook, saveToLocalStorage }) {
                     <div className="col-6">
                         <Form>
                             <Form.Group className="mb-3" controlId="book_name">
-                                <Form.Label>Tên sách* {`${book.book_name.length===0 ? '(Không được rỗng)' : ''}`}</Form.Label>
+                                <Form.Label>Tên sách* {`${book.book_name.length === 0 ? '(Không được rỗng)' : ''}`}</Form.Label>
                                 <Form.Control className="form-control bg-light" placeholder="Nhập tên sách"
                                     value={book.book_name}
                                     onChange={(e) => {

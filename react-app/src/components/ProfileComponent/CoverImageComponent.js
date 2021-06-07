@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import more from "../../assets/images/more.svg";
 import xmark from "../../assets/images/times-solid.svg";
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import fetchApi from '../../services/fetchApi';
 import * as urls from '../../services/url';
 import Cookies from 'js-cookie';

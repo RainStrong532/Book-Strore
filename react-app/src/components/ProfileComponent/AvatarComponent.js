@@ -42,10 +42,7 @@ function AvatarComponent({ user, loading, setLoading, other }) {
         display: "flex",
         justifyContent: "center"
     }
-    useEffect(() => {
-        if (image.length > 0)
-            changeAvatar();
-    }, [image])
+    
     const changeAvatar = async () => {
         setLoading(true);
         try {
@@ -101,6 +98,12 @@ function AvatarComponent({ user, loading, setLoading, other }) {
         }
         setLoading(false);
     }
+
+    useEffect(() => {
+        if (image.length > 0)
+            changeAvatar();
+    }, [image, changeAvatar]);
+    
     return (
         <div className="avatar-cnt">
             <div className="coverImage avatar" style={{ background: "#999" }}>

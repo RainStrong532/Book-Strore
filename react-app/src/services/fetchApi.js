@@ -17,11 +17,9 @@ export default function callApi(method, url, data, token) {
                             request
                         )
                             .then(res => {
-                                console.log("fetch api: ", res);
                                 return res.json();
                             })
                             .then(res => {
-                                console.log("json: ", res);
                                 resolve(res);
                             })
                             .catch(err => {
@@ -49,11 +47,9 @@ export default function callApi(method, url, data, token) {
             request
         )
             .then(res => {
-                console.log("fetch api: ", res);
                 return res.json();
             })
             .then(res => {
-                console.log("json: ", res);
                 resolve(res);
             })
             .catch(err => {

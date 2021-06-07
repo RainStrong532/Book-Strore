@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [isFetching, setIsFetching] = useState(false);
 
-    async function loadUserFromCookies() {
+    const loadUserFromCookies = async () => {
         const token = Cookies.get('token');
         if (token) {
             setLoading(true);
@@ -32,7 +32,9 @@ export const AuthProvider = ({ children }) => {
     }
 
     useEffect(() => {
+        const ac = new AbortController();
         loadUserFromCookies();
+        return () =>  ac.abort();
     }, [])
 
     const loadUser = async function () {

@@ -1,6 +1,5 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import Chat from './components/chat/Chat';
 import * as pages from './pages'
 
 const Routes = () => {

@@ -30,10 +30,16 @@ function LoginComponent() {
 
     const handleSignup = async () => {
         let data = { ...profile, email: email, user_name: user_name_up.toLowerCase(), password: password_up }
+        localStorage.setItem("signupReq", JSON.stringify(data));
         const mes = utils.validates.validatePassword(password_up);
 
         if (mes) {
             alert(mes);
+            return;
+        }
+
+        if(data.user_name.length < 8){
+            alert("Tên tài khoản tối thiếu 8 ký tự!");
             return;
         }
         if (!utils.validates.validateEmail(email)) {
@@ -60,8 +66,6 @@ function LoginComponent() {
 
                 }
             } catch (err) {
-                let data = { ...profile, email: email, user_name: user_name_up, password: password_up }
-                localStorage.setItem("signupReq", JSON.stringify(data));
                 let desc = "";
                 if (err.message) desc = err.message;
                 else desc = err;
@@ -71,25 +75,32 @@ function LoginComponent() {
         }
 
     }
-    useEffect(() => {
-            let loginReq = localStorage.getItem("loginReq");
-            if (loginReq) {
-                loginReq = JSON.parse(loginReq);
-                setPassword(loginReq.password);
-                setUserName(loginReq.user_name);
-            }
 
-            let signupReq = localStorage.getItem("signupReq");
-            if (signupReq) {
-                signupReq = JSON.parse(signupReq);
-                setPasswordUp(signupReq.password);
-                setUserNameUP(signupReq.user_name);
-                setEmail(signupReq.email);
-                setProfile({ ...profile, firstname: signupReq.firstname, lastname: signupReq.lastname })
-            }
+    const getDataFromLocalStorage = () => {
+        let loginReq = localStorage.getItem("loginReq");
+        if (loginReq) {
+            loginReq = JSON.parse(loginReq);
+            setPassword(loginReq.password);
+            setUserName(loginReq.user_name);
+        }
+
+        let signupReq = localStorage.getItem("signupReq");
+        if (signupReq) {
+            signupReq = JSON.parse(signupReq);
+            setPasswordUp(signupReq.password);
+            setUserNameUP(signupReq.user_name);
+            setEmail(signupReq.email);
+            setProfile({ ...profile, firstname: signupReq.firstname, lastname: signupReq.lastname })
+        }
+    }
+    useEffect(() => {
+        const ac = new AbortController();
+        getDataFromLocalStorage();
+        return () => ac.abort();
     }, []);
 
     const handleLogin = async () => {
+        localStorage.setItem("loginReq", JSON.stringify({ user_name: user_name.toLowerCase(), password }));
         if (user_name.length === 0) {
             alert("Thiếu thông tin tên đăng nhập");
             return;
@@ -107,7 +118,6 @@ function LoginComponent() {
 
                 }, 1000);
             } catch (err) {
-                localStorage.setItem("loginReq", JSON.stringify({ user_name, password }));
                 let desc = "";
                 if (err.message) desc = err.message;
                 else desc = err;

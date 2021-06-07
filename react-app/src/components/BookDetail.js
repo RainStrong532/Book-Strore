@@ -65,17 +65,15 @@ function BookDetail() {
 
     useEffect(() => {
         const pathName = history.location.pathname;
-        console.log(pathName);
         let p = pathName.split('/');
         let id = p[p.length - 1];
         id = parseInt(id);
         if (Number.isInteger(id)) {
             getBook(id);
         } else {
-            console.log("id not valid");
             history.push("/404")
         }
-    }, [])
+    }, [history])
     return (
         <div className="book-detail">
             {isLoading && <LoadingComponent />}
