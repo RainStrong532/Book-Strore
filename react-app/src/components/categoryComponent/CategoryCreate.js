@@ -64,7 +64,7 @@ function CategoryCreate({ createCategory }) {
                     <div className="col-6">
                         <Form>
                             <Form.Group className="mb-3" controlId="category_name">
-                                <Form.Label>Tên thể loại* {`${category.category_name.length == 0 ? '(Không được rỗng)' : ''}`}</Form.Label>
+                                <Form.Label>Tên thể loại* {`${category.category_name.length===0 ? '(Không được rỗng)' : ''}`}</Form.Label>
                                 <Form.Control className="form-control bg-light" placeholder="Nhập tên thể loại"
                                     value={category.category_name}
                                     onChange={(e) => {

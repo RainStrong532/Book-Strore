@@ -7,35 +7,34 @@ function Filter({
     placeholder,
     text_search,
     setCurrent,
-    current,
     limit,
     orderBy,
     sortBy,
-    filterActive,
-    setFilterActive,
     className,
     onChange,
     lastOption,
     onLastOption,
-    ready
+    ready,
+    filter,
+    setFilter
 }) {
 
     const [selected, setSelected] = useState(-1);
     const selectedRef = useRef();
 
     useEffect(() => {
-        if (getData && selected >= -1 && ready ) {
+        if (getData && selected >= -1 && ready) {
             setCurrent(1);
             getData({
                 text_search: text_search,
-                page_number: current - 1,
+                page_number: 0,
                 page_size: limit,
                 order_by: orderBy,
                 sort_by: sortBy ? 'ASC' : 'DESC'
-            }, null, { name: id, id: selected });
+            });
         }
 
-        if (selected == -2) {
+        if (selected===-2) {
             if (onLastOption) {
                 onLastOption();
             }
@@ -43,12 +42,15 @@ function Filter({
     }, [selected]);
 
     useEffect(() => {
-        if (filterActive)
-            if (filterActive != id) {
-                setSelected(-1);
-                selectedRef.current.value = -1;
-            }
-    }, [filterActive])
+        if (filter && filter.name !== id) {
+            setSelected(-1);
+            selectedRef.current.value = -1;
+        }
+        if(filter && filter.name === id) {
+            setSelected(filter.id);
+            selectedRef.current.value = filter.id;
+        }
+    }, [filter])
 
     let listOption = [];
     listOption = options.map((option, index) => {
@@ -80,10 +82,8 @@ function Filter({
                 style={{ border: "1px solid #999", borderRadius: "5px", height: "38px", background: "#fafafa" }}
                 ref={selectedRef}
                 onChange={() => {
-                    console.log("options: ", options);
                     setSelected(selectedRef.current.value);
-                    if (setFilterActive)
-                        setFilterActive(id);
+                    setFilter({ ...filter, name: id, id: selectedRef.current.value });
                     if (onChange) {
                         onChange(selectedRef.current.value);
                     }

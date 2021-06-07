@@ -11,7 +11,6 @@ import { Redirect } from 'react-router';
 import NotAuthorizedComponent from '../commons/NotAuthorizedComponent';
 import LoadingComponent from '../commons/LoadingComponent';
 
-let firstLoad = false;
 
 function ProfileComponent(props) {
     const auth = useAuth();
@@ -41,12 +40,10 @@ function ProfileComponent(props) {
             }
         }
     }
+
     useEffect(() => {
-        if (!firstLoad) {
-            loadUser();
-            firstLoad = true;
-        }
-    }, [other, firstLoad])
+        loadUser();
+    }, [])
 
     if (redirect) {
         return (

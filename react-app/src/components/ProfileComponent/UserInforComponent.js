@@ -28,7 +28,7 @@ function UserInforComponent({ user, other, loading, setLoading }) {
     const [is_verify, setIs_verify] = useState(0);
 
     useEffect(() => {
-        if (u == null) {
+        if (u===null) {
 
         } else {
             setFirstname(u.profile.firstname || "");
@@ -107,7 +107,7 @@ function UserInforComponent({ user, other, loading, setLoading }) {
                             ?
                             <>
                                 {
-                                    (is_verify == 1)
+                                    (is_verify===1)
                                         ?
                                         <></>
                                         :
@@ -316,7 +316,7 @@ function UserInforComponent({ user, other, loading, setLoading }) {
                             <Row>
                                 <Col>
                                     <label htmlFor="desc">Mô tả</label>
-                                    <p id="desc" className="form-control" style={{ minHeight: "5rem" }}>
+                                    <p id="desc" className="form-control" style={{ minHeight: "5rem", height: "auto"}}>
                                         {description ? description : "Chưa có mô tả"}
                                     </p>
                                 </Col>

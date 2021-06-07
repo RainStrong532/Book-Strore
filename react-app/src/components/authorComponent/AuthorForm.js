@@ -30,7 +30,7 @@ function AuthorForm({ updateAuthor }) {
         try {
             const token = Cookies.get('token');
             const res = await fetchApi('DELETE', `${urls.AUTHOR_URL}/${author.author_id}`, null, token);
-            if (res.success == 0) {
+            if (res.success===0) {
                 alert(res.message);
             } else {
                 alert("Xóa tác giả thành công");
@@ -186,7 +186,7 @@ function AuthorForm({ updateAuthor }) {
                     <div className="col-6">
                         <Form>
                             <Form.Group className="mb-3" controlId="author_name">
-                                <Form.Label>Tên tác giả* {`${author.author_name.length == 0 ? '(Không được rỗng)' : ''}`}</Form.Label>
+                                <Form.Label>Tên tác giả* {`${author.author_name.length===0 ? '(Không được rỗng)' : ''}`}</Form.Label>
                                 <Form.Control className="form-control bg-light" placeholder="Nhập tên thể loại"
                                     value={author.author_name}
                                     onChange={(e) => {

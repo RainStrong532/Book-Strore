@@ -6,8 +6,6 @@ import { useAuth } from "../../contexts/UserContext";
 import LoadingComponent from '../commons/LoadingComponent';
 import Cookies from 'js-cookie';
 
-let firstLoad = true;
-
 function VerifyForm() {
     const [title, setTitle] = useState("");
     const [verifyCode, setVerifyCode] = useState("");
@@ -27,7 +25,7 @@ function VerifyForm() {
                     alert("Xác thực tài khoản thành công bạn cần đăng nhập lại để tiếp tục");
                     Cookies.remove("token");
                     histoty.push("/login");
-                }else{
+                } else {
                     alert(res.message);
                 }
             }
@@ -62,30 +60,30 @@ function VerifyForm() {
     }
 
     useEffect(() => {
-        if (firstLoad) {
-            firstLoad = false;
-            if (!auth.user) {
-                if(window.history.state.state && window.history.state.state.user_name){
-                    setUserName(window.history.state.state.user_name);
-                }else{
-                    alert('Bạn cần đăng nhập để xác thực tài khoản');
-                    histoty.push("/login");
-                }
-                
-            }
-            else if (auth.user.is_verify === 0) {
-                if (!isSend)
-                    setTitle("Tài khoản của bạn chưa được xác thực.\n Xác thực ngay?");
+        if (!auth.user) {
+            if (window.history.state.state && window.history.state.state.user_name) {
+                setUserName(window.history.state.state.user_name);
             } else {
-                alert("Tài khoản của bạn đã được xác thực. Trở về trang chủ");
-                if (auth.user.roles.length == 1) {
-                    histoty.push("/");
-                }
-                else {
-                    histoty.push("/admin/home");
-                }
+                alert('Bạn cần đăng nhập để xác thực tài khoản');
+                histoty.push("/login");
+            }
+
+        }
+        else if (auth.user.is_verify === 0) {
+            if (!isSend)
+                setTitle("Tài khoản của bạn chưa được xác thực.\n Xác thực ngay?");
+        } else {
+            alert("Tài khoản của bạn đã được xác thực. Trở về trang chủ");
+            if (auth.user.roles.length===1) {
+                histoty.push("/");
+            }
+            else {
+                histoty.push("/admin/home");
             }
         }
+    }, []);
+
+    useEffect(() => {
         if (isSend) {
             let c = counter;
             if (c > 0) {

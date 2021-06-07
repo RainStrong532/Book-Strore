@@ -7,12 +7,12 @@ import * as urls from '../services/url';
 import LoadingComponent from './commons/LoadingComponent';
 import Cookies from 'js-cookie';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
-
-let firstLoad = true;
+import { Link } from 'react-router-dom';
 
 function BookDetail() {
     const history = useHistory();
     const [book, setBook] = useState({
+        book_id: null,
         book_name: "",
         description: "",
         price: 0,
@@ -33,7 +33,7 @@ function BookDetail() {
         try {
             const token = Cookies.get('token');
             const res = await fetchApi('DELETE', `${urls.BOOK_URL}/${book.book_id}`, null, token);
-            if (res.success == 0) {
+            if (res.success===0) {
                 alert(res.message);
             } else {
                 alert("Xóa sách thành công");
@@ -64,22 +64,18 @@ function BookDetail() {
     }
 
     useEffect(() => {
-        if (firstLoad) {
-            firstLoad = false;
-
-            const pathName = history.location.pathname;
-            console.log(pathName);
-            let p = pathName.split('/');
-            let id = p[p.length - 1];
-            id = parseInt(id);
-            if (Number.isInteger(id)) {
-                getBook(id);
-            } else {
-                console.log("id not valid");
-                history.push("/404")
-            }
+        const pathName = history.location.pathname;
+        console.log(pathName);
+        let p = pathName.split('/');
+        let id = p[p.length - 1];
+        id = parseInt(id);
+        if (Number.isInteger(id)) {
+            getBook(id);
+        } else {
+            console.log("id not valid");
+            history.push("/404")
         }
-    })
+    }, [])
     return (
         <div className="book-detail">
             {isLoading && <LoadingComponent />}
@@ -97,7 +93,7 @@ function BookDetail() {
 
                 <div className="right">
                     <Button variant="warning" className="mx-2" title="Chỉnh sửa"
-                        onClick={() => history.push(`/admin/managements/books/update/${book.book_id}`) }
+                        onClick={() => history.push(`/admin/managements/books/update/${book.book_id}`)}
                     >
                         <i className="fas fa-edit" style={{ color: "#FFF" }}></i>
                     </Button>
@@ -147,7 +143,7 @@ function BookDetail() {
                         <Form>
                             <Form.Group className="mb-3" controlId="description">
                                 <Form.Label>Mô tả</Form.Label>
-                                <p className="form-control bg-light" style={{ minHeight: "100px" }}>{book.description || ""}</p>
+                                <p className="form-control bg-light" style={{ minHeight: "100px", height: "auto" }}>{book.description || ""}</p>
                             </Form.Group>
                         </Form>
 
@@ -159,14 +155,20 @@ function BookDetail() {
                                         book.authors
                                             ?
                                             book.authors.length > 0
-                                            ?
-                                            book.authors.map((item, index) => {
-                                                return (
-                                                    <p key={index} className="form-control mx-2 bg-light col-6">{item.author_name}</p>
-                                                )
-                                            })
-                                            :
-                                            <p style={{ fontWeight: "normal" }} className="form-control">Chưa có tác giả</p>
+                                                ?
+                                                book.authors.map((item, index) => {
+                                                    return (
+                                                        <Link to={`/admin/managements/books/authors/${item.author_id}`}
+                                                            key={index}
+                                                            className="form-control m-2 bg-light col-6"
+                                                            style={{ cursor: "pointer", textDecoration: "none" }}
+                                                        >
+                                                            {item.author_name}
+                                                        </Link>
+                                                    )
+                                                })
+                                                :
+                                                <p style={{ fontWeight: "normal" }} className="form-control">Chưa có tác giả</p>
                                             :
                                             <>
                                             </>
@@ -199,14 +201,18 @@ function BookDetail() {
                                         book.categories
                                             ?
                                             book.categories.length > 0
-                                            ?
-                                            book.categories.map((item, index) => {
-                                                return (
-                                                    <p key={index} className="form-control mx-2 bg-light col-6">{item.category_name}</p>
-                                                )
-                                            })
-                                            :
-                                            <p style={{ fontWeight: "normal" }} className="form-control">Chưa có thể loại</p>
+                                                ?
+                                                book.categories.map((item, index) => {
+                                                    return (
+                                                        <Link to={`/admin/managements/books/categories/${item.category_id}`} key={index} className="form-control m-2 bg-light col-6"
+                                                            style={{ cursor: "pointer", textDecoration: "none" }}
+                                                        >
+                                                            {item.category_name}
+                                                        </Link>
+                                                    )
+                                                })
+                                                :
+                                                <p style={{ fontWeight: "normal" }} className="form-control">Chưa có thể loại</p>
                                             :
                                             <>
                                             </>

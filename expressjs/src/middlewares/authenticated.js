@@ -7,7 +7,7 @@ const authenticateToken = function (req, res, next) {
 
   const token = authHeader && authHeader.split(' ')[1];
 
-  if (token == null) return res.status(401).json({ message: "Token not found" })
+  if (token === null) return res.status(401).json({ message: "Token not found" })
 
   jwt.verify(token, TOKEN_SECRET, (err, user) => {
     if (err) return res.status(403).json(err)
@@ -19,7 +19,7 @@ const authenticateToken = function (req, res, next) {
 }
 
 const isVerify = (req, res, next) => {
-  if(req.user.verify == 0) return res.status(400).json({message: "The account has not been verified"});
+  if(req.user.verify===0) return res.status(400).json({message: "The account has not been verified"});
   next();
 };
 

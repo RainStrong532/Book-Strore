@@ -201,7 +201,7 @@ function Chat() {
                 {
                     messages.map((message, index) => {
                         let showTitle = true;
-                        if (index != 0 && messages[index - 1].account_id === message.account_id) {
+                        if (index !== 0 && messages[index - 1].account_id === message.account_id) {
                             showTitle = false;
                         }
                         if (index === messages.length - 1) {

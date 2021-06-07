@@ -27,7 +27,7 @@ function CategoryForm({ updateCategory }) {
         try {
             const token = Cookies.get('token');
             const res = await fetchApi('DELETE', `${urls.CATEGORY_URL}/${category.category_id}`, null, token);
-            if (res.success == 0) {
+            if (res.success===0) {
                 alert(res.message);
             } else {
                 alert("Xóa thể loại thành công");
@@ -130,7 +130,7 @@ function CategoryForm({ updateCategory }) {
                     <div className="col-6">
                         <Form>
                             <Form.Group className="mb-3" controlId="category_name">
-                                <Form.Label>Tên thể loại* {`${category.category_name.length == 0 ? '(Không được rỗng)' : ''}`}</Form.Label>
+                                <Form.Label>Tên thể loại* {`${category.category_name.length===0 ? '(Không được rỗng)' : ''}`}</Form.Label>
                                 <Form.Control className="form-control bg-light" placeholder="Nhập tên thể loại"
                                     value={category.category_name}
                                     onChange={(e) => {

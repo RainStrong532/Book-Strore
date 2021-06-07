@@ -15,7 +15,9 @@ function TabLayout({ data,
     handleDetails,
     onAddButton,
     onDelete,
-    ready
+    ready,
+    filter, 
+    setFilter
 }) {
 
     const [limit, setLimit] = useState(20);
@@ -52,7 +54,6 @@ function TabLayout({ data,
                         id={ids[index]}
                         placeholder={placeholders[index]}
                         setCurrent={setCurrent}
-                        current={current}
                         text_search={text_search}
                         orderBy={orderBy}
                         sortBy={sortBy}
@@ -60,6 +61,8 @@ function TabLayout({ data,
                         setFilterActive={setFilterActive}
                         filterActive={filterActive}
                         ready={ready}
+                        filter={filter}
+                        setFilter={setFilter}
                     />
                 </Col>
             )
@@ -67,7 +70,6 @@ function TabLayout({ data,
     }
 
     useEffect(() => {
-        console.log("ready", ready);
         if (getData && ready) {
             setCurrent(1);
             getData({

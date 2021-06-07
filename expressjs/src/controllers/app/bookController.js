@@ -20,7 +20,7 @@ const findAll = async (req, res, next) => {
     if (col.length === 0)
         return res.status(400).send({ success: 0, message: "order_by không hợp lệ" });
 
-    let sort = sortType.filter(item => item == sort_by);
+    let sort = sortType.filter(item => item===sort_by);
     if (sort.length === 0) return res.status(400).send({ success: 0, message: "sort_by không hợp lệ" });;
 
     let pattern = '%' + text_search + '%';
@@ -271,11 +271,11 @@ const findByCategoryId = async (req, res, next) => {
     let sort_by = req.query.sort_by || "ASC";
     let order_by = req.query.order_by || "book_id";
 
-    let col = columns.filter(item => item == order_by);
+    let col = columns.filter(item => item===order_by);
     if (col.length === 0)
         return res.status(400).send({ success: 0, message: "order_by không hợp lệ" });
 
-    let sort = sortType.filter(item => item == sort_by);
+    let sort = sortType.filter(item => item===sort_by);
     if (sort.length === 0) return res.status(400).send({ success: 0, message: "sort_by không hợp lệ" });;
 
     let pattern = '%' + text_search + '%';
@@ -315,11 +315,11 @@ const findByAuthorId = async (req, res, next) => {
     let sort_by = req.query.sort_by || "ASC";
     let order_by = req.query.order_by || "book_id";
 
-    let col = columns.filter(item => item == order_by);
+    let col = columns.filter(item => item===order_by);
     if (col.length === 0)
         return res.status(400).send({ success: 0, message: "order_by không hợp lệ" });
 
-    let sort = sortType.filter(item => item == sort_by);
+    let sort = sortType.filter(item => item===sort_by);
     if (sort.length === 0) return res.status(400).send({ success: 0, message: "sort_by không hợp lệ" });;
 
     let pattern = '%' + text_search + '%';

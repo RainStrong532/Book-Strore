@@ -124,7 +124,7 @@ function AuhtorCreate({ createAuthor }) {
                     <div className="col-6">
                         <Form>
                             <Form.Group className="mb-3" controlId="author">
-                                <Form.Label>Tên tác giả* {`${auhtor.author_name.length == 0 ? '(Không được rỗng)' : ''}`}</Form.Label>
+                                <Form.Label>Tên tác giả* {`${auhtor.author_name.length===0 ? '(Không được rỗng)' : ''}`}</Form.Label>
                                 <Form.Control className="form-control bg-light" placeholder="Nhập tên thể loại"
                                     value={auhtor.author_name}
                                     onChange={(e) => {

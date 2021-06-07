@@ -26,7 +26,7 @@ const signup = async (req, res, next) => {
             roles.forEach(async (role_name) => {
                 const role = await Role.findByRoleName(role_name);
                 const saved = await Role.saveRoleAccount(role[0].role_id, result[0].account_id);
-                if (saved.length == 0) {
+                if (saved.length===0) {
                     res.status(400).json({ message: "Add role " + role_name + " failure!" });
                     return;
                 }
@@ -155,7 +155,7 @@ const verifyAccount = async (req, res, next) => {
             } else {
                 const verify = await Verify.findByAccountId(account_id);
                 if (verify[0].verify_id) {
-                    if (code != verify[0].code) {
+                    if (code !== verify[0].code) {
                         res.status(400).json({ message: 'Mã không khớp' });
                         return;
                     }

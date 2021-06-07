@@ -26,7 +26,7 @@ function CategoryDetailComponent() {
         try {
             const token = Cookies.get('token');
             const res = await fetchApi('DELETE', `${urls.CATEGORY_URL}/${category.categoty_id}`, null, token);
-            if (res.success == 0) {
+            if (res.success===0) {
                 alert(res.message);
             } else {
                 alert("Xóa thể loại thành công");
@@ -113,7 +113,7 @@ function CategoryDetailComponent() {
                         <Form>
                             <Form.Group className="mb-3" controlId="description">
                                 <Form.Label>Mô tả</Form.Label>
-                                <p className="form-control bg-light" style={{ minHeight: "100px" }}>{category.description || ""}</p>
+                                <p className="form-control bg-light" style={{ minHeight: "100px", height: "auto" }}>{category.description || ""}</p>
                             </Form.Group>
                         </Form>
 

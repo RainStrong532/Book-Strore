@@ -8,7 +8,6 @@ import fetchApi from '../../services/fetchApi'
 import * as utils from '../../utils';
 import * as urls from '../../services/url'
 
-let firstLoad = true;
 
 function ForgotPasswordComponent() {
     const [title, setTitle] = useState("");
@@ -72,7 +71,7 @@ function ForgotPasswordComponent() {
 
     const handleResetPassword = async () => {
         const message = utils.validates.validatePassword(password);
-        if (message == null) {
+        if (message===null) {
             setIsLoading(true);
             try {
                 const res = await fetchApi('POST', urls.PASSWORD_URL, { account_id, password });
@@ -92,22 +91,21 @@ function ForgotPasswordComponent() {
     }
 
     useEffect(() => {
-        if (firstLoad) {
-            firstLoad = false;
-            if (auth.user) {
-                histoty.goBack();
-            } else {
-                setTitle("Hãy nhập tên tài khoản hoặc email đã đăng ký của bạn!");
-            }
+        if (auth.user) {
+            histoty.goBack();
+        } else {
+            setTitle("Hãy nhập tên tài khoản hoặc email đã đăng ký của bạn!");
         }
+    }, []);
+
+    useEffect(() => {
         if (isSend) {
             let c = counter;
             if (c > 0) {
                 c = c - 1;
                 setTimeout(() => {
                     setCounter(c);
-                }, 1000)
-
+                }, 1000);
             }
         }
     }, [counter, isSend]);
@@ -207,7 +205,7 @@ function ForgotPasswordComponent() {
                                     :
                                     <Button
                                         onClick={handleSend}
-                                        disabled={userInfo.length == 0}
+                                        disabled={userInfo.length===0}
                                     >
                                         Gửi mã xác thực
                             </Button>

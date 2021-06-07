@@ -8,9 +8,6 @@ import eye_slash from '../assets/images/eye-slash-solid.svg';
 import { ROLES } from '../constants';
 import { useHistory } from 'react-router';
 
-let firstLoad = true;
-
-
 function LoginComponent() {
     const auth = useAuth();
     const { isFetching } = useAuth();
@@ -75,8 +72,6 @@ function LoginComponent() {
 
     }
     useEffect(() => {
-        if (firstLoad) {
-            firstLoad = false;
             let loginReq = localStorage.getItem("loginReq");
             if (loginReq) {
                 loginReq = JSON.parse(loginReq);
@@ -92,8 +87,7 @@ function LoginComponent() {
                 setEmail(signupReq.email);
                 setProfile({ ...profile, firstname: signupReq.firstname, lastname: signupReq.lastname })
             }
-        }
-    });
+    }, []);
 
     const handleLogin = async () => {
         if (user_name.length === 0) {

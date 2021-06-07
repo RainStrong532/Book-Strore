@@ -81,6 +81,7 @@ export default function ControlledTabs() {
     const [isLoading, setIsLoading] = useState(false);
     const [modal, setModal] = useState(false);
     const [item, setItem] = useState(null);
+    const [filter, setFilter] = useState(null);
 
     const [ready, setReady] = useState(false);
 
@@ -119,7 +120,7 @@ export default function ControlledTabs() {
         try {
             const token = Cookies.get('token');
             const res = await fetchApi('DELETE', `${urls.CATEGORY_URL}/${item.category_id}`, null, token);
-            if (res.success == 0) {
+            if (res.success===0) {
                 alert(res.message);
             } else {
                 let categories = listCategory.data;
@@ -138,7 +139,7 @@ export default function ControlledTabs() {
         try {
             const token = Cookies.get('token');
             const res = await fetchApi('DELETE', `${urls.AUTHOR_URL}/${item.author_id}`, null, token);
-            if (res.success == 0) {
+            if (res.success===0) {
                 alert(res.message);
             } else {
                 let authors = listAuthor.data;
@@ -157,7 +158,7 @@ export default function ControlledTabs() {
         try {
             const token = Cookies.get('token');
             const res = await fetchApi('DELETE', `${urls.BOOK_URL}/${item.book_id}`, null, token);
-            if (res.success == 0) {
+            if (res.success===0) {
                 alert(res.message);
             } else {
                 let books = listBook.data;
@@ -203,13 +204,13 @@ export default function ControlledTabs() {
             history.push(`/admin/managements/books/authors/update/${id}`)
     }
 
-    const getListBook = async function (data, loading, filter) {
+    const getListBook = async function (data, loading) {
         if (loading !== 1){
             setIsLoading(true);
         }
         try {
             let url = new URL(urls.BOOK_URL);
-            if (filter && filter.id != -1) {
+            if (filter && filter.id !== -1) {
                 url = new URL(`${urls.BOOK_URL}/${filter.name}/${filter.id}`);
             }
             if (data) {
@@ -220,7 +221,7 @@ export default function ControlledTabs() {
                 }
             }
             const res = await fetchApi('GET', url);
-            if (res.success == 1) {
+            if (res.success===1) {
                 setListBook(res);
                 setReady(true);
             } else {
@@ -248,7 +249,7 @@ export default function ControlledTabs() {
                 }
             }
             const res = await fetchApi('GET', url);
-            if (res.success == 1) {
+            if (res.success===1) {
                 setListAuthor(res);
             } else {
                 alert(res.message);
@@ -275,7 +276,7 @@ export default function ControlledTabs() {
                 }
             }
             const res = await fetchApi('GET', url);
-            if (res.success == 1) {
+            if (res.success===1) {
                 setListCategory(res);
             } else {
                 alert(res.message);
@@ -320,6 +321,8 @@ export default function ControlledTabs() {
                         onAddButton={() => history.push("/admin/managements/books/add")}
                         onDelete={onDelete}
                         ready={ready}
+                        filter={filter}
+                        setFilter={setFilter}
                     />
                 </Tab>
 
