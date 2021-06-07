@@ -29,6 +29,7 @@ export default function callApi(method, url, data, token) {
                     .catch(err => {
                         reject(err);
                     })
+                return;
             } else {
                 request.body = JSON.stringify(data);
                 request.headers = {

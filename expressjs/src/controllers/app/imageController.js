@@ -1,11 +1,16 @@
 'use strict';
 
-const {Image} = require('../../data');
+const { Image } = require('../../data');
 const fs = require('fs');
 const config = require('../../../config');
 
 
 const upload = async (req, res, next) => {
+    if (!req.file) {
+        const error = new Error('Hãy chọn file');
+        error.httpStatusCode = 400
+        return next(error)
+    }
     const path = req.file.path;
     try {
         const img = fs.readFileSync(path);
@@ -20,14 +25,16 @@ const upload = async (req, res, next) => {
         let result = await Image.saveImage(finalImg);
         result[0].url = config.url + "/public/images/" + result[0].name;
 
-        res.status(200).send(result[0]);
+        return res.status(200).send(result[0]);
     } catch (err) {
+        console.log("err: ", err);
         try {
             fs.unlinkSync(path)
         } catch (e) {
-            res.status(400).send({message: e.message});
+            console.log("e: ", e);
+            return res.status(400).send({ message: e.message });
         }
-        res.status(400).send({message: err.message});
+        return res.status(400).send({ message: err.message });
     }
 }
 
@@ -39,10 +46,10 @@ const findByImageName = async (req, res, next) => {
             result[0].url = config.url + "/public/images/" + result[0].name;
             res.status(200).send(result[0]);
         } else {
-            res.status(404).send({ message: "Url không hợp lệ"});
+            res.status(404).send({ message: "Url không hợp lệ" });
         }
     } catch (err) {
-        res.status(400).send({message: err.message});
+        res.status(400).send({ message: err.message });
     }
 }
 
@@ -54,10 +61,10 @@ const findById = async (req, res, next) => {
             result[0].url = config.url + "/public/images/" + result[0].name;
             res.status(200).send(result[0]);
         } else {
-            res.status(404).send({ message: "Url không hợp lệ"});
+            res.status(404).send({ message: "Url không hợp lệ" });
         }
     } catch (err) {
-        res.status(400).send({message: err.message});
+        res.status(400).send({ message: err.message });
     }
 }
 

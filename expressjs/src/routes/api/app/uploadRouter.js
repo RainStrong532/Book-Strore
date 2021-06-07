@@ -4,9 +4,9 @@ const router = express.Router();
 
 const imageController = require("../../../controllers/app/imageController");
 
-const uploadMiddleware = require("../../../middlewares/uploadImage");
+const ModelMulter = require("../../../data/image/ModelMulter");
 
-router.post("/upload", uploadMiddleware, imageController.upload);
+router.post("/upload", ModelMulter.single("image"), imageController.upload);
 router.get("/id/:image_id", imageController.findById);
 router.get("/:name", imageController.findByImageName);
 
