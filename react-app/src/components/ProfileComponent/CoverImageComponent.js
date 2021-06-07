@@ -18,11 +18,11 @@ function CoverImageComponent({ user, loading, setLoading, other }) {
         if (u) {
             setCoverImage(u.profile.cover_image ? u.profile.cover_image.url : null);
         }
-    }, [u])
+    }, [u])// eslint-disable-line react-hooks/exhaustive-deps
     useEffect(() => {
         if (image.length > 0)
             changeCoverImage();
-    }, [image])
+    }, [image])// eslint-disable-line react-hooks/exhaustive-deps
     const toggle = () => {
         setShow(!show);
     }

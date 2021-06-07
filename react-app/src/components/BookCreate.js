@@ -219,8 +219,7 @@ function BookCreate({ createBook, saveToLocalStorage }) {
         getListCategories();
 
         getDataFromLocalStorage();
-    }, [])
-
+    }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         let ops = [];

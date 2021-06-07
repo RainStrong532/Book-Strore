@@ -100,7 +100,6 @@ function AuthorForm({ updateAuthor }) {
 
     useEffect(() => {
         const pathName = history.location.pathname;
-        console.log(pathName);
         let p = pathName.split('/');
         let id = p[p.length - 1];
         id = parseInt(id);
@@ -109,10 +108,9 @@ function AuthorForm({ updateAuthor }) {
                 getAuthor(id);
             }
         } else {
-            console.log("id not valid");
             history.push("/404")
         }
-    }, [])
+    }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div className="book-detail">

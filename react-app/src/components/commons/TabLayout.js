@@ -80,7 +80,7 @@ function TabLayout({ data,
                 sort_by: sortBy ? 'ASC' : 'DESC'
             }, 1)
         }
-    }, [text_search]);
+    }, [text_search]);// eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (getData && ready) {
@@ -92,7 +92,7 @@ function TabLayout({ data,
                 sort_by: sortBy ? 'ASC' : 'DESC'
             })
         }
-    }, [current, limit, orderBy, sortBy])
+    }, [current, limit, orderBy, sortBy])// eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div className="d-flex flex-column d-flex justify-content-between h-100 flex-grow-1">

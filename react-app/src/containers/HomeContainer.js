@@ -28,7 +28,7 @@ function HomeContainer() {
 
     useEffect(() => {
         getListBook();
-    }, [])
+    }, [])// eslint-disable-line react-hooks/exhaustive-deps
     return (
         <>
             {loading && <LoadingComponent />}

@@ -96,7 +96,7 @@ function ForgotPasswordComponent() {
         } else {
             setTitle("Hãy nhập tên tài khoản hoặc email đã đăng ký của bạn!");
         }
-    }, []);
+    }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (isSend) {

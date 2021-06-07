@@ -39,7 +39,7 @@ function Filter({
                 onLastOption();
             }
         }
-    }, [selected]);
+    }, [selected]);// eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (filter && filter.name !== id) {
@@ -50,7 +50,7 @@ function Filter({
             setSelected(filter.id);
             selectedRef.current.value = filter.id;
         }
-    }, [filter])
+    }, [filter])// eslint-disable-line react-hooks/exhaustive-deps
 
     let listOption = [];
     listOption = options.map((option, index) => {

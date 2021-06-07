@@ -12,7 +12,7 @@ function Menu() {
         } else {
             setAdmin(false);
         }
-    }, [user])
+    }, [user])// eslint-disable-line react-hooks/exhaustive-deps
     return (
         <>
             <nav id="menu" className="nav">
@@ -44,7 +44,7 @@ function Menu() {
                                 <li><a href="/" className="active">Trang chủ</a></li>
 
                                 <li>
-                                    <a href="#" className="dropdown-toggle" aria-disabled>Thể loại</a>
+                                    <a href="/#" className="dropdown-toggle" aria-disabled>Thể loại</a>
                                     <ul className="ul">
                                         <li><a href="/categories/comics">Truyện</a></li>
                                         <li><a href="/categories/books">Sách</a></li>

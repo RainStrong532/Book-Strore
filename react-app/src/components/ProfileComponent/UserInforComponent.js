@@ -41,7 +41,7 @@ function UserInforComponent({ user, other, loading, setLoading }) {
             setDescription(u.profile.description || "");
             setIs_verify(u.is_verify);
         }
-    }, [u])
+    }, [u])// eslint-disable-line react-hooks/exhaustive-deps
 
     const handleUpdateProfile = async () => {
         if (!utils.validates.validatePhoneNumber(phone_number) && phone_number.length > 0) {

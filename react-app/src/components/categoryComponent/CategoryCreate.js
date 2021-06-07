@@ -23,7 +23,7 @@ function CategoryCreate({ createCategory }) {
 
     useEffect(() => {
         getDataFromLocalStorage();
-    }, [])
+    }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
 
     return (

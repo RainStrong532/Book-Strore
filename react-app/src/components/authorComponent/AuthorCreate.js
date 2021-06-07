@@ -56,7 +56,7 @@ function AuhtorCreate({ createAuthor }) {
 
     useEffect(() => {
         getDataFromLocalStorage();
-    }, [])
+    }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
 
     return (

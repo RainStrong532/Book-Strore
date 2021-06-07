@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
         const ac = new AbortController();
         loadUserFromCookies();
         return () =>  ac.abort();
-    }, [])
+    }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
     const loadUser = async function () {
         const token = Cookies.get('token');

@@ -81,7 +81,7 @@ function VerifyForm() {
                 histoty.push("/admin/home");
             }
         }
-    }, []);
+    }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (isSend) {

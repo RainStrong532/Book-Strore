@@ -97,7 +97,7 @@ function LoginComponent() {
         const ac = new AbortController();
         getDataFromLocalStorage();
         return () => ac.abort();
-    }, []);
+    }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
     const handleLogin = async () => {
         localStorage.setItem("loginReq", JSON.stringify({ user_name: user_name.toLowerCase(), password }));

@@ -173,13 +173,13 @@ function Chat() {
             history.push("/404")
         }
 
-    }, [])
+    }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (conversation_id) {
             initSocket();
         }
-    }, [conversation_id]);
+    }, [conversation_id]);// eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (socket) {
@@ -187,7 +187,7 @@ function Chat() {
         }
         scrollToBottom();
 
-    }, [messages, typing]);
+    }, [messages, typing]);// eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div>

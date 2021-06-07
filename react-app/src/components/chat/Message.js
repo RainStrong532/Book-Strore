@@ -18,7 +18,7 @@ function MessageComponent({ message, id, showTitle }) {
         if (auth.user.roles.length > 1) {
             setRole(ROLES['ADMIN']);
         }
-    }, [message])
+    }, [message])// eslint-disable-line react-hooks/exhaustive-deps
     return (
         <div style={{ width: "80%" }}>
             {

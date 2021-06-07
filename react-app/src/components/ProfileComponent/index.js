@@ -43,7 +43,7 @@ function ProfileComponent(props) {
 
     useEffect(() => {
         loadUser();
-    }, [])
+    }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
     if (redirect) {
         return (

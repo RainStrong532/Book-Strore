@@ -22,7 +22,7 @@ function AvatarComponent({ user, loading, setLoading, other }) {
         if (u) {
             setAvatar(u.profile.avatar ? u.profile.avatar.url : null);
         }
-    }, [u])
+    }, [u])// eslint-disable-line react-hooks/exhaustive-deps
 
     const toggle = () => {
         setShow(!show);
@@ -102,8 +102,8 @@ function AvatarComponent({ user, loading, setLoading, other }) {
     useEffect(() => {
         if (image.length > 0)
             changeAvatar();
-    }, [image, changeAvatar]);
-    
+    }, [image]);// eslint-disable-line react-hooks/exhaustive-deps
+
     return (
         <div className="avatar-cnt">
             <div className="coverImage avatar" style={{ background: "#999" }}>

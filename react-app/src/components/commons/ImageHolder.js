@@ -42,7 +42,7 @@ function ImageHolder({ readOnly, data, onDelete }) {
             {
                 data.url
                     ?
-                    <img className="image" src={data.url} alt="image" />
+                    <img className="image" src={data.url} alt="Ảnh" />
                     :
                     <></>
             }

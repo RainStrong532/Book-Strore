@@ -73,7 +73,7 @@ function BookDetail() {
         } else {
             history.push("/404")
         }
-    }, [history])
+    }, [history])// eslint-disable-line react-hooks/exhaustive-deps
     return (
         <div className="book-detail">
             {isLoading && <LoadingComponent />}

@@ -271,7 +271,6 @@ function BookUpdate({ updateBook, saveToLocalStorage }) {
         getListCategories();
 
         const pathName = history.location.pathname;
-        console.log(pathName);
         let p = pathName.split('/');
         let id = p[p.length - 1];
         id = parseInt(id);
@@ -280,10 +279,9 @@ function BookUpdate({ updateBook, saveToLocalStorage }) {
                 getBook(id);
             }
         } else {
-            console.log("id not valid");
             history.push("/404")
         }
-    }, [])
+    }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
 
     useEffect(() => {
@@ -294,7 +292,7 @@ function BookUpdate({ updateBook, saveToLocalStorage }) {
         let ops2 = [];
         ops2 = filterOptions(authorOptions, authors, 'author_id');
         setAuhtorOptions(ops2);
-    }, [categories, authors])
+    }, [categories, authors])// eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div className="book-detail">

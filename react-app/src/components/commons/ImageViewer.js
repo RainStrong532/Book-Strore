@@ -32,12 +32,11 @@ function ImageViewerCustom({images}) {
                                 src={images[0]}
                                 onClick={() => openImageViewer(0)}
                                 style={{
-                                    width: "100%", height: "auto"
+                                    width: "100%", height: "auto", margin: '2px', cursor: "pointer"
                                 }}
                                 height="200"
                                 key={0}
-                                style={{ margin: '2px', cursor: "pointer" }}
-                                alt="" />
+                                alt="Ảnh" />
                         </div>
                 }
 

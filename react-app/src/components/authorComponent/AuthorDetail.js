@@ -71,7 +71,7 @@ function AuthorDetailComponent() {
                 history.push("/404")
             }
         }
-    }, [])
+    }, [])// eslint-disable-line react-hooks/exhaustive-deps
     return (
         <div className="book-detail">
             {isLoading && <LoadingComponent />}

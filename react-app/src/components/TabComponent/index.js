@@ -293,7 +293,7 @@ export default function ControlledTabs() {
         getListAuthors(null, 1);
         getListCategories(null, 1);
         getListBook();
-    }, [])
+    }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <>
