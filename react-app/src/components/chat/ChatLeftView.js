@@ -1,7 +1,17 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import avatar from '../../assets/images/avatar.jpg';
+import { useAuth } from '../../contexts/UserContext';
 
 function Message({ message, title, showTitle }) {
+    const history = useHistory();
+    const auth = useAuth();
+
+    const goToProfile = () => {
+        if(auth.user.roles.length > 1){
+            history.push(`/profiles?profile_id=${message.account_id}`);
+        }
+    }
     return (
         <>
             <div className="message-item d-flex px-3 py-1" style={{ width: "80%", margin: "0 auto" }}>
@@ -19,7 +29,9 @@ function Message({ message, title, showTitle }) {
                         {
                             (showTitle === undefined || showTitle)
                                 ?
-                                <img src={message.avatar ? message.avatar.url : avatar} alt="Ảnh đại diện" style={{ width: "100%", height: "auto" }} />
+                                <img
+                                    onClick={goToProfile}
+                                    src={message.avatar ? message.avatar.url : avatar} alt="Ảnh đại diện" style={{ width: "100%", height: "auto", cursor: "pointer"}} />
                                 :
                                 <></>
                         }

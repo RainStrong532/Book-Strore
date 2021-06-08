@@ -1,16 +1,22 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { useAuth } from '../../contexts/UserContext';
 
 function Footer() {
+	const auth = useAuth();
+	const history = useHistory();
+	const goToBoxChat = () => {
+		history.push(`/chats/conversation/${auth.user.account_id}`);
+	}
 	return (
 		<>
 			<footer id="footer">
 				<div className="inner">
 					<section className="section">
 						<ul className="ul">
-							<li><Link to="/" style={{    color: "#585858"}}>Trang chủ</Link></li>
-							<li><Link to="/about" style={{    color: "#585858"}}>Về chúng tôi</Link></li>
-							<li><Link to="/products" style={{    color: "#585858"}}>Sản phẩm</Link></li>
+							<li><Link to="/" style={{ color: "#585858" }}>Trang chủ</Link></li>
+							<li><Link to="/about" style={{ color: "#585858" }}>Về chúng tôi</Link></li>
+							<li><Link to="/products" style={{ color: "#585858" }}>Sản phẩm</Link></li>
 							{/* <li><Link to="/products">Sản phẩm</Link></li> */}
 						</ul>
 					</section>
@@ -37,6 +43,19 @@ function Footer() {
 						<li>Copyright © 2020 Company Name </li>
 					</ul>
 				</div>
+
+				{
+					(auth.user && auth.user.roles.length == 1)
+						?
+						<div title="Nhắn tin với chúng tôi" className="chat-icon position-fixed d-flex justify-content-center align-items-center"
+							style={{ bottom: "2rem", right: "2rem", width: "4rem", height: "4rem", borderRadius: "50%", backgroundColor: "#FFF", boxShadow: "1px 1px 4px #999", cursor: "pointer", zIndex:"9999"}}
+							onClick={goToBoxChat}
+							>
+							<i className="fas fa-comment-dots" style={{ color: "#339af0", fontSize: "1.5rem" }}></i>
+						</div>
+						:
+						<></>
+				}
 			</footer>
 		</>
 	)
