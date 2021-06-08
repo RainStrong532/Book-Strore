@@ -27,8 +27,20 @@ function UserInforComponent({ user, other, loading, setLoading }) {
     const [description, setDescription] = useState("");
     const [is_verify, setIs_verify] = useState(0);
 
+    const goToBoxChat = () => {
+        if (user.roles.length == 1) {
+            history.push("/chats/conversation/" + user.account_id);
+            return;
+        } else {
+            if (other && other.roles.length == 1) {
+                history.push("/chats/conversation/" + other.account_id);
+                return;
+            }
+        }
+    }
+
     useEffect(() => {
-        if (u===null) {
+        if (u === null) {
 
         } else {
             setFirstname(u.profile.firstname || "");
@@ -107,18 +119,24 @@ function UserInforComponent({ user, other, loading, setLoading }) {
                             ?
                             <>
                                 {
-                                    (is_verify===1)
+                                    (is_verify === 1)
                                         ?
                                         <></>
                                         :
                                         <Button style={{ fontWeight: "bold" }} variant="warning" className="px-4">Xác thực</Button>
                                 }
                                 <Button style={{ fontWeight: "bold" }} className="px-4"
-                                    onClick={()=>{history.push("/change-password")}}
+                                    onClick={() => { history.push("/change-password") }}
                                 >Đổi mật khẩu</Button>
                             </>
                             :
-                            <Button style={{ fontWeight: "bold" }} className="px-4">Nhắn tin</Button>
+                            (user.roles.length > 1 && other && other.roles.length > 1)
+                            ?
+                            <></>
+                            :
+                            <Button
+                                onClick={goToBoxChat}
+                                style={{ fontWeight: "bold" }} className="px-4">Nhắn tin</Button>
                     }
                 </div>
             </div>
@@ -316,7 +334,7 @@ function UserInforComponent({ user, other, loading, setLoading }) {
                             <Row>
                                 <Col>
                                     <label htmlFor="desc">Mô tả</label>
-                                    <p id="desc" className="form-control" style={{ minHeight: "5rem", height: "auto"}}>
+                                    <p id="desc" className="form-control" style={{ minHeight: "5rem", height: "auto" }}>
                                         {description ? description : "Chưa có mô tả"}
                                     </p>
                                 </Col>

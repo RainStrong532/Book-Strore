@@ -85,6 +85,10 @@ export default function ControlledTabs() {
 
     const [ready, setReady] = useState(false);
 
+    const setFilterData = (data) => {
+        setFilter(data);
+    }
+
 
     const toggleDelete = () => {
         setModal(!modal);
@@ -120,12 +124,12 @@ export default function ControlledTabs() {
         try {
             const token = Cookies.get('token');
             const res = await fetchApi('DELETE', `${urls.CATEGORY_URL}/${item.category_id}`, null, token);
-            if (res.success===0) {
+            if (res.success === 0) {
                 alert(res.message);
             } else {
                 let categories = listCategory.data;
                 categories = categories.filter(category => category.category_id !== item.category_id);
-                setListCategory({...listCategory, data: [...categories]});
+                setListCategory({ ...listCategory, data: [...categories] });
                 alert("Xóa thể loại thành công");
             }
         } catch (err) {
@@ -139,12 +143,12 @@ export default function ControlledTabs() {
         try {
             const token = Cookies.get('token');
             const res = await fetchApi('DELETE', `${urls.AUTHOR_URL}/${item.author_id}`, null, token);
-            if (res.success===0) {
+            if (res.success === 0) {
                 alert(res.message);
             } else {
                 let authors = listAuthor.data;
                 authors = authors.filter(author => author.author_id !== item.author_id);
-                setListAuthor({...listAuthor, data: [...authors]});
+                setListAuthor({ ...listAuthor, data: [...authors] });
                 alert("Xóa tác giả thành công");
             }
         } catch (err) {
@@ -158,12 +162,12 @@ export default function ControlledTabs() {
         try {
             const token = Cookies.get('token');
             const res = await fetchApi('DELETE', `${urls.BOOK_URL}/${item.book_id}`, null, token);
-            if (res.success===0) {
+            if (res.success === 0) {
                 alert(res.message);
             } else {
                 let books = listBook.data;
                 books = books.filter(book => book.book_id !== item.book_id);
-                setListBook({...listBook, data: [...books]});
+                setListBook({ ...listBook, data: [...books] });
                 alert("Xóa sách thành công");
             }
         } catch (err) {
@@ -205,13 +209,15 @@ export default function ControlledTabs() {
     }
 
     const getListBook = async function (data, loading) {
-        if (loading !== 1){
+        if (loading !== 1) {
             setIsLoading(true);
         }
         try {
             let url = new URL(urls.BOOK_URL);
-            if (filter && filter.id !== -1) {
-                url = new URL(`${urls.BOOK_URL}/${filter.name}/${filter.id}`);
+            if(filter){
+                if (filter.id != -1) {
+                    url = new URL(`${urls.BOOK_URL}/${filter.name}/${filter.id}`);
+                }
             }
             if (data) {
                 for (const key in data) {
@@ -221,7 +227,8 @@ export default function ControlledTabs() {
                 }
             }
             const res = await fetchApi('GET', url);
-            if (res.success===1) {
+
+            if (res.success === 1) {
                 setListBook(res);
                 setReady(true);
             } else {
@@ -230,13 +237,13 @@ export default function ControlledTabs() {
         } catch (err) {
             alert(err.message)
         }
-        if (loading !== 1){
+        if (loading !== 1) {
             setIsLoading(false);
         }
     }
 
     const getListAuthors = async function (data, loading) {
-        if (loading !== 1){
+        if (loading !== 1) {
             setIsLoading(true);
         }
         try {
@@ -249,7 +256,7 @@ export default function ControlledTabs() {
                 }
             }
             const res = await fetchApi('GET', url);
-            if (res.success===1) {
+            if (res.success === 1) {
                 setListAuthor(res);
             } else {
                 alert(res.message);
@@ -257,13 +264,13 @@ export default function ControlledTabs() {
         } catch (err) {
             alert(err.message)
         }
-        if (loading !== 1){
+        if (loading !== 1) {
             setIsLoading(false);
         }
     }
 
     const getListCategories = async function (data, loading) {
-        if (loading !== 1){
+        if (loading !== 1) {
             setIsLoading(true);
         }
         try {
@@ -276,7 +283,7 @@ export default function ControlledTabs() {
                 }
             }
             const res = await fetchApi('GET', url);
-            if (res.success===1) {
+            if (res.success === 1) {
                 setListCategory(res);
             } else {
                 alert(res.message);
@@ -284,12 +291,12 @@ export default function ControlledTabs() {
         } catch (err) {
             alert(err.message)
         }
-        if (loading !== 1){
+        if (loading !== 1) {
             setIsLoading(false);
         }
     }
 
-    useEffect(() => {  
+    useEffect(() => {
         getListAuthors(null, 1);
         getListCategories(null, 1);
         getListBook();
@@ -322,7 +329,7 @@ export default function ControlledTabs() {
                         onDelete={onDelete}
                         ready={ready}
                         filter={filter}
-                        setFilter={setFilter}
+                        setFilter={setFilterData}
                     />
                 </Tab>
 

@@ -34,7 +34,10 @@ function Filter({
             });
         }
 
-        if (selected===-2) {
+        if (selected == -2) {
+            console.log('====================================');
+            console.log("lastOption", onLastOption);
+            console.log('====================================');
             if (onLastOption) {
                 onLastOption();
             }
@@ -42,11 +45,11 @@ function Filter({
     }, [selected]);// eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
-        if (filter && filter.name !== id) {
+        if (filter && filter.name != id) {
             setSelected(-1);
             selectedRef.current.value = -1;
         }
-        if(filter && filter.name === id) {
+        if(filter && filter.name == id) {
             setSelected(filter.id);
             selectedRef.current.value = filter.id;
         }
@@ -83,7 +86,9 @@ function Filter({
                 ref={selectedRef}
                 onChange={() => {
                     setSelected(selectedRef.current.value);
-                    setFilter({ ...filter, name: id, id: selectedRef.current.value });
+                    if(setFilter){
+                        setFilter({ ...filter, name: id, id: selectedRef.current.value });
+                    }
                     if (onChange) {
                         onChange(selectedRef.current.value);
                     }

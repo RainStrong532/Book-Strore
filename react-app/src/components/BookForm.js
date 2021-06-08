@@ -80,12 +80,12 @@ function BookUpdate({ updateBook, saveToLocalStorage }) {
         ops = options.filter(item => {
             if (data) {
                 if (!item.id || !item.name) return false;
-                let res = data.find(c => c[fieldCheck]===item.id);
+                let res = data.find(c => c[fieldCheck]==item.id);
                 return (res === undefined)
             }
             return true;
         })
-        return ops
+        return ops;
     }
 
     const deleteImage = async (image) => {
@@ -113,47 +113,47 @@ function BookUpdate({ updateBook, saveToLocalStorage }) {
     }
 
     const addCategory = (id) => {
-        if (id===-1 || !Number.isInteger(parseInt(id))) {
+        if (id ==-1 || !Number.isInteger(parseInt(id))) {
             filterOptions(categoryOptions, categories, 'category_id');
             return;
         }
         if (id < -1) {
             return;
         }
-        let category = categoryOptions.find(c => c.id===id);
+        let category = categoryOptions.find(c => c.id ==id);
         category.category_id = category.id;
         delete category.id;
         category.category_name = category.name;
         delete category.name;
         setCategories([...categories, category]);
 
-        let options = categoryOptions.filter(a => a.id !== id);
+        let options = categoryOptions.filter(a => a.id != id);
         setCategoryOptions([...options]);
         setIsLoading(false);
     }
 
     const addAuthor = (id) => {
-        if (id===-1 || !Number.isInteger(parseInt(id))) {
+        if (id ==-1 || !Number.isInteger(parseInt(id))) {
             filterOptions(authorOptions, authors, 'author_id');
             return;
         }
         if (id < -1) {
             return;
         }
-        let author = authorOptions.find(c => c.id===id);
+        let author = authorOptions.find(c => c.id == id);
         author.author_id = author.id;
         delete author.id;
         author.author_name = author.name;
         delete author.name;
         setAuthors([...authors, author]);
 
-        let options = authorOptions.filter(a => a.id !== id);
+        let options = authorOptions.filter(a => a.id != id);
         setAuhtorOptions([...options]);
     }
 
     const deleteAuthor = (id) => {
-        let ats = authors.filter(c => c.author_id !== id);
-        let author = authors.find(c => c.author_id===id);
+        let ats = authors.filter(c => c.author_id != id);
+        let author = authors.find(c => c.author_id == id);
         setAuthors([...ats]);
         let options = authorOptions;
         options.push({ id: author.author_id, name: author.author_name })
@@ -161,8 +161,8 @@ function BookUpdate({ updateBook, saveToLocalStorage }) {
     }
 
     const deleteCategory = (id) => {
-        let cts = categories.filter(c => c.category_id !== id);
-        let category = categories.find(c => c.category_id===id);
+        let cts = categories.filter(c => c.category_id != id);
+        let category = categories.find(c => c.category_id == id);
         setCategories([...cts]);
         let options = categoryOptions;
         options.push({ id: category.category_id, name: category.category_name })
@@ -324,6 +324,10 @@ function BookUpdate({ updateBook, saveToLocalStorage }) {
                         style={{ fontWeight: "bold" }}
                         onClick={() => {
                             if (updateBook) {
+                                if(parseInt(book.quantity || 0) + book.amount < 0){
+                                    alert("Số lượng phải lớn hơn hoặc bằng 0");
+                                    return;
+                                }
                                 updateBook({ ...book, quantity: parseInt(book.quantity || 0) + book.amount }, images, authors, categories);
                             }
                         }}
