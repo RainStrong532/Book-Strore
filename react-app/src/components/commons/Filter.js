@@ -33,7 +33,7 @@ function Filter({
                 sort_by: sortBy ? 'ASC' : 'DESC'
             });
         }
-
+// eslint-disable-next-line
         if (selected == -2) {
             console.log('====================================');
             console.log("lastOption", onLastOption);
@@ -45,10 +45,12 @@ function Filter({
     }, [selected]);// eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
+        // eslint-disable-next-line
         if (filter && filter.name != id) {
             setSelected(-1);
             selectedRef.current.value = -1;
         }
+        // eslint-disable-next-line
         if(filter && filter.name == id) {
             setSelected(filter.id);
             selectedRef.current.value = filter.id;

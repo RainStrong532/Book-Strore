@@ -44,7 +44,7 @@ function Footer() {
 					</ul>
 				</div>
 
-				{
+				{// eslint-disable-next-line
 					(auth.user && auth.user.roles.length == 1)
 						?
 						<div title="Nhắn tin với chúng tôi" className="chat-icon position-fixed d-flex justify-content-center align-items-center"

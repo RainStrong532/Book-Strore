@@ -80,6 +80,7 @@ function BookUpdate({ updateBook, saveToLocalStorage }) {
         ops = options.filter(item => {
             if (data) {
                 if (!item.id || !item.name) return false;
+                // eslint-disable-next-line
                 let res = data.find(c => c[fieldCheck]==item.id);
                 return (res === undefined)
             }
@@ -113,6 +114,7 @@ function BookUpdate({ updateBook, saveToLocalStorage }) {
     }
 
     const addCategory = (id) => {
+        // eslint-disable-next-line
         if (id ==-1 || !Number.isInteger(parseInt(id))) {
             filterOptions(categoryOptions, categories, 'category_id');
             return;
@@ -120,6 +122,7 @@ function BookUpdate({ updateBook, saveToLocalStorage }) {
         if (id < -1) {
             return;
         }
+        // eslint-disable-next-line
         let category = categoryOptions.find(c => c.id ==id);
         category.category_id = category.id;
         delete category.id;
@@ -127,12 +130,14 @@ function BookUpdate({ updateBook, saveToLocalStorage }) {
         delete category.name;
         setCategories([...categories, category]);
 
+        // eslint-disable-next-line
         let options = categoryOptions.filter(a => a.id != id);
         setCategoryOptions([...options]);
         setIsLoading(false);
     }
 
     const addAuthor = (id) => {
+        // eslint-disable-next-line
         if (id ==-1 || !Number.isInteger(parseInt(id))) {
             filterOptions(authorOptions, authors, 'author_id');
             return;
@@ -140,6 +145,7 @@ function BookUpdate({ updateBook, saveToLocalStorage }) {
         if (id < -1) {
             return;
         }
+        // eslint-disable-next-line
         let author = authorOptions.find(c => c.id == id);
         author.author_id = author.id;
         delete author.id;
@@ -147,12 +153,15 @@ function BookUpdate({ updateBook, saveToLocalStorage }) {
         delete author.name;
         setAuthors([...authors, author]);
 
+        // eslint-disable-next-line
         let options = authorOptions.filter(a => a.id != id);
         setAuhtorOptions([...options]);
     }
 
     const deleteAuthor = (id) => {
+        // eslint-disable-next-line
         let ats = authors.filter(c => c.author_id != id);
+        // eslint-disable-next-line
         let author = authors.find(c => c.author_id == id);
         setAuthors([...ats]);
         let options = authorOptions;
@@ -161,7 +170,9 @@ function BookUpdate({ updateBook, saveToLocalStorage }) {
     }
 
     const deleteCategory = (id) => {
+        // eslint-disable-next-line
         let cts = categories.filter(c => c.category_id != id);
+        // eslint-disable-next-line
         let category = categories.find(c => c.category_id == id);
         setCategories([...cts]);
         let options = categoryOptions;

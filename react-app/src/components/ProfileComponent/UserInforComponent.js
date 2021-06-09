@@ -28,10 +28,12 @@ function UserInforComponent({ user, other, loading, setLoading }) {
     const [is_verify, setIs_verify] = useState(0);
 
     const goToBoxChat = () => {
+        // eslint-disable-next-line
         if (user.roles.length == 1) {
             history.push("/chats/conversation/" + user.account_id);
             return;
         } else {
+            // eslint-disable-next-line
             if (other && other.roles.length == 1) {
                 history.push("/chats/conversation/" + other.account_id);
                 return;

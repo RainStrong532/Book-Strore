@@ -95,16 +95,13 @@ export default function ControlledTabs() {
     }
 
     const onDelete = (data) => {
-        setItem({ ...item, ...data });
-        console.log("data:", data, item);
+        setItem(data);
         toggleDelete();
     }
 
     const deleleItem = async () => {
-        console.log(item, "item");
         for (const key in item) {
             if (Object.hasOwnProperty.call(item, key)) {
-                console.log("key: ", key);
                 if (key === 'book_id') {
                     deleteBook();
                     break;
@@ -215,6 +212,7 @@ export default function ControlledTabs() {
         try {
             let url = new URL(urls.BOOK_URL);
             if(filter){
+                // eslint-disable-next-line
                 if (filter.id != -1) {
                     url = new URL(`${urls.BOOK_URL}/${filter.name}/${filter.id}`);
                 }
